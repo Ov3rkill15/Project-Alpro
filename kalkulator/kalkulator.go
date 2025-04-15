@@ -82,12 +82,6 @@ func kalkulatorSederhana() {
 		fmt.Printf("Hasil Akar: %.2f\n", akar(a))
 	case "7":
 		fmt.Printf("Hasil Modulus: %d\n", modulus(a, b))
-	case "8":
-		fmt.Printf("Hasil Faktorial: %d\n", faktorial(a))
-	case "9":
-		fmt.Printf("Hasil Kombinasi: %d\n", kombinasi(a, b))
-	case "10":
-		fmt.Printf("Hasil Permutasi: %d\n", permutasi(a, b))
 	case "0":
 		fmt.Println("Terima kasih telah menggunakan kalkulator ini.")
 		os.Exit(0)
@@ -123,20 +117,4 @@ func akar(a int) float64 {
 }
 func modulus(a, b int) int {
 	return a % b
-}
-func faktorial(a int) int {
-	if a == 0 || a == 1 {
-		return 1
-	}
-	result := 1
-	for i := 2; i <= a; i++ {
-		result *= i
-	}
-	return result
-}
-func kombinasi(n, r int) int {
-	return faktorial(n) / (faktorial(r) * faktorial(n-r))
-}
-func permutasi(n, r int) int {
-	return faktorial(n) / faktorial(n-r)
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"Project-Alpro/kalkulator"
+	"Project-Alpro/rekursif"
 	"bufio"
 	"fmt"
 	"os"
@@ -23,6 +24,9 @@ func main() {
 		case "1":
 			clearScreen()
 			kalkulator.MainMenu()
+		case "2":
+			clearScreen()
+			rekursif.MainMenu()
 		case "7":
 			clearScreen()
 			fmt.Println("Thanks yak")
