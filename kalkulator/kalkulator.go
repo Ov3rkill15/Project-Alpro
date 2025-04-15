@@ -2,17 +2,26 @@ package kalkulator
 
 import (
 	"fmt"
+	"kalkulator/kalkulator"
 	"math"
 	"os"
 	"os/exec"
 	"strconv"
-	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
+
+type Kalkulator struct {
+	input1 *widget.Entry
+	input2 *widget.Entry
+	tambah *widget.Button
+	kurang *widget.Button
+	kali   *widget.Button
+	bagi   *widget.Button
+	window *fyne.Window
+}
 
 func MainMenu() {
 	clearScreen()
@@ -28,7 +37,9 @@ func MainMenu() {
 		clearScreen()
 		kalkulatorSederhana()
 	case "2":
-		fmt.Println("GUI belum tersedia.")
+		clearScreen()
+		k := kalkulator.NewKalkulator()
+		k.Show()
 	case "3":
 		fmt.Println("Terima kasih telah menggunakan kalkulator ini.")
 		os.Exit(0)
@@ -145,87 +156,104 @@ func kombinasi(n, r int) int {
 func permutasi(n, r int) int {
 	return faktorial(n) / faktorial(n-r)
 }
-
-func ShowKalkulator(app fyne.App) {
-	win := app.NewWindow("Kalkulator Kotak")
-
-	display := widget.NewEntry()
-	display.Disable() // agar tidak bisa diketik langsung
-	var expr string
-
-	buttons := []string{
-		"7", "8", "9", "/",
-		"4", "5", "6", "*",
-		"1", "2", "3", "-",
-		"0", "C", "=", "+",
-	}
-
-	grid := container.NewGridWithColumns(4)
-
-	for _, label := range buttons {
-		btn := widget.NewButton(label, func(l string) func() {
-			return func() {
-				switch l {
-				case "C":
-					expr = ""
-				case "=":
-					result := evaluate(expr)
-					expr = result
-				default:
-					expr += l
-				}
-				display.SetText(expr)
-			}
-		}(label))
-		grid.Add(btn)
-	}
-
-	layout := container.NewVBox(
-		display,
-		layout.NewSpacer(),
-		grid,
-	)
-
-	win.SetContent(layout)
-	win.Resize(fyne.NewSize(300, 350))
-	win.Show()
+func NewKalkulator() *Kalkulator {
+	k := &Kalkulator{}
+	k.initUI()
+	return k
 }
 
-func evaluate(expr string) string {
-	// Sederhana: hanya + - * /
-	// Gunakan strconv & parsing manual, bukan eval
-	// Untuk saat ini: parsing pakai strconv dan basic logic
+func (k *Kalkulator) initUI() {
+	k.input1 = widget.NewEntry()
+	k.input2 = widget.NewEntry()
 
-	// Ganti × jadi * dan ÷ jadi /
-	expr = strings.ReplaceAll(expr, "×", "*")
-	expr = strings.ReplaceAll(expr, "÷", "/")
+	k.tambah = widget.NewButton("+", k.tambahHandler)
+	k.kurang = widget.NewButton("-", k.kurangHandler)
+	k.kali = widget.NewButton("*", k.kaliHandler)
+	k.bagi = widget.NewButton("/", k.bagiHandler)
 
-	// Sangat sederhana: satu operasi saja (misalnya 5+3)
-	var op byte
-	for i := 0; i < len(expr); i++ {
-		if strings.ContainsAny(string(expr[i]), "+-*/") {
-			op = expr[i]
-			left := expr[:i]
-			right := expr[i+1:]
-			a, err1 := strconv.Atoi(left)
-			b, err2 := strconv.Atoi(right)
-			if err1 != nil || err2 != nil {
-				return "Err"
-			}
-			switch op {
-			case '+':
-				return strconv.Itoa(a + b)
-			case '-':
-				return strconv.Itoa(a - b)
-			case '*':
-				return strconv.Itoa(a * b)
-			case '/':
-				if b == 0 {
-					return "Div0"
-				}
-				return strconv.Itoa(a / b)
-			}
-		}
+	inputContainer := container.NewVBox(
+		k.input1,
+		k.input2,
+	)
+
+	tombolContainer := container.NewHBox(
+		k.tambah,
+		k.kurang,
+		k.kali,
+		k.bagi,
+	)
+
+	k.window = fyne.CurrentApp().NewWindow("Kalkulator Sederhana")
+	k.window.SetContent(container.NewVBox(
+		inputContainer,
+		tombolContainer,
+	))
+}
+
+func (k *Kalkulator) tambahHandler() {
+	angka1, err := strconv.ParseFloat(k.input1.Text, 64)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
 	}
-	return expr
+	angka2, err := strconv.ParseFloat(k.input2.Text, 64)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+	result := angka1 + angka2
+	resultText := strconv.FormatFloat(result, 'f', 2, 64)
+	k.window.SetTitle("Hasil: " + resultText)
+}
+
+func (k *Kalkulator) kurangHandler() {
+	angka1, err := strconv.ParseFloat(k.input1.Text, 64)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+	angka2, err := strconv.ParseFloat(k.input2.Text, 64)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+	result := angka1 - angka2
+	resultText := strconv.FormatFloat(result, 'f', 2, 64)
+	k.window.SetTitle("Hasil: " + resultText)
+}
+
+func (k *Kalkulator) kaliHandler() {
+	angka1, err := strconv.ParseFloat(k.input1.Text, 64)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+	angka2, err := strconv.ParseFloat(k.input2.Text, 64)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+	result := angka1 * angka2
+	resultText := strconv.FormatFloat(result, 'f', 2, 64)
+	k.window.SetTitle("Hasil: " + resultText)
+}
+
+func (k *Kalkulator) bagiHandler() {
+	angka1, err := strconv.ParseFloat(k.input1.Text, 64)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+	angka2, err := strconv.ParseFloat(k.input2.Text, 64)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+	if angka2 == 0 {
+		k.window.SetTitle("Error: Pembagian dengan nol tidak terdefinisi")
+		return
+	}
+	result := angka1 / angka2
+	resultText := strconv.FormatFloat(result, 'f', 2, 64)
+	k.window.SetTitle("Hasil: " + resultText)
 }
