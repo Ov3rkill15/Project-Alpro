@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"Project-Alpro/kalkulator"
 )
 
 func main() {
@@ -21,7 +22,7 @@ func main() {
 		switch input {
 		case "1":
 			clearScreen()
-			fmt.Println("case 1")
+			kalkulator.Menu()
 		case "2":
 			fmt.Println("Thanks yak")
 			return
