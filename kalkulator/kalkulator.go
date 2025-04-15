@@ -5,6 +5,13 @@ import (
 	"math"
 	"os"
 	"os/exec"
+	"strconv"
+	"strings"
+
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/widget"
 )
 
 func MainMenu() {
@@ -35,7 +42,6 @@ func clearScreen() {
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
-
 func Submenu() {
 	fmt.Println(`
 =================
@@ -46,7 +52,6 @@ Mau Kalkulator mana?
 3. Keluar
 	`)
 }
-
 func kalkulatorSederhana() {
 	fmt.Println("Kalkulator Sederhana")
 	var a, b int
@@ -139,4 +144,88 @@ func kombinasi(n, r int) int {
 }
 func permutasi(n, r int) int {
 	return faktorial(n) / faktorial(n-r)
+}
+
+func ShowKalkulator(app fyne.App) {
+	win := app.NewWindow("Kalkulator Kotak")
+
+	display := widget.NewEntry()
+	display.Disable() // agar tidak bisa diketik langsung
+	var expr string
+
+	buttons := []string{
+		"7", "8", "9", "/",
+		"4", "5", "6", "*",
+		"1", "2", "3", "-",
+		"0", "C", "=", "+",
+	}
+
+	grid := container.NewGridWithColumns(4)
+
+	for _, label := range buttons {
+		btn := widget.NewButton(label, func(l string) func() {
+			return func() {
+				switch l {
+				case "C":
+					expr = ""
+				case "=":
+					result := evaluate(expr)
+					expr = result
+				default:
+					expr += l
+				}
+				display.SetText(expr)
+			}
+		}(label))
+		grid.Add(btn)
+	}
+
+	layout := container.NewVBox(
+		display,
+		layout.NewSpacer(),
+		grid,
+	)
+
+	win.SetContent(layout)
+	win.Resize(fyne.NewSize(300, 350))
+	win.Show()
+}
+
+func evaluate(expr string) string {
+	// Sederhana: hanya + - * /
+	// Gunakan strconv & parsing manual, bukan eval
+	// Untuk saat ini: parsing pakai strconv dan basic logic
+
+	// Ganti × jadi * dan ÷ jadi /
+	expr = strings.ReplaceAll(expr, "×", "*")
+	expr = strings.ReplaceAll(expr, "÷", "/")
+
+	// Sangat sederhana: satu operasi saja (misalnya 5+3)
+	var op byte
+	for i := 0; i < len(expr); i++ {
+		if strings.ContainsAny(string(expr[i]), "+-*/") {
+			op = expr[i]
+			left := expr[:i]
+			right := expr[i+1:]
+			a, err1 := strconv.Atoi(left)
+			b, err2 := strconv.Atoi(right)
+			if err1 != nil || err2 != nil {
+				return "Err"
+			}
+			switch op {
+			case '+':
+				return strconv.Itoa(a + b)
+			case '-':
+				return strconv.Itoa(a - b)
+			case '*':
+				return strconv.Itoa(a * b)
+			case '/':
+				if b == 0 {
+					return "Div0"
+				}
+				return strconv.Itoa(a / b)
+			}
+		}
+	}
+	return expr
 }
