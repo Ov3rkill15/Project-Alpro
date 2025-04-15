@@ -18,6 +18,7 @@ func MainMenu() {
 	fmt.Scan(&pilihan)
 	switch pilihan {
 	case "1":
+		clearScreen()
 		kalkulatorSederhana()
 	case "2":
 		fmt.Println("GUI belum tersedia.")
@@ -27,7 +28,6 @@ func MainMenu() {
 	default:
 		fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 	}
-	fmt.Println("Tekan Enter untuk kembali ke menu...")
 }
 
 func clearScreen() {
