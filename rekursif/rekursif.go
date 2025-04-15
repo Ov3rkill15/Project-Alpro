@@ -96,7 +96,7 @@ func MainMenu() {
 			fmt.Print("Masukkan nilai n dan r (nPr): ")
 			fmt.Scan(&n, &r)
 			permutasi(n, r, &hasil)
-			fmt.Println("Hasilnya adalah: ", &hasil)
+			fmt.Println("Hasilnya adalah: ", hasil)
 			fmt.Println()
 		case "0":
 			fmt.Println("Terima kasih telah menggunakan kalkulator ini.")
