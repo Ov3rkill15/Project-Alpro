@@ -8,10 +8,7 @@ import (
 
 func MainMenu() {
 	clearScreen()
-	fmt.Println("Rekursif")
-	fmt.Println("1. Kalkulator Sederhana")
-	fmt.Println("2. GUI")
-	fmt.Println("3. Keluar")
+	Submenu()
 	fmt.Print("Masukkan pilihan: ")
 	var pilihan string
 	fmt.Scan(&pilihan)
