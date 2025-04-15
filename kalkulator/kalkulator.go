@@ -8,12 +8,26 @@ import (
 )
 
 func MainMenu() {
-	fmt.Println("=== Kalkulator Sederhana (No GUI) ===")
-	var a, b int
-	fmt.Println("Masukkan angka pertama dan kedua: ")
-	fmt.Scan(&a, &b)
 	clearScreen()
-	fmt.Printf("Hasil penjumlahan: %d\n", a+b)
+	fmt.Println("Kalkulator Sederhana")
+	fmt.Println("1. Kalkulator Sederhana")
+	fmt.Println("2. GUI")
+	fmt.Println("3. Keluar")
+	fmt.Print("Masukkan pilihan: ")
+	var pilihan string
+	fmt.Scan(&pilihan)
+	switch pilihan {
+	case "1":
+		kalkulatorSederhana()
+	case "2":
+		fmt.Println("GUI belum tersedia.")
+	case "3":
+		fmt.Println("Terima kasih telah menggunakan kalkulator ini.")
+		os.Exit(0)
+	default:
+		fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
+	}
+	fmt.Println("Tekan Enter untuk kembali ke menu...")
 }
 
 func clearScreen() {
