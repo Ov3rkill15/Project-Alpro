@@ -60,6 +60,7 @@ func menu() {
 DAFTAR FUNGSI
 ===============
 1. Kalkukator
+2. Rekursif
 7. keluar
 	`)
 }
