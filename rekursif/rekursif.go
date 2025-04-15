@@ -77,24 +77,26 @@ func MainMenu() {
 		fmt.Scan(&input)
 		switch input {
 		case "1":
-			var n, r int
+			var n, r, hasil int
 			clearScreen() // Membersihkan layar sebelum menampilkan hasil
 			fmt.Println("==========")
 			fmt.Println("Implementasi Rekursif:Kombinasi")
 			fmt.Println("==========")
-			fmt.Print("Masukkan nilai a dan b (aCb): ")
+			fmt.Print("Masukkan nilai n dan r (nCr): ")
 			fmt.Scan(&n, &r)
-			fmt.Println("Hasilnya adalah: ", kombinasi(n, r))
+			kombinasi(n, r, &hasil)
+			fmt.Println("Hasilnya adalah: ", hasil)
 			fmt.Println()
 		case "2":
-			var n, r int
+			var n, r, hasil int
 			clearScreen() // Membersihkan layar sebelum menampilkan hasil
 			fmt.Println("==========")
 			fmt.Println("Implementasi Rekursif:Permutasi")
 			fmt.Println("==========")
-			fmt.Print("Masukkan nilai a dan b (aCb): ")
+			fmt.Print("Masukkan nilai n dan r (nPr): ")
 			fmt.Scan(&n, &r)
-			fmt.Println("Hasilnya adalah: ", permutasi(n, r))
+			permutasi(n, r, &hasil)
+			fmt.Println("Hasilnya adalah: ", &hasil)
 			fmt.Println()
 		case "0":
 			fmt.Println("Terima kasih telah menggunakan kalkulator ini.")
@@ -165,16 +167,21 @@ func eksponen(x int) int {
 func faktorial(a int) int {
 	if a == 0 || a == 1 {
 		return 1
+	} else {
+		return a * faktorial(a-1)
 	}
-	result := 1
-	for i := 2; i <= a; i++ {
-		result *= i
+}
+func kombinasi(n, r int, hasil *int) {
+	if r > n {
+		fmt.Println("Undefined, Nilai r tidak boleh lebih besar dari n.")
+	} else {
+		*hasil = faktorial(n) / (faktorial(r) * faktorial(n-r))
 	}
-	return result
 }
-func kombinasi(n, r int) int {
-	return faktorial(n) / (faktorial(r) * faktorial(n-r))
-}
-func permutasi(n, r int) int {
-	return faktorial(n) / faktorial(n-r)
+func permutasi(n, r int, hasil *int) {
+	if r > n {
+		fmt.Println("Undefined, Nilai r tidak boleh lebih besar dari n.")
+	} else {
+		*hasil = faktorial(n) / faktorial(n-r)
+	}
 }
