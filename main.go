@@ -1,12 +1,12 @@
 package main
 
 import (
+	"Project-Alpro/kalkulator"
 	"bufio"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
-	"Project-Alpro/kalkulator"
 )
 
 func main() {
@@ -22,8 +22,9 @@ func main() {
 		switch input {
 		case "1":
 			clearScreen()
-			kalkulator.Menu()
-		case "2":
+			kalkulator.MainMenu()
+		case "7":
+			clearScreen()
 			fmt.Println("Thanks yak")
 			return
 		default:
@@ -54,12 +55,7 @@ func menu() {
 ===============
 DAFTAR FUNGSI
 ===============
-1. FIBONACCI
-2. (x - 3) + (x - 2) + (x - 1)
-3. Fungsi nilai ke-n beda tingkat dua
-4. Eksponen 2*n
-5. Faktorial
-6. 
+1. Kalkukator
 7. keluar
 	`)
 }
