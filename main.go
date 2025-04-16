@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Project-Alpro/array"
 	"Project-Alpro/kalkulator"
 	"Project-Alpro/rekursif"
 	"bufio"
@@ -27,6 +28,9 @@ func main() {
 		case "2":
 			clearScreen()
 			rekursif.MainMenu()
+		case "3":
+			clearScreen()
+			array.MainMenu()
 		case "7":
 			clearScreen()
 			fmt.Println("Thanks yak")
@@ -61,9 +65,11 @@ DAFTAR FUNGSI
 ===============
 1. Kalkukator
 2. Rekursif
+3. Array
 7. keluar
 	`)
 }
+
 func clearScreen() {
 	cmd := exec.Command("cmd", "/c", "cls") // Untuk Windows
 	cmd.Stdout = os.Stdout

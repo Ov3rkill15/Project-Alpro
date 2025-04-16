@@ -7,12 +7,11 @@ import (
 	"os/exec"
 )
 
+var pilihan string
+
 func MainMenu() {
 	clearScreen()
 	Submenu()
-	fmt.Print("Masukkan pilihan: ")
-	var pilihan string
-	fmt.Scan(&pilihan)
 	switch pilihan {
 	case "1":
 		clearScreen()
@@ -42,6 +41,8 @@ Mau Kalkulator mana?
 2. GUI
 3. Keluar
 	`)
+	fmt.Print("Masukkan pilihan: ")
+	fmt.Scan(&pilihan)
 }
 
 func kalkulatorSederhana() {
@@ -57,9 +58,6 @@ func kalkulatorSederhana() {
 	fmt.Println("5. Pangkat (a^b)")
 	fmt.Println("6. Akar")
 	fmt.Println("7. Modulus")
-	fmt.Println("8. Faktorial")
-	fmt.Println("9. Kombinasi")
-	fmt.Println("10. Permutasi")
 	fmt.Println("0. Keluar")
 	fmt.Print("Masukkan pilihan: ")
 	var pilihan string

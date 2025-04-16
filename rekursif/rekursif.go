@@ -6,12 +6,11 @@ import (
 	"os/exec"
 )
 
+var pilihan string
+
 func MainMenu() {
 	clearScreen()
 	Submenu()
-	fmt.Print("Masukkan pilihan: ")
-	var pilihan string
-	fmt.Scan(&pilihan)
 	switch pilihan {
 	case "1":
 		var a int
@@ -124,6 +123,8 @@ Jenis rekursif mana?
 5. Faktorial
 6. Implementasi faktorial
 	`)
+	fmt.Print("Masukkan pilihan: ")
+	fmt.Scan(&pilihan)
 }
 func Submenu1() {
 	fmt.Println(`
