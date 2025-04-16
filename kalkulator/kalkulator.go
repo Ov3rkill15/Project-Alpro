@@ -48,8 +48,6 @@ Mau Kalkulator mana?
 func kalkulatorSederhana() {
 	fmt.Println("Kalkulator Sederhana")
 	var a, b int
-	fmt.Println("Masukkan angka pertama dan kedua: ")
-	fmt.Scan(&a, &b)
 	fmt.Println("Silahkan pilih operasi:")
 	fmt.Println("1. Penjumlahan")
 	fmt.Println("2. Pengurangan")
@@ -58,25 +56,50 @@ func kalkulatorSederhana() {
 	fmt.Println("5. Pangkat (a^b)")
 	fmt.Println("6. Akar")
 	fmt.Println("7. Modulus")
+	fmt.Println("8. Ratar-rata n bilangan")
 	fmt.Println("0. Keluar")
 	fmt.Print("Masukkan pilihan: ")
 	var pilihan string
 	fmt.Scan(&pilihan)
 	switch pilihan {
 	case "1":
+		fmt.Println("Masukkan angka pertama dan kedua: ")
+		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Penjumlahan: %d\n", penjumlahan(a, b))
 	case "2":
+		fmt.Println("Masukkan angka pertama dan kedua: ")
+		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Pengurangan: %d\n", pengurangan(a, b))
 	case "3":
+		fmt.Println("Masukkan angka pertama dan kedua: ")
+		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Perkalian: %d\n", perkalian(a, b))
 	case "4":
+		fmt.Println("Masukkan angka pertama dan kedua: ")
+		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Pembagian: %.2f\n", pembagian(a, b))
 	case "5":
+		fmt.Println("Masukkan angka pertama dan kedua: ")
+		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Pangkat: %d\n", pangkat(a, b))
 	case "6":
+		fmt.Println("Masukkan angka pertama dan kedua: ")
+		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Akar: %.2f\n", akar(a))
 	case "7":
+		fmt.Println("Masukkan angka pertama dan kedua: ")
+		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Modulus: %d\n", modulus(a, b))
+	case "8":
+		var n int
+		fmt.Print("Masukkan jumlah bilangan: ")
+		fmt.Scan(&n)
+		numbers := make([]int, n)
+		for i := 0; i < n; i++ {
+			fmt.Printf("Masukkan bilangan ke-%d: ", i+1)
+			fmt.Scan(&numbers[i])
+		}
+		fmt.Printf("Hasil Rata-rata: %.2f\n", rataRata(numbers))
 	case "0":
 		fmt.Println("Terima kasih telah menggunakan kalkulator ini.")
 		os.Exit(0)
@@ -112,4 +135,12 @@ func akar(a int) float64 {
 }
 func modulus(a, b int) int {
 	return a % b
+}
+
+func rataRata(numbers []int) float64 {
+	var sum int
+	for _, num := range numbers {
+		sum += num
+	}
+	return float64(sum) / float64(len(numbers))
 }
