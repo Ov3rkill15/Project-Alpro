@@ -1,9 +1,10 @@
 package main
 
 import (
-	"Project-Alpro/array"
-	"Project-Alpro/kalkulator"
-	"Project-Alpro/rekursif"
+	"Project-Alpro/alpro"
+	// "Project-Alpro/contohsoal"
+	// "Project-Alpro/linklanjutan"
+	"Project-Alpro/pengpro"
 	"bufio"
 	"fmt"
 	"os"
@@ -24,14 +25,17 @@ func main() {
 		switch input {
 		case "1":
 			clearScreen()
-			kalkulator.MainMenu()
+			pengpro.MainMenu()
 		case "2":
 			clearScreen()
-			rekursif.MainMenu()
+			alpro.MainMenu()
 		case "3":
 			clearScreen()
-			array.MainMenu()
-		case "7":
+			// contohsoal.MainMenu()
+		case "4":
+			clearScreen()
+			// linklanjutan.MainMenu()
+		case "0":
 			clearScreen()
 			fmt.Println("Thanks yak")
 			return
@@ -42,7 +46,6 @@ func main() {
 		// Menunggu pengguna untuk menekan Enter atau mengetik 'x'
 		for {
 			fmt.Println("Tekan Enter untuk kembali ke menu atau ketik 'x' untuk keluar...")
-			input, _ = reader.ReadString('\n')
 			input, _ = reader.ReadString('\n')
 			input = strings.TrimSpace(input)
 
@@ -60,13 +63,17 @@ func main() {
 
 func menu() {
 	fmt.Println(`
-===============
-DAFTAR FUNGSI
-===============
-1. Kalkukator
-2. Rekursif
-3. Array
-7. keluar
+=========================================
+BELAJAR BARENG ALWAN & FATHUR!!!!!!
+=========================================
+Materi yang tersedia:
+=========================================
+1. Pengenalan Pemrograman
+2. Algoritma dan Pemrograman 
+3. Contoh Soal
+4. Link untuk belajar lebih lanjut
+
+0. keluar
 	`)
 }
 

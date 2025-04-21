@@ -7,6 +7,7 @@ import (
 )
 
 var pilihan string
+var pilihan2 string
 
 func clearScreen() {
 	cmd := exec.Command("cmd", "/c", "cls") // Untuk Windows
@@ -34,9 +35,24 @@ func MainMenu() {
 	case "1":
 		clearScreen()
 		belajarArray()
+		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+		fmt.Scan(&pilihan2)
+		if pilihan2 == "y" {
+			MainMenu()
+		} else {
+			return
+		}
+
 	case "2":
 		clearScreen()
 		soalArray()
+		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+		fmt.Scan(&pilihan2)
+		if pilihan2 == "y" {
+			MainMenu()
+		} else {
+			return
+		}
 	case "3":
 		return
 	default:
@@ -81,22 +97,20 @@ func belajarArray() {
 	fmt.Println()
 
 	fmt.Println("=======================SLICE===============================")
-	/*
 		KARAKTERISTIK ARRAY
 		1.memiliki 3 tipe data, yaitu, pointer, length dan capacity
 		2.pointer menunjuk data pertama di array
 		3.length menunjuk panjang slice
 		4.capacity adalah kapasitas dari slice, dimana length tidak boleh melebihi capacity
-	*/
-	var fruits = []string{"apple", "grape", "banana", "pisitan"}
+	
+		var fruits = []string{"apple", "grape", "banana", "pisitan"}
 
-	/*
 		Ada beberapa cara membuat slice (partisi dari array)
 		1. array[low:high]	(dari index low sampai sebelum high)
 		2. array[low:] (dari index low sampai data akhir array)
 		3. array [:high] (dari index 0 sampai sebelum high)
 		4. array[:] () (dari index 0 sampai data akhir array)
-	*/
+
 	var fruits1 = fruits[1:3]
 	var fruits2 = fruits[0:]
 	var fruits3 = fruits[:3]
@@ -126,14 +140,12 @@ func belajarArray() {
 	fmt.Println(fruits1) // ["grape", "banana"]
 	fmt.Println(fruits3) // ["ALWAN", "grape", "banana"]
 
-	/*
 		operasi slice
 		1. len(array)
 		2. cap(array)
 		3. append(slice,data)
 		4. make([]type data, length, capacity)
 		5. copy(destination,source)
-	*/
 
 	// append(slice,data)
 	fruits = append(fruits, "alwan") // ["apple", "grape", "banana", "pisitan", "alwan"]

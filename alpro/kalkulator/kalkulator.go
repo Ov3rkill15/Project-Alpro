@@ -8,6 +8,7 @@ import (
 )
 
 var pilihan string
+var Choice2 string
 
 func MainMenu() {
 	clearScreen()
@@ -66,30 +67,79 @@ func kalkulatorSederhana() {
 		fmt.Println("Masukkan angka pertama dan kedua: ")
 		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Penjumlahan: %d\n", penjumlahan(a, b))
+		fmt.Println("Tetap di kalkulator atau kembali ke menu utama?(y/n)")
+		fmt.Scan(&Choice2)
+		if Choice2 == "y" {
+			MainMenu()
+		} else {
+			return
+		}
 	case "2":
 		fmt.Println("Masukkan angka pertama dan kedua: ")
 		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Pengurangan: %d\n", pengurangan(a, b))
+		fmt.Println("Tetap di kalkulator atau kembali ke menu utama?(y/n)")
+		fmt.Scan(&Choice2)
+		if Choice2 == "y" {
+			MainMenu()
+		} else {
+			return
+		}
 	case "3":
 		fmt.Println("Masukkan angka pertama dan kedua: ")
 		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Perkalian: %d\n", perkalian(a, b))
+		fmt.Println("Tetap di kalkulator atau kembali ke menu utama?(y/n)")
+		fmt.Scan(&Choice2)
+		if Choice2 == "y" {
+			MainMenu()
+		} else {
+			return
+		}
 	case "4":
 		fmt.Println("Masukkan angka pertama dan kedua: ")
 		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Pembagian: %.2f\n", pembagian(a, b))
+		fmt.Println("Tetap di kalkulator atau kembali ke menu utama?(y/n)")
+		fmt.Scan(&Choice2)
+		if Choice2 == "y" {
+			MainMenu()
+		} else {
+			return
+		}
 	case "5":
 		fmt.Println("Masukkan angka pertama dan kedua: ")
 		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Pangkat: %d\n", pangkat(a, b))
+		fmt.Println("Tetap di kalkulator atau kembali ke menu utama?(y/n)")
+		fmt.Scan(&Choice2)
+		if Choice2 == "y" {
+			MainMenu()
+		} else {
+			return
+		}
 	case "6":
 		fmt.Println("Masukkan angka pertama dan kedua: ")
 		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Akar: %.2f\n", akar(a))
+		fmt.Println("Tetap di kalkulator atau kembali ke menu utama?(y/n)")
+		fmt.Scan(&Choice2)
+		if Choice2 == "y" {
+			MainMenu()
+		} else {
+			return
+		}
 	case "7":
 		fmt.Println("Masukkan angka pertama dan kedua: ")
 		fmt.Scan(&a, &b)
 		fmt.Printf("Hasil Modulus: %d\n", modulus(a, b))
+		fmt.Println("Tetap di kalkulator atau kembali ke menu utama?(y/n)")
+		fmt.Scan(&Choice2)
+		if Choice2 == "y" {
+			MainMenu()
+		} else {
+			return
+		}
 	case "8":
 		var n int
 		fmt.Print("Masukkan jumlah bilangan: ")
@@ -100,6 +150,13 @@ func kalkulatorSederhana() {
 			fmt.Scan(&numbers[i])
 		}
 		fmt.Printf("Hasil Rata-rata: %.2f\n", rataRata(numbers))
+		fmt.Println("Tetap di kalkulator atau kembali ke menu utama?(y/n)")
+		fmt.Scan(&Choice2)
+		if Choice2 == "y" {
+			MainMenu()
+		} else {
+			return
+		}
 	case "0":
 		fmt.Println("Terima kasih telah menggunakan kalkulator ini.")
 		os.Exit(0)
