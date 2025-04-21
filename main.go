@@ -10,6 +10,8 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/common-nighthawk/go-figure" // Import go-figure
 )
 
 func main() {
@@ -18,6 +20,10 @@ func main() {
 
 	for {
 		clearScreen() // Membersihkan layar sebelum menampilkan menu
+		welcome := figure.NewFigure("WELCOME", "doom", true).String()
+		fmt.Print("\033[32m") // Set warna hijau
+		fmt.Print(welcome)    // Cetak teks ASCII
+		fmt.Print("\033[0m")  // Reset warna ke default
 		menu()
 		fmt.Print("Masukkan pilihan: ")
 		fmt.Scan(&input)
@@ -37,7 +43,7 @@ func main() {
 			// linklanjutan.MainMenu()
 		case "0":
 			clearScreen()
-			fmt.Println("Thanks yak")
+			figure.NewFigure("THX THX THX", "basic", true).Blink(5000, 1000, 500)
 			return
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")

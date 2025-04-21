@@ -7,24 +7,31 @@ import (
 )
 
 var pilihan string
+var Choice2 string
 
 func MainMenu() {
 	clearScreen()
 	Submenu()
 	switch pilihan {
 	case "1":
-		var a int
 		clearScreen()
-		fmt.Println("===============")
-		fmt.Println("Fungsi FIBONACI")
-		fmt.Println("===============")
-		fmt.Print("Masukkan nilai untuk Fibonacci: ")
-		fmt.Scan(&a)
-		fmt.Print(a, " angka Fibonacci pertama adalah: ")
-		for i := 1; i <= a; i++ {
-			fmt.Print(fibo(i), " ")
+		tampilanfibo()
+		fmt.Println("Tetap di Fibonacci(y), Menu rekursif lain(r) atau kembali ke menu utama(m)?")
+		fmt.Scan(&Choice2)
+		for Choice2 == "y" {
+			tampilanfibo()
+			fmt.Println("Tetap di Fibonacci(y), Menu rekursif lain(r) atau kembali ke menu utama(m)?")
+			fmt.Scan(&Choice2)
 		}
-		fmt.Println()
+		if Choice2 == "r" {
+			clearScreen()
+			MainMenu()
+		} else {
+			clearScreen()
+			fmt.Println("Kembali ke menu utama...")
+			// Kode untuk kembali ke menu utama
+			// Misalnya, panggil fungsi MainMenu() dari package lain atau lakukan tindakan lain sesuai kebutuhan
+		}
 	case "2":
 		var num int
 		clearScreen()
@@ -134,6 +141,21 @@ Implementasi Rekursif!
 1. kombinasi
 2. permutasi
 	`)
+}
+
+func tampilanfibo() {
+	var a int
+	fmt.Println("===============")
+	fmt.Println("Fungsi FIBONACI")
+	fmt.Println("===============")
+	fmt.Print("Masukkan nilai untuk Fibonacci: ")
+	fmt.Scan(&a)
+	fmt.Print(a, " angka Fibonacci pertama adalah: ")
+	for i := 1; i <= a; i++ {
+		fmt.Print(fibo(i), " ")
+	}
+	fmt.Println()
+
 }
 func fibo(n int) int {
 	if n == 1 {
