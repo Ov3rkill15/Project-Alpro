@@ -2,23 +2,23 @@ package main
 
 import (
 	"Project-Alpro/alpro"
-	// "Project-Alpro/contohsoal"
+	"Project-Alpro/contohsoal"
+
 	// "Project-Alpro/linklanjutan"
 	"Project-Alpro/pengpro"
-	"bufio"
 	"fmt"
 	"os"
 	"os/exec"
-	"strings"
+	"time"
 
 	"github.com/common-nighthawk/go-figure" // Import go-figure
 )
 
 func main() {
 	var input string
-	reader := bufio.NewReader(os.Stdin) // Membuat reader untuk membaca input
+	var stop bool = false // Variabel untuk menghentikan loop
 
-	for {
+	for !stop {
 		clearScreen() // Membersihkan layar sebelum menampilkan menu
 		welcome := figure.NewFigure("WELCOME", "doom", true).String()
 		fmt.Print("\033[32m") // Set warna hijau
@@ -31,39 +31,35 @@ func main() {
 		switch input {
 		case "1":
 			clearScreen()
+			fmt.Println("Menuju Pengenalan Pemrograman...")
+			loading()
 			pengpro.MainMenu()
 		case "2":
 			clearScreen()
+			fmt.Println("Menuju Algoritma Pemrograman...")
+			loading()
 			alpro.MainMenu()
 		case "3":
 			clearScreen()
-			// contohsoal.MainMenu()
+			fmt.Println("Menuju Contoh Soal...")
+			loading()
+			contohsoal.MainMenu()
 		case "4":
 			clearScreen()
+			fmt.Println("Menuju Kumpulan Link...")
+			loading()
 			// linklanjutan.MainMenu()
 		case "0":
 			clearScreen()
 			figure.NewFigure("THX THX THX", "basic", true).Blink(5000, 1000, 500)
 			return
 		default:
+			clearScreen()
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
+			loading()
+			fmt.Println()
 		}
 
-		// Menunggu pengguna untuk menekan Enter atau mengetik 'x'
-		for {
-			fmt.Println("Tekan Enter untuk kembali ke menu atau ketik 'x' untuk keluar...")
-			input, _ = reader.ReadString('\n')
-			input = strings.TrimSpace(input)
-
-			if input == "" {
-				break // Kembali ke menu
-			} else if input == "x" {
-				fmt.Println("Thanks yak")
-				return // Keluar dari program
-			} else {
-				fmt.Println("Input tidak valid. Silakan coba lagi.")
-			}
-		}
 	}
 }
 
@@ -87,4 +83,11 @@ func clearScreen() {
 	cmd := exec.Command("cmd", "/c", "cls") // Untuk Windows
 	cmd.Stdout = os.Stdout
 	cmd.Run()
+}
+
+func loading() {
+	for i := 0; i < 10; i++ {
+		time.Sleep(100 * time.Millisecond)
+		fmt.Print(".")
+	}
 }
