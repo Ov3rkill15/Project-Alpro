@@ -10,6 +10,8 @@ import (
 var pilihan string
 var Choice2 string
 
+const Narray = 10000
+
 func MainMenu() {
 	clearScreen()
 	Submenu()
@@ -49,17 +51,23 @@ Mau Kalkulator mana?
 func kalkulatorSederhana() {
 	fmt.Println("Kalkulator Sederhana")
 	var a, b int
-	fmt.Println("Silahkan pilih operasi:")
-	fmt.Println("1. Penjumlahan")
-	fmt.Println("2. Pengurangan")
-	fmt.Println("3. Perkalian")
-	fmt.Println("4. Pembagian")
-	fmt.Println("5. Pangkat (a^b)")
-	fmt.Println("6. Akar")
-	fmt.Println("7. Modulus")
-	fmt.Println("8. Ratar-rata n bilangan")
-	fmt.Println("0. Keluar")
-	fmt.Print("Masukkan pilihan: ")
+	fmt.Println(`
+			
+		_____________________
+		|  _________________  |
+		| |              0. | |
+		| |_________________| |
+		|  ___ ___ ___   ___  |
+		| | 7 | 8 | 9 | | + | |
+		| |___|___|___| |___| |
+		| | 4 | 5 | 6 | | - | |
+		| |___|___|___| |___| |
+		| | 1 | 2 | 3 | | x | |
+		| |___|___|___| |___| |
+		| | . | 0 | = | | ÷ | |
+		| |___|___|___| |___| |
+		|_____________________|
+   `)
 	var pilihan string
 	fmt.Scan(&pilihan)
 	switch pilihan {
@@ -142,9 +150,12 @@ func kalkulatorSederhana() {
 		}
 	case "8":
 		var n int
+		var numbers [Narray]float64
 		fmt.Print("Masukkan jumlah bilangan: ")
 		fmt.Scan(&n)
-		numbers := make([]int, n)
+		if n > Narray {
+			n = Narray
+		}
 		for i := 0; i < n; i++ {
 			fmt.Printf("Masukkan bilangan ke-%d: ", i+1)
 			fmt.Scan(&numbers[i])
@@ -194,9 +205,10 @@ func modulus(a, b int) int {
 	return a % b
 }
 
-func rataRata(numbers []int) float64 {
+func rataRata(numbers [Narray]float64) float64 {
 	var sum int
-	for _, num := range numbers {
+	sum = 0
+	for num := range len(numbers) {
 		sum += num
 	}
 	return float64(sum) / float64(len(numbers))

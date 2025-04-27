@@ -1,0 +1,5 @@
+{
+    "pertanyaan": "Buatlah program yang mencetak 5 bilangan genap pertama",
+    "test_cases": ["2", "4", "6", "8", "10"]
+  }
+  

@@ -1,19 +1,12 @@
 package array
 
 import (
+	"Project-Alpro/atribut"
 	"fmt"
-	"os"
-	"os/exec"
 )
 
 var pilihan string
 var pilihan2 string
-
-func clearScreen() {
-	cmd := exec.Command("cmd", "/c", "cls") // Untuk Windows
-	cmd.Stdout = os.Stdout
-	cmd.Run()
-}
 
 func Submenu() {
 	fmt.Println(`
@@ -29,11 +22,11 @@ Selamat Datang di Pembelajaran Array
 }
 
 func MainMenu() {
-	clearScreen()
+	atribut.ClearScreen()
 	Submenu()
 	switch pilihan {
 	case "1":
-		clearScreen()
+		atribut.ClearScreen()
 		belajarArray()
 		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
 		fmt.Scan(&pilihan2)
@@ -44,7 +37,7 @@ func MainMenu() {
 		}
 
 	case "2":
-		clearScreen()
+		atribut.ClearScreen()
 		soalArray()
 		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
 		fmt.Scan(&pilihan2)

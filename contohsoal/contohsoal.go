@@ -13,10 +13,8 @@ import (
 var Choice2 string
 
 type Soal struct {
-	Judul     string   `json:"judul"`
-	Deskripsi string   `json:"deskripsi"`
-	TestCases []string `json:"test_cases"`
-	Outputs   []string `json:"outputs"`
+	Pertanyaan string   `json:"pertanyaan"`
+	TestCases  []string `json:"test_cases"`
 }
 
 func loadSoal(path string) (*Soal, error) {
@@ -24,6 +22,7 @@ func loadSoal(path string) (*Soal, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	var soal Soal
 	err = json.Unmarshal(data, &soal)
 	if err != nil {
@@ -32,98 +31,98 @@ func loadSoal(path string) (*Soal, error) {
 	return &soal, nil
 }
 
-func tulisSoalKeJawaban(path string, soal *Soal) error {
-	template := fmt.Sprintf(`// Judul: %s
-// Deskripsi: %s
-
-package main
-
-import "fmt"
-
-func main() {
-	// Tulis jawaban kamu di sini
+func openNotepadPlusPlus(filePath string) {
+	exePath := "C:\\Program Files\\Notepad++\\notepad++.exe"
+	cmd := exec.Command(exePath, filePath)
+	err := cmd.Start()
+	if err != nil {
+		fmt.Println("Gagal membuka Notepad++:", err)
+	}
 }
-`, soal.Judul, soal.Deskripsi)
 
-	return os.WriteFile(path, []byte(template), 0644)
+func compileAndRun() (string, error) {
+	cmd := exec.Command("go", "run", "jawaban.go")
+	output, err := cmd.CombinedOutput()
+	return string(output), err
 }
 
 func MainMenu() {
-	soalPath := `D:\Matkul smester 2\New folder\soal1.json`
-	jawabanPath := `D:\Matkul smester 2\New folder\jawaban.go`
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Println()
+	fmt.Println("=== PILIH SOAL ===")
+	fmt.Println("1. Soal Pengantar")
+	fmt.Println("2. Soal Algoritma")
+	fmt.Print("Masukkan pilihan: ")
+	pilihan, _ := reader.ReadString('\n')
+	pilihan = strings.TrimSpace(pilihan)
 
-	soal, err := loadSoal(soalPath)
-	if err != nil {
-		panic("Gagal membaca file soal: " + err.Error())
-	}
-
-	err = tulisSoalKeJawaban(jawabanPath, soal)
-	if err != nil {
-		fmt.Println("Gagal menulis ke jawaban.go:", err)
+	var soalPath string
+	switch pilihan {
+	case "1":
+		soalPath = "D:\\Matkul smester 2\\Project-Alpro\\contohsoal\\soal_pengpro.json"
+	case "2":
+		soalPath = "D:\\Matkul smester 2\\Project-Alpro\\contohsoal\\soal_alpro.json"
+	default:
+		fmt.Println("Pilihan tidak valid")
 		return
 	}
 
-	reader := bufio.NewReader(os.Stdin)
+	soal, err := loadSoal(soalPath)
+	if err != nil {
+		fmt.Println("Gagal memuat soal:", err)
+		return
+	}
+
+	// Auto tulis soal di file jawaban.go sebagai komentar
+	jawabanContent := "// " + soal.Pertanyaan + "\n\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n\t// Tulis jawabanmu di sini\n}\n"
+	os.WriteFile("jawaban.go", []byte(jawabanContent), 0644)
+	defer os.Remove("jawaban.go")
+	fmt.Println("Membuka Notepad++ untuk menjawab soal...")
+	time.Sleep(1 * time.Second)
+	openNotepadPlusPlus("jawaban.go")
 
 	for {
-		// Buka Notepad
-		fmt.Println("\nMembuka jawaban.go di Notepad...")
-		exec.Command("notepad", jawabanPath).Run()
+		fmt.Print("\nTekan ENTER untuk cek jawaban atau 'x' untuk keluar: ")
+		input, _ := reader.ReadString('\n')
+		input = strings.TrimSpace(input)
 
-		// Tunggu input Enter dari user
-		fmt.Print("Tekan ENTER setelah kamu selesai mengerjakan dan menutup Notepad...")
-		_, _ = reader.ReadString('\n') // Tidak perlu menggunakan variabel 'err'
-
-		// Jalankan kode
-		cmd := exec.Command("go", "run", jawabanPath)
-		output, err := cmd.CombinedOutput()
-
-		// Tidak gunakan err jika tidak penting
-		if err != nil {
-			fmt.Println("Ada error saat menjalankan kode:", err)
+		if strings.ToLower(input) == "x" {
+			fmt.Println("Keluar dari mode soal...")
+			return
 		}
 
-		cleanOutput := strings.TrimSpace(string(output))
-		cleanExpected := strings.TrimSpace(strings.Join(soal.Outputs, "\n"))
+		output, err := compileAndRun()
+		if err != nil {
+			fmt.Println("Terjadi error saat menjalankan kode:\n", err)
+			continue
+		}
 
-		fmt.Println("\nOutput dari program kamu:")
-		fmt.Println(cleanOutput)
-
-		// Cek apakah output sudah benar
-		if cleanOutput == cleanExpected {
-			fmt.Println("\n✅ Jawaban BENAR! Selamat!")
-			fmt.Println("Tetap di soal ini(y), Menu soal lain(r) atau kembali ke menu utama(m)?")
-			fmt.Scan(&Choice2)
-			for Choice2 == "y" {
-				MainMenu()
-				fmt.Println("Tetap di Fibonacci(y), Menu rekursif lain(r) atau kembali ke menu utama(m)?")
-				fmt.Scan(&Choice2)
+		match := false
+		for _, tc := range soal.TestCases {
+			if strings.Contains(output, tc) {
+				match = true
+				break
 			}
-			if Choice2 == "r" {
-				clearScreen()
-				return
-			} else if Choice2 == "m" {
-				clearScreen()
-				fmt.Println("Kembali ke menu utama...")
-				for range 10 {
-					time.Sleep(100 * time.Millisecond)
-					fmt.Print(".")
-				}
+		}
+
+		if match {
+			fmt.Println("\n✅ Jawaban BENAR! Output sesuai test case.")
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			defer os.Remove("jawaban.go")
+			fmt.Scan(&Choice2)
+			bufio.NewReader(os.Stdin).ReadString('\n')
+			if Choice2 == "y" {
+				MainMenu()
+			} else {
 				return
 			}
 		} else {
-			fmt.Println("\n❌ Jawaban SALAH! Coba lagi ya.")
-			fmt.Println("Output yang diharapkan:")
-			fmt.Println(cleanExpected)
-			fmt.Println("\n----------------------------------------")
-			fmt.Print("Tekan ENTER untuk membuka kembali Notepad dan perbaiki jawaban...")
-			_, _ = reader.ReadString('\n') // Tidak perlu menggunakan variabel 'err'
+			fmt.Println("\n❌ Output tidak sesuai dengan test case.")
+			fmt.Println("Output kamu:\n", output)
+			fmt.Println("Test case yang diharapkan:")
+			for _, t := range soal.TestCases {
+				fmt.Println("-", t)
+			}
 		}
 	}
-}
-
-func clearScreen() {
-	cmd := exec.Command("cmd", "/c", "cls") // Untuk Windows
-	cmd.Stdout = os.Stdout
-	cmd.Run()
 }

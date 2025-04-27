@@ -5,11 +5,11 @@ import (
 	"Project-Alpro/contohsoal"
 
 	// "Project-Alpro/linklanjutan"
+	"Project-Alpro/atribut"
 	"Project-Alpro/pengpro"
+	"bufio"
 	"fmt"
 	"os"
-	"os/exec"
-	"time"
 
 	"github.com/common-nighthawk/go-figure" // Import go-figure
 )
@@ -19,7 +19,7 @@ func main() {
 	var stop bool = false // Variabel untuk menghentikan loop
 
 	for !stop {
-		clearScreen() // Membersihkan layar sebelum menampilkan menu
+		atribut.ClearScreen() // Membersihkan layar sebelum menampilkan menu
 		welcome := figure.NewFigure("WELCOME", "doom", true).String()
 		fmt.Print("\033[32m") // Set warna hijau
 		fmt.Print(welcome)    // Cetak teks ASCII
@@ -27,40 +27,53 @@ func main() {
 		menu()
 		fmt.Print("Masukkan pilihan: ")
 		fmt.Scan(&input)
+		bufio.NewReader(os.Stdin).ReadString('\n')
 
 		switch input {
 		case "1":
-			clearScreen()
+			atribut.ClearScreen()
 			fmt.Println("Menuju Pengenalan Pemrograman...")
-			loading()
+			atribut.Loading()
 			pengpro.MainMenu()
 		case "2":
-			clearScreen()
+			atribut.ClearScreen()
 			fmt.Println("Menuju Algoritma Pemrograman...")
-			loading()
+			atribut.Loading()
 			alpro.MainMenu()
 		case "3":
-			clearScreen()
+			atribut.ClearScreen()
 			fmt.Println("Menuju Contoh Soal...")
-			loading()
+			atribut.Loading()
 			contohsoal.MainMenu()
 		case "4":
-			clearScreen()
-			fmt.Println("Menuju Kumpulan Link...")
-			loading()
-			// linklanjutan.MainMenu()
+			atribut.ClearScreen()
+			fmt.Println("Belum ada materi")
+			atribut.Loading()
+			fmt.Println("Menuju Menu utama...")
+			return
+		case "10":
+			atribut.ClearScreen()
+			fmt.Println("COMING SOON!!!")
+			fmt.Println("Menuju Menu utama...")
+			atribut.Loading()
+		case "11":
+			atribut.ClearScreen()
+			fmt.Println("COMING SOON!!!")
+			fmt.Println("Menuju Menu utama...")
+			atribut.Loading()
 		case "0":
-			clearScreen()
+			atribut.ClearScreen()
 			figure.NewFigure("THX THX THX", "basic", true).Blink(5000, 1000, 500)
 			return
 		default:
-			clearScreen()
+			atribut.ClearScreen()
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
-			loading()
+			atribut.Loading()
 			fmt.Println()
 		}
 
 	}
+
 }
 
 func menu() {
@@ -75,19 +88,12 @@ Materi yang tersedia:
 3. Contoh Soal
 4. Link untuk belajar lebih lanjut
 
+
+=========================================
+10. about us:
+11. link referensi:
+=========================================
+
 0. keluar
 	`)
-}
-
-func clearScreen() {
-	cmd := exec.Command("cmd", "/c", "cls") // Untuk Windows
-	cmd.Stdout = os.Stdout
-	cmd.Run()
-}
-
-func loading() {
-	for i := 0; i < 10; i++ {
-		time.Sleep(100 * time.Millisecond)
-		fmt.Print(".")
-	}
 }

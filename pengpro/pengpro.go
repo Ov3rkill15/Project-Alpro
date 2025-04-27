@@ -1,21 +1,25 @@
 package pengpro
 
 import (
+	"Project-Alpro/atribut"
 	"fmt"
-	"os"
-	"os/exec"
-	"runtime"
+
+	"github.com/common-nighthawk/go-figure"
 )
 
 var Choice int
 var Choice2 string
 
 func MainMenu() {
-	clearScreen()
+	atribut.ClearScreen()
 	Submenu()
 }
 
 func Submenu() {
+	welcome := figure.NewFigure("PENGPRO", "doom", true).String()
+	fmt.Print("\033[32m") // Set warna hijau
+	fmt.Print(welcome)    // Cetak teks ASCII
+	fmt.Print("\033[0m")
 	fmt.Println("== Pengenalan Pemrograman ==")
 	fmt.Println("1. Introduction (Pendahuluan)Dasar-dasar Coding")
 	fmt.Println("2. konsep Menara Hanoi")
@@ -27,10 +31,9 @@ func Submenu() {
 	fmt.Println("0. Kembali")
 	fmt.Print("Pilih materi: ")
 	fmt.Scan(&Choice)
-
 	switch Choice {
 	case 1:
-		openBrowser("https://1drv.ms/p/c/87a899df7dfa3990/EXebJrgPSrBDlN3TeSN9CJ0BwdKVzYaNfIFZSTBWiMu3Qw?e=jom0HL")
+		atribut.Openbrowser("https://1drv.ms/p/c/87a899df7dfa3990/EXebJrgPSrBDlN3TeSN9CJ0BwdKVzYaNfIFZSTBWiMu3Qw?e=jom0HL")
 		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
 		fmt.Scan(&Choice2)
 		if Choice2 == "y" {
@@ -39,7 +42,7 @@ func Submenu() {
 			return
 		}
 	case 2:
-		openBrowser("https://1drv.ms/p/c/87a899df7dfa3990/EfoM86_zr51Kpt9sXLBLOO0B7_kz35yYlbNUEQ27uExU9A?e=9dzJKB")
+		atribut.Openbrowser("https://1drv.ms/p/c/87a899df7dfa3990/EfoM86_zr51Kpt9sXLBLOO0B7_kz35yYlbNUEQ27uExU9A?e=9dzJKB")
 		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
 		fmt.Scan(&Choice2)
 		if Choice2 == "y" {
@@ -60,28 +63,5 @@ func Submenu() {
 		return
 	default:
 		fmt.Println("Pilihan tidak valid")
-	}
-}
-
-func clearScreen() {
-	cmd := exec.Command("cmd", "/c", "cls") // Untuk Windows
-	cmd.Stdout = os.Stdout
-	cmd.Run()
-}
-
-func openBrowser(url string) {
-	var err error
-
-	switch runtime.GOOS {
-	case "linux":
-		err = exec.Command("xdg-open", url).Start()
-	case "windows":
-		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
-	case "darwin": // macOS
-		err = exec.Command("open", url).Start()
-	}
-
-	if err != nil {
-		fmt.Println("Gagal membuka browser:", err)
 	}
 }
