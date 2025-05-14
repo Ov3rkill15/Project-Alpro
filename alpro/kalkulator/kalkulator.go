@@ -1,58 +1,24 @@
 package kalkulator
 
 import (
+	"Project-Alpro/atribut"
 	"fmt"
 	"math"
-	"os"
-	"os/exec"
 )
 
-var pilihan string
 var Choice2 string
 
 const Narray = 10000
 
 func MainMenu() {
-	clearScreen()
-	Submenu()
-	switch pilihan {
-	case "1":
-		clearScreen()
-		kalkulatorSederhana()
-	case "2":
-		fmt.Println("GUI belum tersedia.")
-	case "3":
-		fmt.Println("Terima kasih telah menggunakan kalkulator ini.")
-		os.Exit(0)
-	default:
-		fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
-	}
-}
-
-func clearScreen() {
-	cmd := exec.Command("cmd", "/c", "cls") // Untuk Windows
-	cmd.Stdout = os.Stdout
-	cmd.Run()
-}
-
-func Submenu() {
-	fmt.Println(`
-=================
-Mau Kalkulator mana?
-=================
-1. Sederhana
-2. GUI
-3. Keluar
-	`)
-	fmt.Print("Masukkan pilihan: ")
-	fmt.Scan(&pilihan)
+	atribut.ClearScreen()
+	kalkulatorSederhana()
 }
 
 func kalkulatorSederhana() {
 	fmt.Println("Kalkulator Sederhana")
 	var a, b int
 	fmt.Println(`
-			
 		_____________________
 		|  _________________  |
 		| |              0. | |
@@ -67,6 +33,15 @@ func kalkulatorSederhana() {
 		| | . | 0 | = | | ÷ | |
 		| |___|___|___| |___| |
 		|_____________________|
+		
+		1. Penjumlahan
+		2. Pengurangan
+		3. Perkalian
+		4. Pembagian
+		5. Pangkat
+		6. Akar
+		7. Modulus
+		0. Keluar
    `)
 	var pilihan string
 	fmt.Scan(&pilihan)
@@ -148,29 +123,8 @@ func kalkulatorSederhana() {
 		} else {
 			return
 		}
-	case "8":
-		var n int
-		var numbers [Narray]float64
-		fmt.Print("Masukkan jumlah bilangan: ")
-		fmt.Scan(&n)
-		if n > Narray {
-			n = Narray
-		}
-		for i := 0; i < n; i++ {
-			fmt.Printf("Masukkan bilangan ke-%d: ", i+1)
-			fmt.Scan(&numbers[i])
-		}
-		fmt.Printf("Hasil Rata-rata: %.2f\n", rataRata(numbers))
-		fmt.Println("Tetap di kalkulator atau kembali ke menu utama?(y/n)")
-		fmt.Scan(&Choice2)
-		if Choice2 == "y" {
-			MainMenu()
-		} else {
-			return
-		}
 	case "0":
-		fmt.Println("Terima kasih telah menggunakan kalkulator ini.")
-		os.Exit(0)
+		return
 	default:
 		fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 	}
@@ -203,13 +157,4 @@ func akar(a int) float64 {
 }
 func modulus(a, b int) int {
 	return a % b
-}
-
-func rataRata(numbers [Narray]float64) float64 {
-	var sum int
-	sum = 0
-	for num := range len(numbers) {
-		sum += num
-	}
-	return float64(sum) / float64(len(numbers))
 }

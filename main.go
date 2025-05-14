@@ -3,6 +3,7 @@ package main
 import (
 	"Project-Alpro/alpro"
 	"Project-Alpro/contohsoal"
+	"Project-Alpro/login"
 
 	// "Project-Alpro/linklanjutan"
 	"Project-Alpro/atribut"
@@ -20,6 +21,7 @@ func main() {
 
 	for !stop {
 		atribut.ClearScreen() // Membersihkan layar sebelum menampilkan menu
+		login.Login()         // Memanggil fungsi login dari package login
 		welcome := figure.NewFigure("WELCOME", "doom", true).String()
 		fmt.Print("\033[32m") // Set warna hijau
 		fmt.Print(welcome)    // Cetak teks ASCII
