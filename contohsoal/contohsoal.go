@@ -64,7 +64,6 @@ func MainMenu() {
 		soalPath = "D:\\Matkul smester 2\\Project-Alpro\\contohsoal\\soal_alpro.json"
 	default:
 		fmt.Println("Pilihan tidak valid")
-		return
 	}
 
 	soal, err := loadSoal(soalPath)

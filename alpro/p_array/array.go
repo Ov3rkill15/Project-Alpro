@@ -1,4 +1,4 @@
-package array
+package p_array
 
 import (
 	"Project-Alpro/atribut"

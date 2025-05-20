@@ -8,12 +8,6 @@ import (
 	"time"
 )
 
-type fungsi struct {
-	ClearScreen func()
-	Loading     func()
-	Openbrowser func(string)
-}
-
 func ClearScreen() {
 	var cmd *exec.Cmd
 	if runtime.GOOS == "windows" {

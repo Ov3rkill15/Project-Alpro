@@ -1,9 +1,8 @@
 package alpro
 
 import (
-	"Project-Alpro/alpro/array"
-	"Project-Alpro/alpro/kalkulator"
-	"Project-Alpro/alpro/rekursif"
+	"Project-Alpro/alpro/p_array"
+	"Project-Alpro/alpro/projek_kami"
 	"Project-Alpro/atribut"
 	"fmt"
 
@@ -19,13 +18,13 @@ func MainMenu() {
 		switch pilihan {
 		case "1":
 			atribut.ClearScreen()
-			array.MainMenu()
+			p_array.MainMenu()
 		case "2":
 			atribut.ClearScreen()
-			kalkulator.MainMenu()
+			fmt.Println("Coming soon")
 		case "3":
 			atribut.ClearScreen()
-			rekursif.MainMenu()
+			projek_kami.Project_menu()
 		case "0":
 			atribut.ClearScreen()
 			atribut.Loading()
@@ -47,9 +46,9 @@ func Submenu() {
 ====================================
 Selamat Datang di Algoritma dan Pemrograman
 ====================================
-1. Pembelajaran Array
-2. Kalkulator
-3. Rekursif
+1. Pembelajaran
+2. Contoh Soal
+3. Projek Kami
 
 0. Keluar
 	`)
