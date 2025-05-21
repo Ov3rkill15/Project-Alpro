@@ -20,7 +20,7 @@ func kelvin(celcius float64) float64 {
 	return kelvin
 }
 
-func soal1fungsi() {
+func Soal1fungsi() {
 	var celcius_awal, celcius_akhir, step float64
 	fmt.Scan(&celcius_awal, &celcius_akhir, &step)
 	fmt.Printf("%-10s %-10s %-12s %-10s\n", "Celcius", "Reamur", "Fahrenheit", "Kelvin")

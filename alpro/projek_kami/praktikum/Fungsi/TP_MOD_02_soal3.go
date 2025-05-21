@@ -16,7 +16,7 @@ func check(bilangan_input, bilangan_cek int) bool {
 	return found
 }
 
-func soal3fungsi() {
+func Soal3fungsi() {
 	var b1, b2 int
 	var found bool
 

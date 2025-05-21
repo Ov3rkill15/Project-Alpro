@@ -27,13 +27,13 @@ func MainMenu() {
 			projek_kami.Project_menu()
 		case "0":
 			atribut.ClearScreen()
-			atribut.Loading()
+			atribut.Loading(100)
 			fmt.Println("Menuju menu utama...")
 			return
 		default:
 			atribut.ClearScreen()
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
-			atribut.Loading()
+			atribut.Loading(100)
 		}
 	}
 }

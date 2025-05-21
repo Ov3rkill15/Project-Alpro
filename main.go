@@ -32,18 +32,18 @@ func main() {
 		case "1":
 			atribut.ClearScreen()
 			fmt.Println("Menuju Pengenalan Pemrograman...")
-			atribut.Loading()
+			atribut.Loading(100)
 			pengpro.MainMenu()
 		case "2":
 			atribut.ClearScreen()
 			fmt.Println("Menuju Algoritma Pemrograman...")
-			atribut.Loading()
+			atribut.Loading(100)
 			alpro.MainMenu()
 		case "10":
 			atribut.ClearScreen()
 			fmt.Println("COMING SOON!!!")
 			fmt.Println("Menuju Menu utama...")
-			atribut.Loading()
+			atribut.Loading(100)
 		case "0":
 			stop = true
 			atribut.ClearScreen()
@@ -52,7 +52,7 @@ func main() {
 		default:
 			atribut.ClearScreen()
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
-			atribut.Loading()
+			atribut.Loading(100)
 			fmt.Println()
 		}
 
@@ -81,18 +81,18 @@ Apakah kamu pernah belajar pemrograman go?
 		fmt.Scan(&konfirmasi2)
 		if konfirmasi2 == "1" {
 			fmt.Println("Menuju Algoritma Pemrograman!")
-			atribut.Loading()
+			atribut.Loading(100)
 			atribut.ClearScreen()
 			alpro.MainMenu()
 		} else {
 			fmt.Println("Oke, mari belajar sama-sama!")
-			atribut.Loading()
+			atribut.Loading(100)
 			atribut.ClearScreen()
 			menu()
 		}
 	case "tidak":
 		fmt.Println("Kalau begitu mari belajar sama-sama!")
-		atribut.Loading()
+		atribut.Loading(100)
 		atribut.ClearScreen()
 		menu()
 	default:

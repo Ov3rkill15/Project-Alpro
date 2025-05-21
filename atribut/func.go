@@ -20,9 +20,9 @@ func ClearScreen() {
 	fmt.Println()
 }
 
-func Loading() {
+func Loading(n int) {
 	for i := 0; i < 10; i++ {
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(time.Duration(n) * time.Millisecond)
 		fmt.Print(".")
 	}
 }

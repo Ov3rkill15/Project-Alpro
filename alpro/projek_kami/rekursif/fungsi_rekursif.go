@@ -52,7 +52,7 @@ func ifelse(n int) {
 	} else {
 		atribut.ClearScreen()
 		fmt.Println("Kembali ke menu utama...")
-		atribut.Loading()
+		atribut.Loading(100)
 	}
 }
 func tampilanfibo() {
