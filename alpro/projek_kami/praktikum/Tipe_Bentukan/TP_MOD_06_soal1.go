@@ -7,7 +7,7 @@ type mobil struct {
 	tahun_produksi, kecepatan int
 }
 
-func soal1bentukan() {
+func Soal1bentukan() {
 	var m1, m2, m3 mobil
 	var rata_rata_kecepatan float64
 	fmt.Scan(&m1.merek, &m1.tahun_produksi, &m1.kecepatan)

@@ -28,7 +28,7 @@ func hitungPoint(jp *int) {
 
 var jm, jd, jk, jg, jb, sg, poin int // dideklarasi secara global
 
-func soal2prosedur() {
+func Soal2prosedur() {
 	var match, goal, bobol int
 
 	fmt.Scan(&match)

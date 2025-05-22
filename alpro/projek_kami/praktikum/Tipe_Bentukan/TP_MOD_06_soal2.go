@@ -7,7 +7,7 @@ type titik struct {
 	warna string
 }
 
-func soal2bentukan() {
+func Soal2bentukan() {
 	var w1, w2 string
 	var t1, t2 titik
 	var x1, y1, x2, y2 float64

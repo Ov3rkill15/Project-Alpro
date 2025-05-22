@@ -9,7 +9,7 @@ type pegawai struct {
 	besar_bonus            float64
 }
 
-func soal3bentukan() {
+func Soal3bentukan() {
 	// deklarasi variabel bertipe pegawai
 	var names pegawai
 	// baca data pengawai

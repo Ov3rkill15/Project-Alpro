@@ -346,4 +346,3 @@ func modulus(a, b int) int {
 	return hasil
 
 }
-

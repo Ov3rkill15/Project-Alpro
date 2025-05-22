@@ -6,7 +6,7 @@ const NMAX = 20
 
 type tabInt [NMAX]int
 
-func soal3searching() {
+func Soal3searching() {
 	var A tabInt
 	var n int
 

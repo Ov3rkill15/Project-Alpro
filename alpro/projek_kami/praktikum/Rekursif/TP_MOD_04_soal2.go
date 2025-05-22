@@ -11,7 +11,7 @@ func mod(a, b int) int {
 
 }
 
-func soal2rekursif() {
+func Soal2rekursif() {
 	var bil1, bil2 int
 	fmt.Scan(&bil1, &bil2)
 	fmt.Println(mod(bil1, bil2))

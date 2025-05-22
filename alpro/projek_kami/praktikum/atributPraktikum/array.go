@@ -4,18 +4,27 @@ import "fmt"
 
 const NMAX int = 1000
 
-type Tabint [NMAX]int
+type Array struct {
+	Info [NMAX]int
+	N    int
+}
 
-func BacaData(A *Tabint, N *int) {
-	var i int
-	for i = 0; i < *N; i++ {
-		fmt.Scan(&A[i])
+func BacaData1(A *Array) {
+	fmt.Scan(&A.N)
+	if A.N > NMAX {
+		A.N = NMAX
+	}
+	for i := 0; i < A.N; i++ {
+		fmt.Scan(&A.Info[i])
 	}
 }
 
-func CetakData(A Tabint, N int) {
-	for i := 0; i < N; i++ {
-		fmt.Print(A[i], " ")
+func CetakData1(A Array) {
+	if A.N == 0 {
+		fmt.Println("Array kosong")
+	}
+	for i := 0; i < A.N; i++ {
+		fmt.Print(A.Info[i], " ")
 	}
 	fmt.Println()
 }

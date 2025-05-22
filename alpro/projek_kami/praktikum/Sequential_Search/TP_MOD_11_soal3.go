@@ -6,7 +6,7 @@ const NMAX = 10
 
 type tabInt [NMAX]int
 
-func soal3SeqSearch() {
+func Soal3SeqSearch() {
 	var data tabInt
 	var nData int
 	var x int

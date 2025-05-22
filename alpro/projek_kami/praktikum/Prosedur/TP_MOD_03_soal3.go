@@ -40,7 +40,7 @@ func hitungBagi() {
 	}
 }
 
-func soal3prosedur() {
+func Soal3prosedur() {
 	var pilih int
 
 	for {

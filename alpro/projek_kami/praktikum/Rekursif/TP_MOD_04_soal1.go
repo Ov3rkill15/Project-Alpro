@@ -10,7 +10,7 @@ func fibo(n int) int {
 	}
 }
 
-func soal1rekursif() {
+func Soal1rekursif() {
 	var bil int
 	fmt.Scan(&bil)
 	fmt.Println(fibo(bil))

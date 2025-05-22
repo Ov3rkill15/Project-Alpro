@@ -6,7 +6,7 @@ const N = 10
 
 type tabInt [N]int
 
-func main() {
+func Soal3BinSearch() {
 	var data tabInt
 	var nData, x1 int
 	fmt.Scan(&nData)

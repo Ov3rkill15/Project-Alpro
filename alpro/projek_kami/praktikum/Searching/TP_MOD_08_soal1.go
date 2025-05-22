@@ -2,7 +2,7 @@ package Searching
 
 import "fmt"
 
-func soal1searching() {
+func Soal1searching() {
 	const NMAX int = 10
 	var A [NMAX]int
 	var i, n, MAX int

@@ -10,7 +10,7 @@ func faktorial(n int) int {
 	}
 }
 
-func soal3rekursif() {
+func Soal3rekursif() {
 	var bil int
 	fmt.Scan(&bil)
 	fmt.Println(faktorial(bil))

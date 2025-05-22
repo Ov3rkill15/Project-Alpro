@@ -1,15 +1,34 @@
 package Array
 
-import (
-	atribut "Project-Alpro/alpro/projek_kami/praktikum/atributPraktikum"
-	"fmt"
-)
+import "fmt"
 
-func soal2array() {
-	var data atribut.Tabint
-	var banyakData int
-	atribut.BacaData(&data, &banyakData)
+const NMAX1 int = 10
+
+type tabInt [NMAX]int
+
+func bacaData(A *tabInt, n *int) {
+	fmt.Scan(n)
+	if *n > NMAX {
+		*n = NMAX
+	}
+	for i := 0; i < *n; i++ {
+		fmt.Scan(&A[i])
+	}
+}
+func cetakData(A tabInt, n int) {
+	if n == 0 {
+		fmt.Println("Array kosong")
+	}
+	for i := 0; i < n; i++ {
+		fmt.Print(A[i], " ")
+	}
 	fmt.Println()
-	atribut.CetakData(data, banyakData)
+}
 
+func Soal2array() {
+	var data tabInt
+	var banyakData int
+	bacaData(&data, &banyakData)
+	fmt.Println()
+	cetakData(data, banyakData)
 }

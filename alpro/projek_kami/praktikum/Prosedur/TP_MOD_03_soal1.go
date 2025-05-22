@@ -18,7 +18,7 @@ func total(LP, LL, KP, KL float64, totalluas *float64, totalkeliling *float64) {
 	*totalkeliling = KP + KL
 }
 
-func soal1prosedur() {
+func Soal1prosedur() {
 	var radius, sisi float64
 	var LL, KL, LP, KP float64
 

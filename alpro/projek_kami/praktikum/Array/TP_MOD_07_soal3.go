@@ -2,37 +2,63 @@ package Array
 
 import "fmt"
 
-type tabInt struct {
-	info [NMAX]int
-	n    int
+const NMAX int = 10
+
+type Tabint [NMAX]int
+
+func Soal3array() {
+	var data Tabint
+	var nData int
+
+	baca(&data, &nData)
+	cetak(data, nData)
+	fmt.Println(jumlah(data, nData))
+	fmt.Println(rataRata(data, nData))
 }
 
-func bacaData(A *tabInt) {
-	var x int
-	if A.n < NMAX {
-		fmt.Scan(&x)
-		A.info[A.n] = x
-		A.n++
+func baca(A *Tabint, n *int) {
+	var num int
+	var stop bool
+	*n = 0
+	stop = true
+
+	for stop && *n < NMAX {
+		fmt.Scan(&num)
+
+		if num == 0 {
+			stop = false
+		} else {
+			if num < 0 {
+				num = -num
+			}
+			A[*n] = num
+			*n++
+		}
 	}
 }
 
-func cetakData(A tabInt) {
-	if A.n > 0 {
-		for i := 0; i < A.n; i++ {
-			fmt.Print(A.info[i], " ")
+func cetak(A Tabint, n int) {
+	if n > 0 {
+		for i := 0; i < n; i++ {
+			fmt.Print(A[i], " ")
 		}
 		fmt.Println()
+	} else {
+		fmt.Println("Array kosong")
 	}
 }
 
-func soal3array() {
-	var data tabInt
-	bacaData(&data)
-	bacaData(&data)
-	bacaData(&data)
-	bacaData(&data)
-	bacaData(&data)
-	bacaData(&data)
-	bacaData(&data)
-	cetakData(data)
+func jumlah(A Tabint, n int) int {
+	total := 0
+	for i := 0; i < n; i++ {
+		total += A[i]
+	}
+	return total
+}
+
+func rataRata(A Tabint, n int) float64 {
+	if n > 0 {
+		return float64(jumlah(A, n)) / float64(n)
+	}
+	return 0.0
 }
