@@ -55,6 +55,7 @@ Pilih Soal:
 1. Fungsi Celcius, Reamur, Fahrenheit, Kelvin
 2. Fungsi Rubah huruf kecil menjadi huruf besar
 3. Fungsi Cek bilanga
+0.keluar
 	`)
 		fmt.Scan(&Choise)
 		kumpulanTugasPendahuluan("1", Choise)
@@ -65,6 +66,7 @@ Pilih Soal:
 1. Prosedur keliling dan luas lingkaran
 2. Prosedur hitung menang,draw dan kalah bola
 3. Prosedur kalkulator sederhana
+0.keluar
 	`)
 		fmt.Scan(&Choise)
 		kumpulanTugasPendahuluan("2", Choise)
@@ -74,7 +76,8 @@ Pilih Soal:
 Pilih Soal:
 1. Rekursif fibonaci
 2. Rekursif Faktor Persekutuan Terbesar
-3. Rekursif Faktorial 
+3. Rekursif Faktorial
+0. keluar
 			`)
 		fmt.Scan(&Choise)
 		kumpulanTugasPendahuluan("3", Choise)
@@ -85,6 +88,7 @@ Pilih Soal:
 1. Tipe Bentukan merek, tahun produksi dan kecepatan mobil
 2. Tipe Bentukan titik koordinat dan warna
 3. Tipe Bentukan gaji pegawai
+0. keluar
 			`)
 		fmt.Scan(&Choise)
 		kumpulanTugasPendahuluan("4", Choise)
@@ -95,6 +99,7 @@ Pilih Soal:
 1. Input dan ouput array sederhana
 2. Input dan output array dengan baca dan cetak data
 3. Jumlah dan Rata-rata Nilai dengan Array
+0. keluar
 			`)
 		fmt.Scan(&Choise)
 		kumpulanTugasPendahuluan("5", Choise)
@@ -105,6 +110,7 @@ Pilih Soal:
 1. Mencari nilai Max
 2. Mencari nilai Min
 3. Gabungan Keduanya
+0. keluar
 			`)
 		fmt.Scan(&Choise)
 		kumpulanTugasPendahuluan("6", Choise)
@@ -115,6 +121,7 @@ Pilih Soal:
 1. Sequential Search dengan return boolean
 2. Sequential Search dengan return index
 3. Modifikasi Algoritma Sequential Search
+0. keluar
 			`)
 		fmt.Scan(&Choise)
 		kumpulanTugasPendahuluan("7", Choise)
@@ -125,6 +132,7 @@ Pilih Soal:
 1. Binary Search dengan return boolean
 2. Binary Search dengan return index
 3. Modifikasi Algoritma Binary Search
+0. keluar
 			`)
 		fmt.Scan(&Choise)
 		kumpulanTugasPendahuluan("8", Choise)
@@ -133,6 +141,7 @@ Pilih Soal:
 			`Soal-soal Selection Sort
 Pilih Soal:
 1. Selection Sort
+0. keluar
 			`)
 		fmt.Scan(&Choise)
 		kumpulanTugasPendahuluan("9", Choise)
@@ -152,6 +161,8 @@ func kumpulanTugasPendahuluan(n1, n2 string) {
 		case "3":
 			fungsi.Soal3fungsi()
 			tanyaKembali("fungsi")
+		case "0":
+			MainMenu()
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 		}
@@ -166,6 +177,8 @@ func kumpulanTugasPendahuluan(n1, n2 string) {
 		case "3":
 			prosedur.Soal3prosedur()
 			tanyaKembali("prosedur")
+		case "0":
+			MainMenu()
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 		}
@@ -180,6 +193,8 @@ func kumpulanTugasPendahuluan(n1, n2 string) {
 		case "3":
 			rekursif.Soal3rekursif()
 			tanyaKembali("rekursif")
+		case "0":
+			MainMenu()
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 		}
@@ -194,6 +209,8 @@ func kumpulanTugasPendahuluan(n1, n2 string) {
 		case "3":
 			Tbentukan.Soal3bentukan()
 			tanyaKembali("tipe bentukan")
+		case "0":
+			MainMenu()
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 		}
@@ -208,6 +225,8 @@ func kumpulanTugasPendahuluan(n1, n2 string) {
 		case "3":
 			array.Soal3array()
 			tanyaKembali("array")
+		case "0":
+			MainMenu()
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 		}
@@ -222,6 +241,8 @@ func kumpulanTugasPendahuluan(n1, n2 string) {
 		case "3":
 			maxmin.Soal3searching()
 			tanyaKembali("maxmin")
+		case "0":
+			MainMenu()
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 		}
@@ -236,6 +257,8 @@ func kumpulanTugasPendahuluan(n1, n2 string) {
 		case "3":
 			sequential.Soal3SeqSearch()
 			tanyaKembali("seqsearch")
+		case "0":
+			MainMenu()
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 		}
@@ -250,6 +273,8 @@ func kumpulanTugasPendahuluan(n1, n2 string) {
 		case "3":
 			binary.Soal3BinSearch()
 			tanyaKembali("binsearch")
+		case "0":
+			MainMenu()
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 		}
@@ -258,6 +283,8 @@ func kumpulanTugasPendahuluan(n1, n2 string) {
 		case "1":
 			selection.SoalSelectionSort()
 			tanyaKembali("selection")
+		case "0":
+			MainMenu()
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 		}
