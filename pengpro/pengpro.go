@@ -16,12 +16,13 @@ func MainMenu() {
 	berhenti = true
 	atribut.ClearScreen()
 	for berhenti {
-	Submenu()
+		Submenu()
 		if Choice == 0 {
 			fmt.Println("Terima kasih telah menggunakan program PENGPRO!")
 			berhenti = false
 		}
-	
+
+	}
 }
 
 func Submenu() {
@@ -116,7 +117,6 @@ func MateriGoLanguage() {
 	}
 	return
 }
-
 
 func QuizGoLanguage() {
 	atribut.ClearScreen()
