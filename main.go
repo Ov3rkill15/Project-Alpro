@@ -2,7 +2,7 @@ package main
 
 import (
 	"Project-Alpro/alpro"
-	// "Project-Alpro/login"
+	"Project-Alpro/login"
 
 	// "Project-Alpro/linklanjutan"
 	"Project-Alpro/atribut"
@@ -15,6 +15,7 @@ import (
 func main() {
 	var input string
 	var stop bool = false // Variabel untuk menghentikan loop
+	login.Mainlogin()
 	menuKonfirmasi()
 
 	for !stop {
