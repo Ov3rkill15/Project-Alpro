@@ -1,14 +1,15 @@
 package alpro
 
 import (
-	"Project-Alpro/alpro/function"
 	"Project-Alpro/alpro/p_array"
-	"Project-Alpro/alpro/p_maxmin"
-	"Project-Alpro/alpro/p_procedure"
-	"Project-Alpro/alpro/p_rekursif"
-	"Project-Alpro/alpro/p_searching"
-	"Project-Alpro/alpro/p_sorting"
-	"Project-Alpro/alpro/p_tipebentukan"
+	"Project-Alpro/alpro/p_function"
+
+	// "Project-Alpro/alpro/p_maxmin"
+	// "Project-Alpro/alpro/p_procedure"
+	// "Project-Alpro/alpro/p_rekursif"
+	// "Project-Alpro/alpro/p_searching"
+	// "Project-Alpro/alpro/p_sorting"
+	// "Project-Alpro/alpro/p_tipebentukan"
 	"Project-Alpro/alpro/projek_kami"
 	"Project-Alpro/atribut"
 	"Project-Alpro/contohsoal"
@@ -32,28 +33,31 @@ func MainMenu() {
 			p_function.MainMenu()
 		case "3":
 			atribut.ClearScreen()
-			p_procedure.MainMenu()
+			// p_procedure.MainMenu()
 		case "4":
 			atribut.ClearScreen()
-			p_rekursif.MainMenu()
+			// p_rekursif.MainMenu()
 		case "5":
 			atribut.ClearScreen()
-			p_tipebentukan.MainMenu()
+			// p_tipebentukan.MainMenu()
 		case "6":
 			atribut.ClearScreen()
-			p_maxmin.MainMenu()
+			// p_maxmin.MainMenu()
 		case "7":
 			atribut.ClearScreen()
-			p_searching.MainMenu()
+			// p_searching.MainMenu()
 		case "8":
 			atribut.ClearScreen()
-			p_sorting.MainMenu()
+			// p_sorting.MainMenu()
 		case "9":
 			atribut.ClearScreen()
 			projek_kami.Project_menu()
 		case "10":
 			atribut.ClearScreen()
 			contohsoal.MainMenu()
+		case "0":
+			atribut.ClearScreen()
+			return
 		default:
 			atribut.ClearScreen()
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")

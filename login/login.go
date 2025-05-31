@@ -33,13 +33,15 @@ func Login(sign, helo *string) {
 	fmt.Print("\033[32m") // Set warna hijau
 	fmt.Print(welcome)    // Cetak teks ASCII
 	fmt.Print("\033[0m")
-	fmt.Printf("%15s\n", "1. Masuk")
-	fmt.Printf("%15s\n", "2. Daftar")
+	fmt.Println()
+	fmt.Println("1. Masuk")
+	fmt.Println("2. Daftar")
 	fmt.Print("pilih yang mana: ")
 	signed, _ := reader.ReadString('\n')
 	*sign = strings.TrimSpace(signed)
-
-	if *sign == "Masuk" || *sign == "1" {
+	cek := strings.ToLower(*sign)
+	switch cek {
+	case "masuk", "1":
 		welcome := figure.NewFigure("=== MASUK ===", "doom", true).String()
 		fmt.Print("\033[32m") // Set warna hijau
 		fmt.Print(welcome)    // Cetak teks ASCII
@@ -60,7 +62,6 @@ func Login(sign, helo *string) {
 
 			if authenticateUser(username, password) {
 				fmt.Println("Login berhasil!")
-				stop = false
 				if helo != nil {
 					*helo = username
 				}
@@ -68,13 +69,14 @@ func Login(sign, helo *string) {
 				fmt.Println("Menuju Aplikasi")
 				atribut.Loading(100)
 				fmt.Println()
+				stop = false
 			} else {
 				fmt.Println("Username atau password salah.")
 				key++
 				fmt.Printf("Tersisa %d kesempatan\n", 3-key)
 			}
 		}
-	} else if *sign == "daftar" || *sign == "2" {
+	case "daftar", "2":
 		welcome := figure.NewFigure("=== DAFTAR ===", "doom", true).String()
 		fmt.Print("\033[32m") // Set warna hijau
 		fmt.Print(welcome)    // Cetak teks ASCII
@@ -121,8 +123,9 @@ func Login(sign, helo *string) {
 				fmt.Println("Signup berhasil! Silakan login.")
 			}
 		}
-	} else {
-		fmt.Println("Pilihan tidak dikenali.")
+
+	default:
+		fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 	}
 }
 
@@ -196,11 +199,11 @@ func Mainlogin(sign, helo *string) {
 	initUsers()
 	for stop := true; stop; {
 		Login(sign, helo)
-		if *sign == "signin" {
+		if *sign == "1" || *sign == "masuk" {
 			stop = false
-		} else if *sign == "signup" {
+		} else if *sign == "2" || *sign == "daftar" {
 			Login(sign, helo)
-			*sign = "signup"
+			*sign = "daftar"
 			stop = false
 		}
 	}

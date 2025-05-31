@@ -18,7 +18,7 @@ func main() {
 	var stop bool = false // Variabel untuk menghentikan loop
 	var sign, helo string
 	login.Mainlogin(&sign, &helo)
-	if sign != "signin" {
+	if sign != "masuk" {
 		menuKonfirmasi("tidak")
 	} else {
 		menuKonfirmasi("ya")
@@ -94,14 +94,14 @@ func menuKonfirmasi(n string) {
 		}
 	case "tidak":
 		fmt.Println(`
-			=========================================
-			BELAJAR BARENG ALWAN & FATHUR!!!!!!
-			=========================================
-			Apakah kamu pernah belajar pemrograman go?
-			=========================================
-			1. ya
-			2. tidak
-			=========================================`)
+=========================================
+BELAJAR BARENG ALWAN & FATHUR!!!!!!
+=========================================
+Apakah kamu pernah belajar pemrograman go?
+=========================================
+1. ya
+2. tidak
+=========================================`)
 		fmt.Scan(&konfirmasi2)
 		cek := strings.ToLower(konfirmasi2)
 		switch cek {
