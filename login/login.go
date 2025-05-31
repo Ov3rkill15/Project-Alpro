@@ -12,20 +12,21 @@ import (
 	"golang.org/x/term"
 )
 
-type user struct {
+type User struct {
 	Username, Password string
 }
 
-const nmax int = 45
+const NMAX int = 45
 
-type daftarNama [nmax]user
+type Daftarnama [NMAX]User
+type Riwayat [100]User
 
-var users daftarNama
+var users Daftarnama
 var jumlahPengguna int = 42
 
 func Login(sign, helo *string) {
 	var username, password string
-	var signup user
+	var signup User
 	stop := true
 	key := 0
 	reader := bufio.NewReader(os.Stdin)
@@ -61,15 +62,16 @@ func Login(sign, helo *string) {
 			password = string(passwordBytes)
 
 			if authenticateUser(username, password) {
-				fmt.Println("Login berhasil!")
 				if helo != nil {
 					*helo = username
 				}
 				atribut.ClearScreen()
+				fmt.Println("Login berhasil!")
 				fmt.Println("Menuju Aplikasi")
 				atribut.Loading(100)
 				fmt.Println()
 				stop = false
+
 			} else {
 				fmt.Println("Username atau password salah.")
 				key++
@@ -81,7 +83,7 @@ func Login(sign, helo *string) {
 		fmt.Print("\033[32m") // Set warna hijau
 		fmt.Print(welcome)    // Cetak teks ASCII
 		fmt.Print("\033[0m")
-		if jumlahPengguna >= nmax {
+		if jumlahPengguna >= NMAX {
 			fmt.Println("Maaf, jumlah maksimum pengguna telah tercapai. Tidak bisa Daftar sekarang.")
 		}
 
@@ -139,10 +141,10 @@ func authenticateUser(username, password string) bool {
 }
 
 func initUsers() {
-	if nmax < 42 {
+	if NMAX < 42 {
 		fmt.Println("Peringatan: nmax terlalu kecil, hanya sebagian data akan dimuat.")
 	}
-	data := [42]user{
+	data := [42]User{
 		{"admin", "admin123"},
 		{"nathasyayuanmaharani", "0001"},
 		{"theodoreelvisestrada", "0006"},
@@ -189,7 +191,7 @@ func initUsers() {
 
 	// Hanya masukkan sesuai kapasitas array
 	jumlahPengguna = 0
-	for i := 0; i < nmax && i < len(data); i++ {
+	for i := 0; i < NMAX && i < len(data); i++ {
 		users[i] = data[i]
 		jumlahPengguna++
 	}
