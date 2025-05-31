@@ -1,38 +1,46 @@
-package p_function
-
+package p_function 
 import (
-	"Project-Alpro/atribut"
+	"Project-Alpro/atribut" /
 	"fmt"
 	"strings"
 )
 
-var pilihan string
-var pilihan2 string
-
-func Submenu() {
-	fmt.Println(`
-==================
-Selamat Datang di Pembelajaran function
-==================
-1. apa itu function anjay
-2. soal function
-3. Keluar
-	`)
-	fmt.Print("Masukkan pilihan: ")
-	fmt.Scan(&pilihan)
-}
 
 func MainMenu() {
+	var pilihan string
+	var pilihan2 string 
+
+	fmt.Println(`
+=====================================
+Selamat Datang di Pembelajaran Function
+=====================================
+1. Apa itu Function
+2. Soal Function
+3. Keluar
+    `)
+	fmt.Print("Masukkan pilihan: ")
+	fmt.Scan(&pilihan)
+	fmt.Scanln() 
 	atribut.ClearScreen()
-	Submenu()
+
 	switch pilihan {
 	case "1":
 		atribut.ClearScreen()
-		belajarFunction()
-		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-		fmt.Scan(&pilihan2)
-		if pilihan2 == "y" {
-			MainMenu()
+		if belajarFunction() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Scan(&pilihan2)
+				fmt.Scanln()
+				if strings.ToLower(pilihan2) == "y" {
+					MainMenu()
+				} else if strings.ToLower(pilihan2) == "n" {
+					return
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
+				}
+			}
 		} else {
 			return
 		}
@@ -41,19 +49,32 @@ func MainMenu() {
 		atribut.ClearScreen()
 		soalFunction()
 		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-		fmt.Scan(&pilihan2)
-		if pilihan2 == "y" {
-			MainMenu()
-		} else {
-			return
+		berhenti2 := false
+		for !berhenti2 {
+			fmt.Scan(&pilihan2)
+			fmt.Scanln() 
+			if strings.ToLower(pilihan2) == "y" {
+				MainMenu() 
+				return     
+			} else if strings.ToLower(pilihan2) == "n" {
+				return 
+			} else {
+				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+				fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
+			}
 		}
 	case "3":
+		fmt.Println("Terima kasih telah menggunakan program pembelajaran function.")
+		return
 	default:
-		fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
+		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '3'.")
+		fmt.Print("Tekan Enter untuk melanjutkan...")
+		fmt.Scanln()
+		MainMenu()
 	}
 }
 
-func belajarFunction() {
+func belajarFunction() bool {
 	halamanSekarang := 1
 	totalHalaman := 3
 	var berhenti bool = true
@@ -75,10 +96,10 @@ func belajarFunction() {
 			fmt.Println("Mari kita lihat struktur dasar sebuah fungsi di Go. Ini cukup lugas:")
 			fmt.Println("\n```go")
 			fmt.Println("func namaFungsi(parameter1 tipeData, parameter2 tipeData) (nilaiKembali1 tipeData, nilaiKembali2 tipeData) {")
-			fmt.Println("    // Ini adalah badan fungsi")
-			fmt.Println("    // Semua kode yang melakukan tugas fungsi ada di sini")
-			fmt.Println("    // ...")
-			fmt.Println("    return nilai1, nilai2 // Jika fungsi mengembalikan nilai")
+			fmt.Println("    // Ini adalah badan fungsi")
+			fmt.Println("    // Semua kode yang melakukan tugas fungsi ada di sini")
+			fmt.Println("    // ...")
+			fmt.Println("    return nilai1, nilai2 // Jika fungsi mengembalikan nilai")
 			fmt.Println("}")
 			fmt.Println("```")
 			fmt.Println("\nInilah arti setiap bagian:")
@@ -90,11 +111,11 @@ func belajarFunction() {
 			fmt.Println("\n**Contoh Sederhana:**")
 			fmt.Println("```go")
 			fmt.Println("func sapaPengguna(nama string) { // sapaPengguna adalah fungsi, 'nama' adalah parameter string")
-			fmt.Println("    fmt.Printf(\"Halo, %s! Selamat datang di program kami.\\n\", nama)")
+			fmt.Println("    fmt.Printf(\"Halo, %s! Selamat datang di program kami.\\n\", nama)")
 			fmt.Println("}")
 			fmt.Println("\n// Cara memanggil (menggunakan) fungsi ini:")
 			fmt.Println("// sapaPengguna(\"Budi\") // Ini akan mencetak \"Halo, Budi! Selamat datang di program kami.\"")
-			fmt.Println("// sapaPengguna(\"Ani\")  // Ini akan mencetak \"Halo, Ani! Selamat datang di program kami.\"")
+			fmt.Println("// sapaPengguna(\"Ani\")  // Ini akan mencetak \"Halo, Ani! Selamat datang di program kami.\"")
 			fmt.Println("```")
 		case 3:
 			fmt.Println("Fungsi adalah tulang punggung dari setiap program Go yang terstruktur dengan baik. Mereka memungkinkan kita membangun aplikasi kompleks dari unit-unit kecil yang mudah diuji dan dikelola.")
@@ -103,46 +124,89 @@ func belajarFunction() {
 			fmt.Println("- **Functions as First-Class Citizens:** Di Go, fungsi bisa diperlakukan seperti variabel lainnya. Kamu bisa meneruskan fungsi sebagai argumen ke fungsi lain, menyimpannya di variabel, atau bahkan mengembalikannya dari fungsi lain! Ini membuka pola desain yang kuat seperti *callback* dan *higher-order functions*.")
 			fmt.Println("- **`defer` Statements:** Kamu bisa menggunakan kata kunci `defer` di dalam fungsi untuk memastikan bahwa panggilan fungsi akan dieksekusi tepat sebelum fungsi yang mengelilinginya selesai, terlepas dari bagaimana fungsi tersebut keluar (normal atau karena *error*). Ini umum digunakan untuk membersihkan sumber daya, seperti menutup *file* atau koneksi *database*.")
 			fmt.Println("\nDengan memahami dan menguasai fungsi, kamu akan bisa menulis kode Go yang tidak hanya efisien, tetapi juga mudah dibaca, dipelihara, dan diskalakan. Fungsi adalah salah satu konsep paling fundamental yang harus kamu pahami saat belajar Go!")
+			fmt.Println("\n---") 
+
+			fmt.Println("### Contoh Penggunaan Fungsi Sederhana")
+			fmt.Println("\nMari kita lihat contoh fungsi sederhana yang menghitung luas persegi panjang:")
+			fmt.Println("```go")
+			fmt.Println("package main")
+			fmt.Println("\nimport \"fmt\"")
+			fmt.Println("\n// hitungLuasPersegiPanjang adalah fungsi yang menerima dua parameter (panjang dan lebar)")
+			fmt.Println("// dan mengembalikan satu nilai (luas) bertipe int.")
+			fmt.Println("func hitungLuasPersegiPanjang(panjang int, lebar int) int {")
+			fmt.Println("    luas := panjang * lebar")
+			fmt.Println("    return luas")
+			fmt.Println("}")
+			fmt.Println("\nfunc main() {")
+			fmt.Println("    // Memanggil fungsi hitungLuasPersegiPanjang")
+			fmt.Println("    luas1 := hitungLuasPersegiPanjang(10, 5)")
+			fmt.Println("    fmt.Printf(\"Luas persegi panjang dengan panjang 10 dan lebar 5 adalah: %d\\n\", luas1) // Output: 50")
+			fmt.Println("\n    luas2 := hitungLuasPersegiPanjang(7, 3)")
+			fmt.Println("    fmt.Printf(\"Luas persegi panjang dengan panjang 7 dan lebar 3 adalah: %d\\n\", luas2) // Output: 21")
+			fmt.Println("}")
+			fmt.Println("```")
+			fmt.Println("\nDalam contoh di atas:")
+			fmt.Println("* Kita mendefinisikan fungsi bernama `hitungLuasPersegiPanjang` yang menerima dua *integer* sebagai **input** (`panjang` dan `lebar`).")
+			fmt.Println("* Fungsi ini **mengembalikan** satu *integer* yang merupakan hasil perkalian `panjang` dan `lebar`.")
+			fmt.Println("* Di dalam fungsi `main`, kita **memanggil** `hitungLuasPersegiPanjang` beberapa kali dengan nilai yang berbeda, menunjukkan bagaimana fungsi dapat digunakan kembali.")
+			fmt.Println("\nIni adalah contoh dasar bagaimana fungsi membantu kita mengorganisir kode dan menghindari pengulangan.")
 		}
 
 		fmt.Println("\n------------------------------------")
 
 		if halamanSekarang < totalHalaman {
-			fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
-			fmt.Scan(&Choice)
-			fmt.Scanln()
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
+				fmt.Scan(&Choice)
+				fmt.Scanln() 
 
-			if strings.ToLower(Choice) == "y" {
-				halamanSekarang++
-			} else {
-				atribut.ClearScreen()
-				MainMenu()
+				if strings.ToLower(Choice) == "y" {
+					halamanSekarang++
+					berhenti2 = true 
+				} else if strings.ToLower(Choice) == "n" {
+					atribut.ClearScreen()
+					berhenti = false
+					berhenti2 = true
+					MainMenu()
+					return false
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+				}
 			}
 		} else {
-			fmt.Print("Materi selesai! Mau lanjut ke soa (k), atau kembali ke menu utama (n)? ")
-			fmt.Scan(&Choice)
-			fmt.Scanln()
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Print("Materi selesai! Mau lanjut ke soal (s), atau kembali ke menu utama (n)? ")
+				fmt.Scan(&Choice)
+				fmt.Scanln()
 
-			if strings.ToLower(Choice) == "k" {
-				soalFunction()
-				berhenti = false
-			} else if strings.ToLower(Choice) == "n" {
-				MainMenu()
-				berhenti = false
-				atribut.ClearScreen()
-			} else {
-				var i int
-				for i = 0; i < 2; i++ {
-					fmt.Println("Pilihan tidak valid. Silakan masukkan 'k' atau 'n'.")
-					fmt.Scan(&Choice)
+				if strings.ToLower(Choice) == "s" {
+					soalFunction()
+					berhenti = false 
+					berhenti2 = true 
+					return true      
+				} else if strings.ToLower(Choice) == "n" {
+					berhenti = false 
+					berhenti2 = true 
+					MainMenu()       
+					atribut.ClearScreen()
+					return false 
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 's' atau 'n'.")
 				}
-				MainMenu()
 			}
-
 		}
 	}
+	return true 
 }
 
 func soalFunction() {
+	atribut.ClearScreen()
+	fmt.Println("==================")
+	fmt.Println("   SOAL FUNCTION")
+	fmt.Println("==================")
 	fmt.Println("COMING SOON!")
+	fmt.Println("\nTekan Enter untuk melanjutkan...")
+	fmt.Scanln() 
 }
