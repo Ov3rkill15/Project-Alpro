@@ -2,7 +2,7 @@ package alpro
 
 import (
 	"Project-Alpro/alpro/p_array"
-	"Project-Alpro/alpro/p_function"
+	// "Project-Alpro/alpro/p_function"
 
 	// "Project-Alpro/alpro/p_maxmin"
 	// "Project-Alpro/alpro/p_procedure"
@@ -30,7 +30,7 @@ func MainMenu() {
 			p_array.MainMenu()
 		case "2":
 			atribut.ClearScreen()
-			p_function.MainMenu()
+			// p_function.MainMenu()
 		case "3":
 			atribut.ClearScreen()
 			// p_procedure.MainMenu()
