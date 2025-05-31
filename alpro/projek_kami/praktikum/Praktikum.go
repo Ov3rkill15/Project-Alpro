@@ -54,7 +54,7 @@ func submenu(subshoice string) {
 Pilih Soal:
 1. Fungsi Celcius, Reamur, Fahrenheit, Kelvin
 2. Fungsi Rubah huruf kecil menjadi huruf besar
-3. Fungsi Cek bilanga
+3. Fungsi Cek bilangan
 0.keluar
 	`)
 		fmt.Scan(&Choise)

@@ -8,6 +8,7 @@ import (
 	"Project-Alpro/atribut"
 	"Project-Alpro/pengpro"
 	"fmt"
+	"strings"
 
 	"github.com/common-nighthawk/go-figure" // Import go-figure
 )
@@ -15,16 +16,24 @@ import (
 func main() {
 	var input string
 	var stop bool = false // Variabel untuk menghentikan loop
-	login.Mainlogin()
-	menuKonfirmasi()
+	var sign, helo string
+	login.Mainlogin(&sign, &helo)
+	if sign != "signin" {
+		menuKonfirmasi("tidak")
+	} else {
+		menuKonfirmasi("ya")
+	}
 
 	for !stop {
 		atribut.ClearScreen() // Membersihkan layar sebelum menampilkan menu
-		// login.Login()         // Memanggil fungsi login dari package login
+		user := figure.NewFigure(helo, "doom", true).String()
 		welcome := figure.NewFigure("WELCOME", "doom", true).String()
 		fmt.Print("\033[32m") // Set warna hijau
 		fmt.Print(welcome)    // Cetak teks ASCII
 		fmt.Print("\033[0m")  // Reset warna ke default
+		fmt.Print("\033[32m")
+		fmt.Print(user)
+		fmt.Print("\033[0m")
 		menu()
 		fmt.Print("Masukkan pilihan: ")
 		fmt.Scan(&input)
@@ -61,41 +70,52 @@ func main() {
 
 }
 
-func menuKonfirmasi() {
-	var konfirmasi string
+func menuKonfirmasi(n string) {
+	// var konfirmasi string
 	var konfirmasi2 string
-	fmt.Println(`
-=========================================
-BELAJAR BARENG ALWAN & FATHUR!!!!!!
-=========================================
-Apakah kamu pernah belajar pemrograman go?
-=========================================
-1. ya
-2. tidak
-=========================================`)
-	fmt.Scan(&konfirmasi)
-	switch konfirmasi {
+	switch n {
 	case "ya":
-		fmt.Println("Kalau begitu kami sarankan untuk kamu langsung menuju pilihan 2")
+		fmt.Println("Kami sarankan untuk kamu langsung menuju pilihan 2")
 		fmt.Println("1. Setuju")
 		fmt.Println("2. Dari awal aja!")
 		fmt.Scan(&konfirmasi2)
-		if konfirmasi2 == "1" {
+		cek := strings.ToLower(konfirmasi2)
+		switch cek {
+		case "1", "setuju":
 			fmt.Println("Menuju Algoritma Pemrograman!")
 			atribut.Loading(100)
 			atribut.ClearScreen()
 			alpro.MainMenu()
-		} else {
+		case "2", "dari awal aja", "awal", "dari awal":
 			fmt.Println("Oke, mari belajar sama-sama!")
 			atribut.Loading(100)
 			atribut.ClearScreen()
 			menu()
 		}
 	case "tidak":
-		fmt.Println("Kalau begitu mari belajar sama-sama!")
-		atribut.Loading(100)
-		atribut.ClearScreen()
-		menu()
+		fmt.Println(`
+			=========================================
+			BELAJAR BARENG ALWAN & FATHUR!!!!!!
+			=========================================
+			Apakah kamu pernah belajar pemrograman go?
+			=========================================
+			1. ya
+			2. tidak
+			=========================================`)
+		fmt.Scan(&konfirmasi2)
+		cek := strings.ToLower(konfirmasi2)
+		switch cek {
+		case "1", "setuju":
+			fmt.Println("Menuju Algoritma Pemrograman!")
+			atribut.Loading(100)
+			atribut.ClearScreen()
+			alpro.MainMenu()
+		case "2", "dari awal aja", "awal", "dari awal":
+			fmt.Println("Oke, mari belajar sama-sama!")
+			atribut.Loading(100)
+			atribut.ClearScreen()
+			menu()
+		}
 	default:
 		fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 	}
