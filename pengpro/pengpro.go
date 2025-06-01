@@ -2,6 +2,7 @@ package pengpro
 
 import (
 	"Project-Alpro/atribut"
+	"Project-Alpro/pengpro/pengenalan_Go"
 	"fmt"
 	"strings"
 
@@ -42,7 +43,7 @@ func Submenu() {
 	fmt.Scan(&Choice)
 	switch Choice {
 	case 1:
-		MateriGoLanguage() // Panggil fungsi utama materi Go
+		pengenalan_Go.MainMenu // Panggil fungsi utama materi Go
 	case 2:
 		MateriTipeData()
 	case 3:
