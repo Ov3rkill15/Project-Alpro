@@ -8,6 +8,19 @@ import (
 	"time"
 )
 
+type Quiz struct {
+	Nama                         string
+	ID                           string
+	TotalScore                   int
+	GoLanguageScore              int
+	PercabanganScore             int
+	KonversiTipeDataScore        int
+	OperasiMatematikaLogikaScore int
+	PerulanganScore              int
+	TipeDataGoScore              int
+	VariableConstantScore        int
+}
+
 func ClearScreen() {
 	var cmd *exec.Cmd
 	if runtime.GOOS == "windows" {
