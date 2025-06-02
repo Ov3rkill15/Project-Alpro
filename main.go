@@ -1,12 +1,9 @@
 package main
 
 import (
-	"Project-Alpro/admin"
 	"Project-Alpro/alpro"
-	"Project-Alpro/login"
-
-	// "Project-Alpro/linklanjutan"
 	"Project-Alpro/atribut"
+	"Project-Alpro/login"
 	"Project-Alpro/pengpro"
 	"fmt"
 	"strings"
@@ -15,13 +12,11 @@ import (
 )
 
 func main() {
+	atribut.ClearScreen()
 	var input string
 	var stop bool = false // Variabel untuk menghentikan loop
 	var sign, helo string
 	login.Mainlogin(&sign, &helo)
-	if helo == "admin" && sign == "1" || sign == "masuk" {
-		admin.MainAdmin()
-	}
 	switch helo {
 	case "nathasyayuanmaharani":
 		helo = "Yuan"

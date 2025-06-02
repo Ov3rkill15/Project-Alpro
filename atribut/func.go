@@ -16,30 +16,19 @@ func ClearScreen() {
 		cmd = exec.Command("clear")
 	}
 	cmd.Stdout = os.Stdout
-	cmd.Run()
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Peringatan: Gagal membersihkan layar. Error: %v\n", err)
+	}
+}
+func Loading(ms int) {
+	fmt.Print("Loading...")
+	time.Sleep(time.Duration(ms) * time.Millisecond)
 	fmt.Println()
 }
 
-func Loading(n int) {
-	for i := 0; i < 10; i++ {
-		time.Sleep(time.Duration(n) * time.Millisecond)
-		fmt.Print(".")
-	}
-}
-
-func Openbrowser(url string) {
-	var err error
-
-	switch runtime.GOOS {
-	case "linux":
-		err = exec.Command("xdg-open", url).Start()
-	case "windows":
-		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
-	case "darwin": // macOS
-		err = exec.Command("open", url).Start()
-	}
-
-	if err != nil {
-		fmt.Println("Gagal membuka browser:", err)
-	}
+// GetWaktuSekarang mengembalikan string representasi waktu saat ini (YYYY-MM-DD HH:MM:SS)
+func GetWaktuSekarang() string {
+	return time.Now().Format("2006-01-02 15:04:05")
 }

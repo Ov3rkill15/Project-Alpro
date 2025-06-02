@@ -13,7 +13,6 @@ import (
 	p_tipeBentukan "Project-Alpro/alpro/p_tipebentukan"
 	"Project-Alpro/alpro/projek_kami"
 	"Project-Alpro/atribut"
-	"Project-Alpro/contohsoal"
 	"fmt"
 
 	"github.com/common-nighthawk/go-figure"
@@ -55,7 +54,6 @@ func MainMenu() {
 			projek_kami.Project_menu()
 		case "10":
 			atribut.ClearScreen()
-			contohsoal.MainMenu()
 		case "0":
 			atribut.ClearScreen()
 			return
