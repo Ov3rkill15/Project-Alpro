@@ -4,10 +4,10 @@ import (
 	"Project-Alpro/atribut"
 	"Project-Alpro/pengpro/konversi_tipe_data"
 	"Project-Alpro/pengpro/operasi_matematika_logika"
-	"Project-Alpro/pengpro/p_golanguange"
+	pengenalan "Project-Alpro/pengpro/pengenalan_Go"
 	"Project-Alpro/pengpro/percabangan"
 	"Project-Alpro/pengpro/perulangan"
-	 "Project-Alpro/pengpro/dataquiz"
+	dataquiz "Project-Alpro/pengpro/quiz"
 	"Project-Alpro/pengpro/tipe_data_go"
 	"Project-Alpro/pengpro/variable_constant"
 	"fmt"
@@ -58,7 +58,7 @@ func Submenu() int {
 
 	switch Choice {
 	case 1:
-		p_golanguange.MainMenu(&dataquiz.DataQuiz)
+		pengenalan.MainMenu(&dataquiz.DataQuiz)
 	case 2:
 		tipe_data_go.MainMenu(&dataquiz.DataQuiz)
 	case 3:
