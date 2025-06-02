@@ -16,8 +16,7 @@ func MainMenu() {
 Selamat Datang di Pembelajaran Tipe Bentukan
 ============================================
 1. Apa itu Tipe Bentukan (Struct) dan Alias
-2. Soal Tipe Bentukan
-3. Keluar
+0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
 	fmt.Scan(&pilihan)
@@ -39,19 +38,7 @@ Selamat Datang di Pembelajaran Tipe Bentukan
 		} else { // Jika false, artinya user ingin keluar dari modul
 			return
 		}
-
-	case "2":
-		atribut.ClearScreen()
-		soalTipeBentukkan()
-		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-		fmt.Scan(&pilihan2)
-		fmt.Scanln() // Clear newline
-		if strings.ToLower(pilihan2) == "y" {
-			MainMenu() // Rekursi
-		} else {
-			return
-		}
-	case "3":
+	case "0":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran tipe bentukan.")
 		return
 	default:
@@ -169,36 +156,20 @@ func belajarTipeBentukkan() bool {
 			// Loop untuk input valid s/n
 			berhenti2 := false
 			for !berhenti2 {
-				fmt.Print("Materi selesai! Mau lanjut ke soal (s), atau kembali ke menu utama (n)? ")
+				fmt.Print("Kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
 				fmt.Scanln() // Clear newline
-
-				if strings.ToLower(Choice) == "s" {
-					soalTipeBentukkan()
-					berhenti = false // Stop the main 'for berhenti' loop
-					berhenti2 = true // Input valid, exit loop
-					return true      // Return true to go back to MainMenu after soal
-				} else if strings.ToLower(Choice) == "n" {
+				if strings.ToLower(Choice) == "n" {
 					berhenti = false // Stop the main 'for berhenti' loop
 					berhenti2 = true // Input valid, exit loop
 					MainMenu()       // Recursive call to MainMenu
 					atribut.ClearScreen()
 					return false // Return false to exit belajarTipeBentukkan
 				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 's' atau 'n'.")
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'n'.")
 				}
 			}
 		}
 	}
 	return true
-}
-
-func soalTipeBentukkan() {
-	atribut.ClearScreen()
-	fmt.Println("========================")
-	fmt.Println("   SOAL TIPE BENTUKAN")
-	fmt.Println("========================")
-	fmt.Println("COMING SOON!")
-	fmt.Println("\nTekan Enter untuk melanjutkan...")
-	fmt.Scanln() // Wait for Enter
 }

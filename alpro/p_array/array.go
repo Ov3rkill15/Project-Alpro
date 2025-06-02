@@ -1,15 +1,14 @@
-package p_array 
+package p_array
 
 import (
-	"Project-Alpro/atribut" 
+	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
 )
 
-
 func MainMenu() {
 	var pilihan string
-	var pilihan2 string 
+	var pilihan2 string
 	fmt.Println(`
 ==================================
 Selamat Datang di Pembelajaran Array
@@ -49,16 +48,16 @@ Selamat Datang di Pembelajaran Array
 		atribut.ClearScreen()
 		soalArray()
 		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-		
+
 		berhenti2 := false
 		for !berhenti2 {
 			fmt.Scan(&pilihan2)
-			fmt.Scanln() 
+			fmt.Scanln()
 			if strings.ToLower(pilihan2) == "y" {
-				MainMenu() 
-				return     
+				MainMenu()
+				return
 			} else if strings.ToLower(pilihan2) == "n" {
-				return 
+				return
 			} else {
 				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
 				fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
@@ -66,7 +65,9 @@ Selamat Datang di Pembelajaran Array
 		}
 	case "3":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran array.")
-		return
+		fmt.Print("Tekan Enter untuk melanjutkan...")
+		fmt.Scanln()
+		MainMenu()
 	default:
 		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '3'.")
 		fmt.Print("Tekan Enter untuk melanjutkan...")
@@ -78,10 +79,10 @@ Selamat Datang di Pembelajaran Array
 func belajarArray() bool {
 	halamanSekarang := 1
 	totalHalaman := 2
-	var berhenti bool = true 
+	var berhenti bool = true
 	var Choice string
 
-	for berhenti { 
+	for berhenti {
 		atribut.ClearScreen()
 		fmt.Printf("=== Apa itu Array di Go? (Halaman %d/%d) ===\n", halamanSekarang, totalHalaman)
 
@@ -147,31 +148,31 @@ func belajarArray() bool {
 				} else if strings.ToLower(Choice) == "n" {
 					atribut.ClearScreen()
 					berhenti = false
-					berhenti2 = true 
-					MainMenu() 
-					return false 
+					berhenti2 = true
+					MainMenu()
+					return false
 				} else {
 					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
 				}
 			}
-		} else { 
+		} else {
 			berhenti2 := false
 			for !berhenti2 {
 				fmt.Print("Materi selesai! Mau lanjut ke soal (s), atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
-				fmt.Scanln() 
+				fmt.Scanln()
 
 				if strings.ToLower(Choice) == "s" {
 					soalArray()
-					berhenti = false 
-					berhenti2 = true 
-					return true      
+					berhenti = false
+					berhenti2 = true
+					return true
 				} else if strings.ToLower(Choice) == "n" {
-					berhenti = false 
-					berhenti2 = true 
+					berhenti = false
+					berhenti2 = true
 					MainMenu()
 					atribut.ClearScreen()
-					return false 
+					return false
 				} else {
 					fmt.Println("Pilihan tidak valid. Harap masukkan 's' atau 'n'.")
 				}

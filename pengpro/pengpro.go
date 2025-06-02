@@ -43,7 +43,7 @@ func Submenu() {
 	fmt.Scan(&Choice)
 	switch Choice {
 	case 1:
-		pengenalan_Go.MainMenu // Panggil fungsi utama materi Go
+		pengenalan_Go.MainMenu() // Panggil fungsi utama materi Go
 	case 2:
 		MateriTipeData()
 	case 3:
