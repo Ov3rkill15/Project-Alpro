@@ -16,8 +16,7 @@ Selamat Datang di Pembelajaran Sorting
 ======================================
 1. Apa itu Selection Sort
 2. Apa itu Insertion Sort
-3. Soal Sorting
-4. Keluar
+0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
 	fmt.Scan(&pilihan)
@@ -74,27 +73,7 @@ Selamat Datang di Pembelajaran Sorting
 		} else { // Jika false, artinya belajarInsertionSort sudah mengarahkan atau keluar
 			return
 		}
-	case "3": // Case 3: Soal Sorting
-		atribut.ClearScreen()
-		soalSorting() // Memanggil fungsi soalSorting untuk materi sorting
-		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-		// Loop untuk input valid y/n
-		isInputValid := false
-		for !isInputValid {
-			fmt.Scan(&pilihan2)
-			fmt.Scanln() // Membersihkan newline
-			if strings.ToLower(pilihan2) == "y" {
-				isInputValid = true // Valid input, keluar dari loop
-				MainMenu()          // Rekursi
-			} else if strings.ToLower(pilihan2) == "n" {
-				isInputValid = true // Valid input, keluar dari loop
-				return
-			} else {
-				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-			}
-		}
-	case "4": // Case 4: Keluar
+	case "0": // Case 4: Keluar
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran sorting.")
 		return
 	default:
@@ -241,13 +220,7 @@ func belajarSelectionSort() bool {
 				fmt.Print("Materi selesai! Mau lanjut ke Soal (s) atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
 				fmt.Scanln() // Clear newline
-
-				if strings.ToLower(Choice) == "s" {
-					soalSorting()       // Memanggil fungsi soalSorting
-					berhenti = false    // Mengatur 'berhenti' menjadi false untuk keluar dari loop utama
-					isInputValid = true // Input valid, keluar dari loop
-					return true         // Return true to go back to MainMenu after quiz
-				} else if strings.ToLower(Choice) == "n" {
+				if strings.ToLower(Choice) == "n" {
 					berhenti = false    // Mengatur 'berhenti' menjadi false untuk keluar dari loop utama
 					isInputValid = true // Input valid, keluar dari loop
 					MainMenu()          // Rekursi
@@ -396,13 +369,7 @@ func belajarInsertionSort() bool {
 				fmt.Print("Materi selesai! Mau lanjut ke Soal (s) atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
 				fmt.Scanln() // Clear newline
-
-				if strings.ToLower(Choice) == "s" {
-					soalSorting()       // Memanggil fungsi soalSorting
-					berhenti = false    // Mengatur 'berhenti' menjadi false untuk keluar dari loop utama
-					isInputValid = true // Input valid, keluar dari loop
-					return true         // Return true to go back to MainMenu after quiz
-				} else if strings.ToLower(Choice) == "n" {
+				if strings.ToLower(Choice) == "n" {
 					berhenti = false    // Mengatur 'berhenti' menjadi false untuk keluar dari loop utama
 					isInputValid = true // Input valid, keluar dari loop
 					MainMenu()          // Rekursi
@@ -418,12 +385,3 @@ func belajarInsertionSort() bool {
 }
 
 // soalSorting is a placeholder for the quiz section.
-func soalSorting() {
-	atribut.ClearScreen()
-	fmt.Println("==================")
-	fmt.Println(" 	SOAL SORTING") // Generic name for sorting quiz
-	fmt.Println("==================")
-	fmt.Println("COMING SOON!")
-	fmt.Println("\nTekan Enter untuk melanjutkan...")
-	fmt.Scanln() // Wait for Enter
-}

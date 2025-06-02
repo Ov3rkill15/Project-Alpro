@@ -2,81 +2,13 @@ package p_array
 
 import (
 	"Project-Alpro/atribut"
+	"bufio"
 	"fmt"
+	"os"
 	"strings"
 )
 
-func MainMenu() {
-	var pilihan string
-	var pilihan2 string
-	fmt.Println(`
-==================================
-Selamat Datang di Pembelajaran Array
-==================================
-1. Apa itu Array
-2. Soal Array
-3. Keluar
-    `)
-	fmt.Print("Masukkan pilihan: ")
-	fmt.Scan(&pilihan)
-	fmt.Scanln() // Clear newline
-	atribut.ClearScreen()
-
-	switch pilihan {
-	case "1":
-		atribut.ClearScreen()
-		if belajarArray() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					MainMenu()
-				} else if strings.ToLower(pilihan2) == "n" {
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
-			}
-		} else {
-			return
-		}
-
-	case "2":
-		atribut.ClearScreen()
-		soalArray()
-		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-
-		berhenti2 := false
-		for !berhenti2 {
-			fmt.Scan(&pilihan2)
-			fmt.Scanln()
-			if strings.ToLower(pilihan2) == "y" {
-				MainMenu()
-				return
-			} else if strings.ToLower(pilihan2) == "n" {
-				return
-			} else {
-				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-			}
-		}
-	case "3":
-		fmt.Println("Terima kasih telah menggunakan program pembelajaran array.")
-		fmt.Print("Tekan Enter untuk melanjutkan...")
-		fmt.Scanln()
-		MainMenu()
-	default:
-		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '3'.")
-		fmt.Print("Tekan Enter untuk melanjutkan...")
-		fmt.Scanln()
-		MainMenu()
-	}
-}
-
-func belajarArray() bool {
+func MainMenu() bool {
 	halamanSekarang := 1
 	totalHalaman := 2
 	var berhenti bool = true
@@ -149,7 +81,6 @@ func belajarArray() bool {
 					atribut.ClearScreen()
 					berhenti = false
 					berhenti2 = true
-					MainMenu()
 					return false
 				} else {
 					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
@@ -158,36 +89,15 @@ func belajarArray() bool {
 		} else {
 			berhenti2 := false
 			for !berhenti2 {
-				fmt.Print("Materi selesai! Mau lanjut ke soal (s), atau kembali ke menu utama (n)? ")
-				fmt.Scan(&Choice)
-				fmt.Scanln()
-
-				if strings.ToLower(Choice) == "s" {
-					soalArray()
-					berhenti = false
-					berhenti2 = true
-					return true
-				} else if strings.ToLower(Choice) == "n" {
-					berhenti = false
-					berhenti2 = true
-					MainMenu()
-					atribut.ClearScreen()
-					return false
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 's' atau 'n'.")
-				}
+				fmt.Print("Materi selesai!Tekan Enter untuk kembali...")
+				bufio.NewReader(os.Stdin).ReadBytes('\n')
+				atribut.Loading(1200)
+				berhenti = false
+				berhenti2 = true
+				atribut.ClearScreen()
+				return false
 			}
 		}
 	}
 	return true
-}
-
-func soalArray() {
-	atribut.ClearScreen()
-	fmt.Println("=================")
-	fmt.Println(" 	SOAL ARRAY")
-	fmt.Println("=================")
-	fmt.Println("COMING SOON!")
-	fmt.Println("\nTekan Enter untuk melanjutkan...")
-	fmt.Scanln() // Wait for Enter
 }

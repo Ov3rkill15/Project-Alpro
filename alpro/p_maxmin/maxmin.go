@@ -15,8 +15,7 @@ func MainMenu() {
 Selamat Datang di Pembelajaran Max & Min Array
 ============================================
 1. Mencari Nilai Maksimum & Minimum
-2. Soal Max & Min
-3. Keluar
+0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
 	fmt.Scan(&pilihan)
@@ -47,27 +46,7 @@ Selamat Datang di Pembelajaran Max & Min Array
 		} else {
 			return
 		}
-
-	case "2":
-		atribut.ClearScreen()
-		soalMaxMin()
-		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-		berhenti2 := false
-		for !berhenti2 {
-			fmt.Scan(&pilihan2)
-			fmt.Scanln()
-			if strings.ToLower(pilihan2) == "y" {
-				berhenti2 = true
-				MainMenu()
-			} else if strings.ToLower(pilihan2) == "n" {
-				berhenti2 = true
-				return
-			} else {
-				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-			}
-		}
-	case "3":
+	case "0":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran Max & Min.")
 		return
 	default:
@@ -193,13 +172,7 @@ func belajarMaxMin() bool {
 				fmt.Print("Materi selesai! Mau lanjut ke soal (s), atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
 				fmt.Scanln()
-
-				if strings.ToLower(Choice) == "s" {
-					soalMaxMin()
-					berhenti = false
-					berhenti2 = true
-					return true
-				} else if strings.ToLower(Choice) == "n" {
+				if strings.ToLower(Choice) == "n" {
 					berhenti = false
 					berhenti2 = true
 					MainMenu()
@@ -212,14 +185,4 @@ func belajarMaxMin() bool {
 		}
 	}
 	return true
-}
-
-func soalMaxMin() {
-	atribut.ClearScreen()
-	fmt.Println("===================")
-	fmt.Println(" 	SOAL MAX & MIN")
-	fmt.Println("===================")
-	fmt.Println("COMING SOON!")
-	fmt.Println("\nTekan Enter untuk melanjutkan...")
-	fmt.Scanln() // Wait for Enter
 }

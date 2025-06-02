@@ -5,7 +5,9 @@ import (
 	"Project-Alpro/atribut"
 	"Project-Alpro/login"
 	"Project-Alpro/pengpro"
+	"bufio"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/common-nighthawk/go-figure" // Import go-figure
@@ -13,7 +15,7 @@ import (
 
 func main() {
 	atribut.ClearScreen()
-	var input string
+	reader := bufio.NewReader(os.Stdin)
 	var stop bool = false // Variabel untuk menghentikan loop
 	var sign, helo string
 	login.Mainlogin(&sign, &helo)
@@ -120,27 +122,28 @@ func main() {
 		fmt.Print("\033[0m")
 		menu()
 		fmt.Print("Masukkan pilihan: ")
-		fmt.Scanln(&input)
+		input, _ := reader.ReadString('\n')
+		input = strings.TrimSpace(input)
 
 		switch input {
 		case "1":
 			atribut.ClearScreen()
 			fmt.Println("Menuju Pengenalan Pemrograman...")
-			atribut.Loading(100)
+			atribut.Loading(1200)
 			pengpro.MainMenu()
 		case "2":
 			atribut.ClearScreen()
 			fmt.Println("Menuju Algoritma Pemrograman...")
-			atribut.Loading(100)
+			atribut.Loading(1200)
 			alpro.MainMenu()
 		case "3":
 			atribut.ClearScreen()
-			login.Mainlogin(&sign, &helo)
+			main()
 		case "10":
 			atribut.ClearScreen()
 			fmt.Println("COMING SOON!!!")
 			fmt.Println("Menuju Menu utama...")
-			atribut.Loading(100)
+			atribut.Loading(1200)
 		case "0":
 			stop = true
 			atribut.ClearScreen()
@@ -149,7 +152,7 @@ func main() {
 		default:
 			atribut.ClearScreen()
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
-			atribut.Loading(100)
+			atribut.Loading(1200)
 			fmt.Println()
 		}
 
@@ -195,12 +198,12 @@ Apakah kamu pernah belajar pemrograman go?
 		switch cek {
 		case "1", "setuju":
 			fmt.Println("Menuju Algoritma Pemrograman!")
-			atribut.Loading(100)
+			atribut.Loading(1200)
 			atribut.ClearScreen()
 			alpro.MainMenu()
 		case "2", "dari awal aja", "awal", "dari awal":
 			fmt.Println("Oke, mari belajar sama-sama!")
-			atribut.Loading(100)
+			atribut.Loading(1200)
 			atribut.ClearScreen()
 			menu()
 		}

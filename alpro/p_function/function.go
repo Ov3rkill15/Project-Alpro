@@ -15,8 +15,7 @@ func MainMenu() {
 Selamat Datang di Pembelajaran Function
 =====================================
 1. Apa itu Function
-2. Soal Function
-3. Keluar
+0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
 	fmt.Scan(&pilihan)
@@ -44,26 +43,7 @@ Selamat Datang di Pembelajaran Function
 		} else {
 			return
 		}
-
-	case "2":
-		atribut.ClearScreen()
-		soalFunction()
-		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-		berhenti2 := false
-		for !berhenti2 {
-			fmt.Scan(&pilihan2)
-			fmt.Scanln()
-			if strings.ToLower(pilihan2) == "y" {
-				MainMenu()
-				return
-			} else if strings.ToLower(pilihan2) == "n" {
-				return
-			} else {
-				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-			}
-		}
-	case "3":
+	case "0":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran function.")
 		return
 	default:
@@ -180,13 +160,7 @@ func belajarFunction() bool {
 				fmt.Print("Materi selesai! Mau lanjut ke soal (s), atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
 				fmt.Scanln()
-
-				if strings.ToLower(Choice) == "s" {
-					soalFunction()
-					berhenti = false
-					berhenti2 = true
-					return true
-				} else if strings.ToLower(Choice) == "n" {
+				if strings.ToLower(Choice) == "n" {
 					berhenti = false
 					berhenti2 = true
 					MainMenu()
@@ -199,14 +173,4 @@ func belajarFunction() bool {
 		}
 	}
 	return true
-}
-
-func soalFunction() {
-	atribut.ClearScreen()
-	fmt.Println("==================")
-	fmt.Println("   SOAL FUNCTION")
-	fmt.Println("==================")
-	fmt.Println("COMING SOON!")
-	fmt.Println("\nTekan Enter untuk melanjutkan...")
-	fmt.Scanln()
 }

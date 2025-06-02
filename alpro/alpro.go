@@ -10,35 +10,41 @@ import (
 	"Project-Alpro/alpro/p_searching"
 	"Project-Alpro/alpro/p_sorting"
 	p_tipeBentukan "Project-Alpro/alpro/p_tipebentukan"
-	"Project-Alpro/alpro/projek_kami"
+	"Project-Alpro/alpro/praktikum"
 	"Project-Alpro/atribut"
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/common-nighthawk/go-figure"
 )
 
-var pilihan string
-
-func MainMenu() {
-	for {
+func MainMenu() int {
+	reader := bufio.NewReader(os.Stdin)
+	var stop bool = true
+	for stop {
 		atribut.ClearScreen()
 		Submenu()
-		switch pilihan {
+		fmt.Print("Masukkan pilihan: ")
+		input, _ := reader.ReadString('\n')
+		input = strings.TrimSpace(input)
+		switch input {
 		case "1":
 			atribut.ClearScreen()
-			p_array.MainMenu()
+			p_function.MainMenu()
 		case "2":
 			atribut.ClearScreen()
-			p_function.MainMenu()
+			p_procedure.MainMenu()
 		case "3":
 			atribut.ClearScreen()
-			p_procedure.MainMenu()
+			p_rekursif.MainMenu()
 		case "4":
 			atribut.ClearScreen()
-			p_rekursif.MainMenu()
+			p_tipeBentukan.MainMenu()
 		case "5":
 			atribut.ClearScreen()
-			p_tipeBentukan.MainMenu()
+			p_array.MainMenu()
 		case "6":
 			atribut.ClearScreen()
 			p_maxmin.MainMenu()
@@ -50,19 +56,22 @@ func MainMenu() {
 			p_sorting.MainMenu()
 		case "9":
 			atribut.ClearScreen()
-			projek_kami.Project_menu()
+			praktikum.MainMenu()
 		case "10":
 			atribut.ClearScreen()
-			contohsoal.Mainmenu()
+			contohsoal.StartSoalMenu()
 		case "0":
 			atribut.ClearScreen()
-			return
+			atribut.Loading(1200)
+			stop = false
+			return 0
 		default:
 			atribut.ClearScreen()
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
-			atribut.Loading(100)
+			atribut.Loading(1200)
 		}
 	}
+	return 0
 }
 func Submenu() {
 	welcome := figure.NewFigure("ALPRO", "doom", true).String()
@@ -81,11 +90,9 @@ Selamat Datang di Algoritma dan Pemrograman
 6. Pembelajaran maxmin
 7. Pembelajaran Searching
 8. Pembelajaran Sorting
-9. Projek kami
+9. Referensi Soal
 10. Contoh Soal
 
 0. Keluar
 	`)
-	fmt.Print("Masukkan pilihan: ")
-	fmt.Scan(&pilihan)
 }

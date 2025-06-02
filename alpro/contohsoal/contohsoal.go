@@ -1,4 +1,4 @@
-package contohsoal
+package contohsoal // Changed package name
 
 import (
 	"bufio"
@@ -37,8 +37,9 @@ func compileAndRun() (string, error) {
 	return string(output), err
 }
 
-// MainMenu adalah fungsi utama yang mengelola alur soal dan pengecekan jawaban.
-func Mainmenu() {
+// StartSoalMenu adalah fungsi utama yang mengelola alur soal dan pengecekan jawaban.
+// Ini sekarang mengembalikan boolean untuk menunjukkan apakah pengguna ingin kembali ke MainMenu.
+func StartSoalMenu() bool { // Renamed and added return value
 	var Choice2 string
 	reader := bufio.NewReader(os.Stdin)
 
@@ -113,7 +114,7 @@ func Mainmenu() {
 
 	if pilihanInt < 1 || pilihanInt > len(daftarSoal) {
 		fmt.Println("Pilihan tidak valid")
-		return
+		return false
 	}
 
 	soalTerpilih := daftarSoal[pilihanInt-1]
@@ -134,9 +135,8 @@ func Mainmenu() {
 			fmt.Println("Keluar dari mode soal...")
 			os.Remove("jawaban.go") // Hapus file jawaban.go saat keluar.
 			fmt.Print("\nTekan ENTER: ")
-			input, _ := reader.ReadString('\n')
-			input = strings.TrimSpace(input)
-
+			bufio.NewReader(os.Stdin).ReadString('\n') // Just consume the newline
+			return false                               // Indicate that the user wants to go back
 		}
 
 		output, _ := compileAndRun()
@@ -156,10 +156,10 @@ func Mainmenu() {
 			bufio.NewReader(os.Stdin).ReadString('\n')
 			if strings.ToLower(Choice2) == "y" {
 				os.Remove("jawaban.go") // Hapus file sebelum memanggil MainMenu lagi.
-				Mainmenu()
+				return true             // Indicate that the user wants to select another topic
 			} else {
 				os.Remove("jawaban.go") // Hapus file jawaban.go saat kembali ke menu utama.
-				return
+				return false            // Indicate that the user wants to go back to main menu
 			}
 		} else {
 			fmt.Println("\n❌ Output tidak sesuai dengan test case.")

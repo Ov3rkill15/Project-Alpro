@@ -136,7 +136,7 @@ func Login(sign, helo *string) (bool, bool) { // <-- Perubahan di sini: tambahka
 				atribut.ClearScreen()
 				fmt.Println("Login berhasil!")
 				fmt.Println("Menuju Aplikasi")
-				atribut.Loading(100)
+				atribut.Loading(1200)
 				fmt.Println()
 				stop = false // Berhasil login, hentikan loop
 
@@ -220,6 +220,8 @@ func Login(sign, helo *string) (bool, bool) { // <-- Perubahan di sini: tambahka
 		return false, false // Gagal daftar setelah 3 percobaan
 	} else {
 		fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
+		fmt.Println("\nTekan Enter untuk kembali...")
+		bufio.NewReader(os.Stdin).ReadBytes('\n')
 		return false, false
 	}
 }
@@ -272,8 +274,6 @@ func Mainlogin(sign, helo *string) {
 				fmt.Println("Login gagal. Coba lagi untuk masuk atau daftar.")
 			} else if *sign == "2" || *sign == "daftar" {
 				fmt.Println("Kembali ke menu login.")
-			} else {
-				fmt.Println("Pilihan tidak valid. Kembali ke menu utama.")
 			}
 			atribut.Loading(200) // Beri jeda sebelum menampilkan menu lagi
 		}
@@ -297,7 +297,6 @@ func DeleteUser(username string) bool {
 	for i < jumlahPengguna {
 		if users[i].Username == username {
 			foundIndex = i
-			// Tidak menggunakan break
 		}
 		i++
 	}
@@ -326,7 +325,6 @@ func GetUserByUsername(username string) (User, bool) {
 		if users[i].Username == username {
 			user = users[i]
 			found = true
-			// Tidak menggunakan break
 		}
 		i++
 	}
@@ -342,7 +340,6 @@ func UpdateUser(oldUsername, newUsername, newPassword string) bool {
 			users[i].Username = newUsername
 			users[i].Password = newPassword
 			updated = true
-			// Tidak menggunakan break
 		}
 		i++
 	}
@@ -366,7 +363,7 @@ func AddUser(newUser User) bool {
 //                              ADMIN PERMISSIONS
 //==================================================================================
 
-const MAX_RIWAYAT int = 100
+const MAX_RIWAYAT int = 1200
 
 type RiwayatAdmin struct {
 	Timestamp string
@@ -461,7 +458,7 @@ func KelolaPengguna(adminUsername string) {
 1. Tambah Pengguna Baru
 2. Hapus Pengguna
 3. Ubah Data Pengguna
-4. Kembali ke Menu Admin
+0. Kembali ke Menu Admin
         `)
 		fmt.Print("Masukkan pilihan: ")
 		input, _ := reader.ReadString('\n')
@@ -473,7 +470,7 @@ func KelolaPengguna(adminUsername string) {
 			HapusPengguna(adminUsername)
 		} else if pilihan == "3" {
 			UbahDataPengguna(adminUsername)
-		} else if pilihan == "4" {
+		} else if pilihan == "0" {
 			managing = false
 		} else {
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
@@ -482,7 +479,8 @@ func KelolaPengguna(adminUsername string) {
 	}
 }
 
-func TambahPenggunaBaru(adminUsername string) {
+func TambahPenggunaBaru(adminUsername string) bool {
+	var berhasil bool = true
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Masukkan Username baru: ")
 	usernameInput, _ := reader.ReadString('\n')
@@ -491,7 +489,7 @@ func TambahPenggunaBaru(adminUsername string) {
 	if isUsernameExists(username) { // Memanggil isUsernameExists
 		fmt.Println("Username sudah ada. Harap gunakan username lain.")
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 
 	fmt.Print("Masukkan Password untuk pengguna baru: ")
@@ -500,7 +498,7 @@ func TambahPenggunaBaru(adminUsername string) {
 	if err != nil {
 		fmt.Println("Gagal membaca kata sandi:", err)
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 	password := string(passwordBytes)
 
@@ -508,13 +506,17 @@ func TambahPenggunaBaru(adminUsername string) {
 	if AddUser(newUser) {
 		fmt.Printf("Pengguna '%s' berhasil ditambahkan.\n", username)
 		CatatRiwayatAdmin(adminUsername, fmt.Sprintf("Menambahkan pengguna baru: %s", username))
+		berhasil = true
 	} else {
 		fmt.Println("Gagal menambahkan pengguna. Kapasitas penuh atau masalah lainnya.")
+		berhasil = false
 	}
 	atribut.Loading(200)
+	return berhasil
 }
 
-func HapusPengguna(adminUsername string) {
+func HapusPengguna(adminUsername string) bool {
+	var berhasil bool = true
 	reader := bufio.NewReader(os.Stdin)
 	CetakPengguna()
 	fmt.Print("Masukkan username pengguna yang ingin dihapus: ")
@@ -524,19 +526,23 @@ func HapusPengguna(adminUsername string) {
 	if username == "admin" && adminUsername == "admin" {
 		fmt.Println("Anda tidak dapat menghapus akun admin utama!")
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 
 	if DeleteUser(username) {
 		fmt.Printf("Pengguna '%s' berhasil dihapus.\n", username)
 		CatatRiwayatAdmin(adminUsername, fmt.Sprintf("Menghapus pengguna: %s", username))
+		berhasil = true
 	} else {
 		fmt.Printf("Pengguna '%s' tidak ditemukan.\n", username)
+		berhasil = false
 	}
 	atribut.Loading(200)
+	return berhasil
 }
 
-func UbahDataPengguna(adminUsername string) {
+func UbahDataPengguna(adminUsername string) bool {
+	var berhasil bool = true
 	reader := bufio.NewReader(os.Stdin)
 	CetakPengguna()
 	fmt.Print("Masukkan username pengguna yang ingin diubah: ")
@@ -547,7 +553,7 @@ func UbahDataPengguna(adminUsername string) {
 	if !found {
 		fmt.Printf("Pengguna '%s' tidak ditemukan.\n", oldUsername)
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 
 	fmt.Print("Masukkan Username baru (kosongkan jika tidak ingin mengubah): ")
@@ -559,7 +565,7 @@ func UbahDataPengguna(adminUsername string) {
 		if isUsernameExists(newUsername) { // Memanggil isUsernameExists
 			fmt.Println("Username baru sudah digunakan. Harap pilih username lain.")
 			atribut.Loading(200)
-			return
+			berhasil = false
 		}
 	}
 
@@ -569,7 +575,7 @@ func UbahDataPengguna(adminUsername string) {
 	if err != nil {
 		fmt.Println("Gagal membaca kata sandi:", err)
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 	newPassword := string(newPasswordBytes)
 	if newPassword == "" {
@@ -579,13 +585,17 @@ func UbahDataPengguna(adminUsername string) {
 	if UpdateUser(oldUsername, newUsername, newPassword) {
 		fmt.Printf("Data pengguna '%s' berhasil diubah menjadi Username: '%s', Password: '%s'\n", oldUsername, newUsername, newPassword)
 		CatatRiwayatAdmin(adminUsername, fmt.Sprintf("Mengubah data pengguna dari '%s' menjadi '%s'", oldUsername, newUsername))
+		berhasil = true
 	} else {
 		fmt.Println("Gagal mengubah data pengguna.")
+		berhasil = false
 	}
 	atribut.Loading(200)
+	return berhasil
 }
 
-func ResetPasswordPengguna(adminUsername string) {
+func ResetPasswordPengguna(adminUsername string) bool {
+	var berhasil bool = true
 	reader := bufio.NewReader(os.Stdin)
 	CetakPengguna()
 	fmt.Print("Masukkan username pengguna yang ingin direset passwordnya: ")
@@ -596,7 +606,7 @@ func ResetPasswordPengguna(adminUsername string) {
 	if !found {
 		fmt.Printf("Pengguna '%s' tidak ditemukan.\n", username)
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 
 	fmt.Print("Masukkan password baru untuk pengguna ini: ")
@@ -605,34 +615,38 @@ func ResetPasswordPengguna(adminUsername string) {
 	if err != nil {
 		fmt.Println("Gagal membaca kata sandi:", err)
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 	newPassword := string(newPasswordBytes)
 
 	if UpdateUser(username, username, newPassword) {
 		fmt.Printf("Password pengguna '%s' berhasil direset.\n", username)
 		CatatRiwayatAdmin(adminUsername, fmt.Sprintf("Reset password pengguna: %s", username))
+		berhasil = true
 	} else {
 		fmt.Println("Gagal mereset password pengguna.")
+		berhasil = false
 	}
 	atribut.Loading(200)
+	return berhasil
 }
 
-func GantiPasswordAdmin(adminUsername string) {
+func GantiPasswordAdmin(adminUsername string) bool {
+	var berhasil bool = true
 	fmt.Print("Masukkan password admin lama Anda: ")
 	oldPasswordBytes, err := term.ReadPassword(int(syscall.Stdin))
 	fmt.Println()
 	if err != nil {
 		fmt.Println("Gagal membaca kata sandi lama:", err)
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 	oldPassword := string(oldPasswordBytes)
 
 	if !AuthenticateUser(adminUsername, oldPassword) {
 		fmt.Println("Password lama Anda salah.")
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 
 	fmt.Print("Masukkan password admin baru: ")
@@ -641,7 +655,7 @@ func GantiPasswordAdmin(adminUsername string) {
 	if err != nil {
 		fmt.Println("Gagal membaca kata sandi baru:", err)
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 	newPassword := string(newPasswordBytes)
 
@@ -651,23 +665,26 @@ func GantiPasswordAdmin(adminUsername string) {
 	if err != nil {
 		fmt.Println("Gagal membaca konfirmasi password baru:", err)
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 	confirmNewPassword := string(confirmNewPasswordBytes)
 
 	if newPassword != confirmNewPassword {
 		fmt.Println("Password baru dan konfirmasi tidak cocok.")
 		atribut.Loading(200)
-		return
+		berhasil = false
 	}
 
 	if UpdateUser(adminUsername, adminUsername, newPassword) {
 		fmt.Println("Password admin berhasil diubah.")
 		CatatRiwayatAdmin(adminUsername, "Mengubah password akun admin sendiri")
+		berhasil = true
 	} else {
 		fmt.Println("Gagal mengubah password admin.")
+		berhasil = false
 	}
 	atribut.Loading(200)
+	return berhasil
 }
 
 func CatatRiwayatAdmin(adminUsername, aktivitas string) {

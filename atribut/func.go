@@ -35,9 +35,15 @@ func ClearScreen() {
 		fmt.Fprintf(os.Stderr, "Peringatan: Gagal membersihkan layar. Error: %v\n", err)
 	}
 }
-func Loading(ms int) {
-	fmt.Print("Loading...")
-	time.Sleep(time.Duration(ms) * time.Millisecond)
+func Loading(durationMs int) {
+	fmt.Print("Loading")
+	interval := 300 // interval antar titik (ms)
+	dots := durationMs / interval
+
+	for i := 0; i < dots; i++ {
+		time.Sleep(time.Duration(interval) * time.Millisecond)
+		fmt.Print(".")
+	}
 	fmt.Println()
 }
 

@@ -8,19 +8,18 @@ import (
 
 func MainMenu() {
 	var pilihan string
-	var pilihan2 string 
+	var pilihan2 string
 
 	fmt.Println(`
 ======================================
 Selamat Datang di Pembelajaran Rekursif
 ======================================
 1. Apa itu Rekursif
-2. Soal Rekursif
-3. Keluar
+0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
 	fmt.Scan(&pilihan)
-	fmt.Scanln() 
+	fmt.Scanln()
 	atribut.ClearScreen()
 
 	switch pilihan {
@@ -29,35 +28,23 @@ Selamat Datang di Pembelajaran Rekursif
 		if belajarRekursif() {
 			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
 			fmt.Scan(&pilihan2)
-			fmt.Scanln() 
+			fmt.Scanln()
 			if strings.ToLower(pilihan2) == "y" {
-				MainMenu() 
+				MainMenu()
 			} else {
 				return
 			}
-		} else { 
-			return
-		}
-
-	case "2":
-		atribut.ClearScreen()
-		soalFrekuensi()
-		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-		fmt.Scan(&pilihan2)
-		fmt.Scanln() 
-		if strings.ToLower(pilihan2) == "y" {
-			MainMenu() 
 		} else {
 			return
 		}
-	case "3":
+	case "0":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran rekursif.")
 		return
 	default:
 		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '3'.")
 		fmt.Print("Tekan Enter untuk melanjutkan...")
-		fmt.Scanln() 
-		MainMenu()   
+		fmt.Scanln()
+		MainMenu()
 	}
 }
 
@@ -161,13 +148,7 @@ func belajarRekursif() bool {
 				fmt.Print("Materi selesai! Mau lanjut ke soal (s), atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
 				fmt.Scanln() // Clear newline
-
-				if strings.ToLower(Choice) == "s" {
-					soalFrekuensi()
-					berhenti = false // Stop the main 'for berhenti' loop
-					berhenti2 = true // Input valid, exit loop
-					return true      // Return true to go back to MainMenu after soal
-				} else if strings.ToLower(Choice) == "n" {
+				if strings.ToLower(Choice) == "n" {
 					berhenti = false // Stop the main 'for berhenti' loop
 					berhenti2 = true // Input valid, exit loop
 					MainMenu()       // Recursive call to MainMenu
@@ -180,14 +161,4 @@ func belajarRekursif() bool {
 		}
 	}
 	return true
-}
-
-func soalFrekuensi() {
-	atribut.ClearScreen()
-	fmt.Println("==================")
-	fmt.Println("   SOAL REKURSIF")
-	fmt.Println("==================")
-	fmt.Println("COMING SOON!")
-	fmt.Println("\nTekan Enter untuk melanjutkan...")
-	fmt.Scanln() // Wait for Enter
 }

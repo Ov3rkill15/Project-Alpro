@@ -8,7 +8,7 @@ import (
 	"Project-Alpro/pengpro/percabangan"
 	"Project-Alpro/pengpro/perulangan"
 	dataquiz "Project-Alpro/pengpro/quiz"
-	"Project-Alpro/pengpro/tipe_data_go"
+	tipe_data_go "Project-Alpro/pengpro/tipe_data_Go"
 	"Project-Alpro/pengpro/variable_constant"
 	"fmt"
 	"strings"

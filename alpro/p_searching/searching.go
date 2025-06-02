@@ -1,15 +1,14 @@
-package p_searching 
+package p_searching
 
 import (
-	"Project-Alpro/atribut" 
+	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
 )
 
-
 func MainMenu() {
 	var pilihan string
-	var pilihan2 string 
+	var pilihan2 string
 
 	fmt.Println(`
 ======================================
@@ -18,11 +17,11 @@ Selamat Datang di Pembelajaran Searching
 1. Apa itu Sequential Search
 2. Apa itu Binary Search
 3. Soal Searching
-4. Keluar
+0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
 	fmt.Scan(&pilihan)
-	fmt.Scanln() 
+	fmt.Scanln()
 	atribut.ClearScreen()
 
 	switch pilihan {
@@ -33,20 +32,20 @@ Selamat Datang di Pembelajaran Searching
 			isInputValid := false
 			for !isInputValid {
 				fmt.Scan(&pilihan2)
-				fmt.Scanln() 
+				fmt.Scanln()
 				if strings.ToLower(pilihan2) == "y" {
-					isInputValid = true 
-					MainMenu()          
-					return              
+					isInputValid = true
+					MainMenu()
+					return
 				} else if strings.ToLower(pilihan2) == "n" {
-					isInputValid = true 
+					isInputValid = true
 					return
 				} else {
 					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
 					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
 				}
 			}
-		} else { 
+		} else {
 			return
 		}
 
@@ -57,11 +56,11 @@ Selamat Datang di Pembelajaran Searching
 			isInputValid := false
 			for !isInputValid {
 				fmt.Scan(&pilihan2)
-				fmt.Scanln() 
+				fmt.Scanln()
 				if strings.ToLower(pilihan2) == "y" {
-					isInputValid = true 
-					MainMenu()         
-					return             
+					isInputValid = true
+					MainMenu()
+					return
 				} else if strings.ToLower(pilihan2) == "n" {
 					isInputValid = true
 				} else {
@@ -69,47 +68,27 @@ Selamat Datang di Pembelajaran Searching
 					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
 				}
 			}
-		} else { 
+		} else {
 			return
 		}
-	case "3": 
-		atribut.ClearScreen()
-		soalFunction() 
-		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-		isInputValid := false
-		for !isInputValid {
-			fmt.Scan(&pilihan2)
-			fmt.Scanln() 
-			if strings.ToLower(pilihan2) == "y" {
-				isInputValid = true 
-				MainMenu()          
-				return           
-			} else if strings.ToLower(pilihan2) == "n" {
-				isInputValid = true 
-				return
-			} else {
-				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-			}
-		}
-	case "4": 
+	case "0":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran searching.")
 		return
 	default:
-		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', '3', atau '4'.")
+		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', '3', atau '0'.")
 		fmt.Print("Tekan Enter untuk melanjutkan...")
-		fmt.Scanln() 
-		MainMenu()  
+		fmt.Scanln()
+		MainMenu()
 	}
 }
 
 func belajarSequentialSearch() bool {
 	halamanSekarang := 1
-	totalHalaman := 3        
-	var berhenti bool = true 
-	var Choice string       
+	totalHalaman := 3
+	var berhenti bool = true
+	var Choice string
 
-	for berhenti { 
+	for berhenti {
 		atribut.ClearScreen()
 		fmt.Printf("=== Apa itu Sequential Search di Go? (Halaman %d/%d) ===\n", halamanSekarang, totalHalaman)
 
@@ -150,7 +129,7 @@ func belajarSequentialSearch() bool {
 			fmt.Println("    - **Worst Case & Average Case:** O(n) - Jika elemen berada di akhir daftar, atau tidak ditemukan sama sekali, algoritma harus memeriksa setiap elemen (n adalah jumlah elemen). Ini berarti waktu yang dibutuhkan berbanding lurus dengan ukuran daftar.")
 			fmt.Println("\n- **Tidak Efisien untuk Data Besar:** Untuk daftar yang memiliki ribuan atau jutaan elemen, Sequential Search akan sangat lambat karena harus memeriksa setiap elemen satu per satu. Ini membuatnya tidak praktis untuk database besar atau aplikasi yang membutuhkan kinerja tinggi.")
 			fmt.Println("\nOleh karena itu, Sequential Search jarang digunakan untuk pencarian di data besar, kecuali jika data tersebut tidak dapat diurutkan atau jumlahnya sangat kecil.")
-			fmt.Println("\n---") 
+			fmt.Println("\n---")
 			fmt.Println("### Latihan Sederhana Sequential Search")
 			fmt.Println("Pikirkan bagaimana kamu akan memodifikasi fungsi `sequentialSearch` di atas agar juga mengembalikan `true` jika elemen ditemukan, dan `false` jika tidak ditemukan.")
 			fmt.Println("```go")
@@ -169,39 +148,33 @@ func belajarSequentialSearch() bool {
 			for !isInputValid {
 				fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
-				fmt.Scanln() 
+				fmt.Scanln()
 
 				if strings.ToLower(Choice) == "y" {
 					halamanSekarang++
-					isInputValid = true 
+					isInputValid = true
 				} else if strings.ToLower(Choice) == "n" {
 					atribut.ClearScreen()
-					berhenti = false    
-					isInputValid = true 
-					MainMenu()          
-					return false        
+					berhenti = false
+					isInputValid = true
+					MainMenu()
+					return false
 				} else {
 					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
 				}
 			}
-		} else { 
+		} else {
 			isInputValid := false
 			for !isInputValid {
 				fmt.Print("Materi selesai! Mau lanjut ke Soal (s) atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
 				fmt.Scanln()
-
-				if strings.ToLower(Choice) == "s" {
-					soalFunction()      
-					berhenti = false    
-					isInputValid = true 
-					return true         
-				} else if strings.ToLower(Choice) == "n" {
-					berhenti = false    
-					isInputValid = true 
-					MainMenu()          
+				if strings.ToLower(Choice) == "n" {
+					berhenti = false
+					isInputValid = true
+					MainMenu()
 					atribut.ClearScreen()
-					return false 
+					return false
 				} else {
 					fmt.Println("Pilihan tidak valid. Harap masukkan 's' atau 'n'.")
 				}
@@ -308,13 +281,7 @@ func belajarBinarySearch() bool {
 				fmt.Print("Materi selesai! Mau lanjut ke Soal (s) atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
 				fmt.Scanln() // Clear newline
-
-				if strings.ToLower(Choice) == "s" {
-					soalFunction()      // Memanggil fungsi soalFunction
-					berhenti = false    // Mengatur 'berhenti' menjadi false untuk keluar dari loop utama
-					isInputValid = true // Input valid, keluar dari loop
-					return true         // Return true to go back to MainMenu after quiz
-				} else if strings.ToLower(Choice) == "n" {
+				if strings.ToLower(Choice) == "n" {
 					berhenti = false    // Mengatur 'berhenti' menjadi false untuk keluar dari loop utama
 					isInputValid = true // Input valid, keluar dari loop
 					MainMenu()          // Rekursi
@@ -331,12 +298,3 @@ func belajarBinarySearch() bool {
 
 // soalFunction is a placeholder for the quiz section.
 // This function can be reused by both sequential and binary search learning modules.
-func soalFunction() {
-	atribut.ClearScreen()
-	fmt.Println("==================")
-	fmt.Println(" 	SOAL SEARCHING") // Generic name for searching quiz
-	fmt.Println("==================")
-	fmt.Println("COMING SOON!")
-	fmt.Println("\nTekan Enter untuk melanjutkan...")
-	fmt.Scanln() // Wait for Enter
-}

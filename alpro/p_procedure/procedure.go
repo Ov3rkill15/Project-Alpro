@@ -15,8 +15,7 @@ func MainMenu() {
 Selamat Datang di Pembelajaran Procedure
 =====================================
 1. Apa itu Procedure
-2. Soal Procedure
-3. Keluar
+0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
 	fmt.Scan(&pilihan)
@@ -47,28 +46,7 @@ Selamat Datang di Pembelajaran Procedure
 		} else {
 			return
 		}
-
-	case "2":
-		atribut.ClearScreen()
-		soalProcedure()
-		fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-		berhenti2 := false
-		for !berhenti2 {
-			fmt.Scan(&pilihan2)
-			fmt.Scanln()
-			if strings.ToLower(pilihan2) == "y" {
-				berhenti2 = true
-				MainMenu()
-				return
-			} else if strings.ToLower(pilihan2) == "n" {
-				berhenti2 = true
-				return
-			} else {
-				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-			}
-		}
-	case "3":
+	case "0":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran procedure.")
 		return
 	default:
@@ -166,41 +144,35 @@ func belajarProcedure() bool {
 		fmt.Println("\n------------------------------------")
 
 		if halamanSekarang < totalHalaman {
-			berhenti2 := false 
+			berhenti2 := false
 			for !berhenti2 {
 				fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
-				fmt.Scanln() 
+				fmt.Scanln()
 
 				if strings.ToLower(Choice) == "y" {
 					halamanSekarang++
-					berhenti2 = true 
+					berhenti2 = true
 				} else if strings.ToLower(Choice) == "n" {
 					atribut.ClearScreen()
-					berhenti = false 
-					berhenti2 = true 
-					MainMenu()       
-					return false     
+					berhenti = false
+					berhenti2 = true
+					MainMenu()
+					return false
 				} else {
 					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
 				}
 			}
-		} else { 
-			berhenti2 := false 
+		} else {
+			berhenti2 := false
 			for !berhenti2 {
 				fmt.Print("Materi selesai! Mau lanjut ke soal (k), atau kembali ke menu utama (n)? ")
 				fmt.Scan(&Choice)
-				fmt.Scanln() 
-
-				if strings.ToLower(Choice) == "k" {
-					soalProcedure()
-					berhenti = false 
-					berhenti2 = true 
-					return true      
-				} else if strings.ToLower(Choice) == "n" {
-					berhenti = false 
-					berhenti2 = true 
-					MainMenu()       
+				fmt.Scanln()
+				if strings.ToLower(Choice) == "n" {
+					berhenti = false
+					berhenti2 = true
+					MainMenu()
 					atribut.ClearScreen()
 					return false
 				} else {
@@ -210,14 +182,4 @@ func belajarProcedure() bool {
 		}
 	}
 	return true
-}
-
-func soalProcedure() {
-	atribut.ClearScreen()
-	fmt.Println("====================")
-	fmt.Println(" 	SOAL PROCEDURE") 
-	fmt.Println("====================")
-	fmt.Println("COMING SOON!")
-	fmt.Println("\nTekan Enter untuk melanjutkan...")
-	fmt.Scanln() 
 }
