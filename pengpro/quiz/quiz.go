@@ -24,12 +24,21 @@ var DataQuiz [NMAX]atribut.Quiz = [NMAX]atribut.Quiz{
 
 // FindStudentIndex finds a student's index by ID. It's exported.
 func FindStudentIndex(studentID string) int {
-	for i := 0; i < NMAX; i++ {
+	i := 0
+	found := false // Flag untuk menandakan apakah siswa ditemukan
+
+	for i < NMAX && !found { // Simulasi: while i < NMAX AND NOT found do
 		if strings.ToLower(DataQuiz[i].ID) == strings.ToLower(studentID) {
-			return i
+			found = true // Jika ditemukan, set flag 'found' menjadi true
+		} else {
+			i++ // Jika tidak ditemukan, lanjutkan ke indeks berikutnya
 		}
 	}
-	return -1
+	if found {
+		return i 
+	} else {
+		return -1 
+	}
 }
 
 // RegisterNewStudent adds a new student's data to the DataQuiz array. It's exported.
