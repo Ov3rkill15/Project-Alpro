@@ -1,6 +1,7 @@
 package p_tipeBentukan
 
 import (
+	soal "Project-Alpro/alpro/praktikum/Tipe_Bentukan"
 	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
@@ -16,6 +17,7 @@ func MainMenu() {
 Selamat Datang di Pembelajaran Tipe Bentukan
 ============================================
 1. Apa itu Tipe Bentukan (Struct) dan Alias
+2. Soal referensi
 0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
@@ -37,6 +39,27 @@ Selamat Datang di Pembelajaran Tipe Bentukan
 			}
 		} else { // Jika false, artinya user ingin keluar dari modul
 			return
+		}
+	case "2":
+		atribut.ClearScreen()
+		if soal.Soal1bentukan() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Scan(&pilihan2)
+				fmt.Scanln()
+				if strings.ToLower(pilihan2) == "y" {
+					berhenti2 = true
+					MainMenu()
+					return
+				} else if strings.ToLower(pilihan2) == "n" {
+					berhenti2 = true
+					return
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
+				}
+			}
 		}
 	case "0":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran tipe bentukan.")

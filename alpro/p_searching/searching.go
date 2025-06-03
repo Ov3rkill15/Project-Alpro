@@ -1,6 +1,8 @@
 package p_searching
 
 import (
+	binary "Project-Alpro/alpro/praktikum/Binary_Search"
+	sequential "Project-Alpro/alpro/praktikum/Sequential_Search"
 	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
@@ -16,7 +18,8 @@ Selamat Datang di Pembelajaran Searching
 ======================================
 1. Apa itu Sequential Search
 2. Apa itu Binary Search
-3. Soal Searching
+3. Soal Sequential Search
+4. Soal Binary Search
 0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
@@ -48,7 +51,6 @@ Selamat Datang di Pembelajaran Searching
 		} else {
 			return
 		}
-
 	case "2":
 		atribut.ClearScreen()
 		if belajarBinarySearch() {
@@ -67,6 +69,34 @@ Selamat Datang di Pembelajaran Searching
 					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
 					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
 				}
+			}
+		} else {
+			return
+		}
+	case "3":
+		atribut.ClearScreen()
+		if sequential.Soal1SeqSearch() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			fmt.Scan(&pilihan2)
+			fmt.Scanln()
+			if strings.ToLower(pilihan2) == "y" {
+				MainMenu()
+			} else {
+				return
+			}
+		} else {
+			return
+		}
+	case "4":
+		atribut.ClearScreen()
+		if binary.Soal1BinSearch() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			fmt.Scan(&pilihan2)
+			fmt.Scanln()
+			if strings.ToLower(pilihan2) == "y" {
+				MainMenu()
+			} else {
+				return
 			}
 		} else {
 			return

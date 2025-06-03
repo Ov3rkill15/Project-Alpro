@@ -20,7 +20,7 @@ func kelvin(celcius float64) float64 {
 	return kelvin
 }
 
-func Soal1fungsi() {
+func Soal1fungsi() bool {
 	fmt.Println(`
 ============================================
 package main
@@ -62,4 +62,5 @@ func main() {
 		fmt.Printf("%-10.2f %-10.2f %-12.2f %-10.2f\n", celcius_awal, reamur(celcius_awal), fahrenheit(celcius_awal), kelvin(celcius_awal))
 		celcius_awal += step
 	}
+	return true
 }

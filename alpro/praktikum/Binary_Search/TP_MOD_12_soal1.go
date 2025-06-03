@@ -21,7 +21,7 @@ func BinSearch1(tab atribut.Array, n, x int) bool {
 	return mid > -1 && tab.Info[mid] == x
 }
 
-func Soal1BinSearch() {
+func Soal1BinSearch() bool {
 	fmt.Println(`
 ============================================
 package main
@@ -93,5 +93,6 @@ func main() {
 	atribut.BacaData1(&data)
 	atribut.CetakData1(data)
 	BinSearch1(data, data.N, x)
+	return true
 
 }

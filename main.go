@@ -104,12 +104,6 @@ func main() {
 		helo = "Jihan"
 	}
 
-	if sign == "masuk" || sign == "1" {
-		menuKonfirmasi("ya")
-	} else {
-		menuKonfirmasi("tidak")
-	}
-
 	for !stop {
 		atribut.ClearScreen() // Membersihkan layar sebelum menampilkan menu
 		user := figure.NewFigure(helo, "doom", true).String()
@@ -156,59 +150,6 @@ func main() {
 			fmt.Println()
 		}
 
-	}
-
-}
-
-func menuKonfirmasi(n string) {
-	// var konfirmasi string
-	var konfirmasi2 string
-	switch n {
-	case "ya":
-		atribut.ClearScreen()
-		fmt.Println("Kami sarankan untuk kamu langsung menuju pilihan 2")
-		fmt.Println("1. Setuju")
-		fmt.Println("2. Dari awal aja!")
-		fmt.Scanln(&konfirmasi2)
-		cek := strings.ToLower(konfirmasi2)
-		switch cek {
-		case "1", "setuju":
-			fmt.Println("Menuju Algoritma Pemrograman!")
-			atribut.Loading(100)
-			atribut.ClearScreen()
-			alpro.MainMenu()
-		case "2", "dari awal aja", "awal", "dari awal":
-			fmt.Println("Oke, mari belajar sama-sama!")
-			atribut.Loading(100)
-			atribut.ClearScreen()
-			menu()
-		}
-	case "tidak":
-		fmt.Println(`
-=========================================
-BELAJAR BARENG ALWAN & FATHUR!!!!!!
-=========================================
-Apakah kamu pernah belajar pemrograman go?
-=========================================
-1. ya
-2. tidak
-=========================================`)
-		fmt.Scan(&konfirmasi2)
-		cek := strings.ToLower(konfirmasi2)
-		switch cek {
-		case "1", "setuju":
-			fmt.Println("Menuju Algoritma Pemrograman!")
-			atribut.Loading(1200)
-			atribut.ClearScreen()
-			alpro.MainMenu()
-		case "2", "dari awal aja", "awal", "dari awal":
-			fmt.Println("Oke, mari belajar sama-sama!")
-			atribut.Loading(1200)
-			atribut.ClearScreen()
-			menu()
-		}
-	default:
-		fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 	}
 
 }

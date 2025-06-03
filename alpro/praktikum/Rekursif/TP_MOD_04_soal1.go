@@ -10,7 +10,7 @@ func fibo(n int) int {
 	}
 }
 
-func Soal1rekursif() {
+func Soal1rekursif() bool {
 	fmt.Print(`
 ============================================
 package main
@@ -36,4 +36,5 @@ func main() {
 	var bil int
 	fmt.Scan(&bil)
 	fmt.Println(fibo(bil))
+	return true
 }

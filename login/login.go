@@ -363,7 +363,7 @@ func AddUser(newUser User) bool {
 //                              ADMIN PERMISSIONS
 //==================================================================================
 
-const MAX_RIWAYAT int = 1200
+const MAX_RIWAYAT int = 100
 
 type RiwayatAdmin struct {
 	Timestamp string

@@ -1,16 +1,84 @@
 package p_array
 
 import (
+	soal "Project-Alpro/alpro/praktikum/Array"
 	"Project-Alpro/atribut"
-	"bufio"
 	"fmt"
-	"os"
 	"strings"
 )
 
-func MainMenu() bool {
+func MainMenu() {
+	var pilihan string
+	var pilihan2 string
+	var key int
+	fmt.Println(`
+=====================================
+Selamat Datang di Pembelajaran Array
+=====================================
+1. Apa itu Array
+2. Referensi Soal Array
+0. Keluar
+    `)
+	fmt.Print("Masukkan pilihan: ")
+	fmt.Scan(&pilihan)
+	fmt.Scanln()
+	atribut.ClearScreen()
+
+	switch pilihan {
+	case "1":
+		atribut.ClearScreen()
+		if belajarArray(&key) {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Scan(&pilihan2)
+				fmt.Scanln()
+				if strings.ToLower(pilihan2) == "y" {
+					MainMenu()
+				} else if strings.ToLower(pilihan2) == "n" {
+					return
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
+				}
+			}
+		} else {
+			return
+		}
+	case "2":
+		atribut.ClearScreen()
+		if soal.Soal1array() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Scan(&pilihan2)
+				fmt.Scanln()
+				if strings.ToLower(pilihan2) == "y" {
+					MainMenu()
+				} else if strings.ToLower(pilihan2) == "n" {
+					return
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
+				}
+			}
+		} else {
+			return
+		}
+	case "0":
+		fmt.Println("Terima kasih telah menggunakan program pembelajaran function.")
+		return
+	default:
+		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '0'.")
+		fmt.Print("Tekan Enter untuk melanjutkan...")
+		fmt.Scanln()
+		MainMenu()
+	}
+}
+
+func belajarArray(key *int) bool {
 	halamanSekarang := 1
-	totalHalaman := 2
+	totalHalaman := 3
 	var berhenti bool = true
 	var Choice string
 
@@ -66,7 +134,6 @@ func MainMenu() bool {
 		}
 
 		fmt.Println("\n------------------------------------")
-
 		if halamanSekarang < totalHalaman {
 			berhenti2 := false
 			for !berhenti2 {
@@ -81,6 +148,7 @@ func MainMenu() bool {
 					atribut.ClearScreen()
 					berhenti = false
 					berhenti2 = true
+					MainMenu()
 					return false
 				} else {
 					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
@@ -89,13 +157,19 @@ func MainMenu() bool {
 		} else {
 			berhenti2 := false
 			for !berhenti2 {
-				fmt.Print("Materi selesai!Tekan Enter untuk kembali...")
-				bufio.NewReader(os.Stdin).ReadBytes('\n')
-				atribut.Loading(1200)
-				berhenti = false
-				berhenti2 = true
-				atribut.ClearScreen()
-				return false
+				fmt.Print("kembali ke menu utama (n)")
+				fmt.Scan(&Choice)
+				fmt.Scanln()
+				if strings.ToLower(Choice) == "n" {
+					berhenti = false
+					berhenti2 = true
+					MainMenu()
+					atribut.ClearScreen()
+					*key = 10
+					return false
+				} else {
+					fmt.Println("Pilihan tidak valid.")
+				}
 			}
 		}
 	}

@@ -10,7 +10,7 @@ import (
 )
 
 // Choice2 adalah variabel global untuk menyimpan pilihan pengguna setelah jawaban benar.
-const nmax int = 5
+const nmax int = 10
 
 // Soal merepresentasikan struktur soal dengan pertanyaan dan daftar test case.
 type Soal struct {
@@ -44,7 +44,7 @@ func StartSoalMenu() bool { // Renamed and added return value
 	reader := bufio.NewReader(os.Stdin)
 
 	// Definisi semua soal secara langsung di dalam kode Go
-	daftarSoal := [10]Soal{
+	daftarSoal := [nmax]Soal{
 		{
 			Materi:     "Function (Sederhana)",
 			Pertanyaan: "Buatlah sebuah fungsi Go bernama `hitungJumlah` yang menerima dua bilangan bulat ($a$ dan $b$) sebagai input, lalu mengembalikan hasil penjumlahan kedua bilangan tersebut. Cetak hasil pemanggilan fungsi ini dengan input 5 dan 3.",
@@ -105,18 +105,20 @@ func StartSoalMenu() bool { // Renamed and added return value
 		fmt.Printf("%d. %s\n", i+1, s.Materi)
 		i++
 	}
+	fmt.Println("0. Keluar")
 	fmt.Print("Masukkan pilihan: ")
 	pilihanStr, _ := reader.ReadString('\n')
 	pilihanStr = strings.TrimSpace(pilihanStr)
 
 	pilihanInt := -1
 	fmt.Sscanf(pilihanStr, "%d", &pilihanInt)
-
+	if pilihanInt == 0 {
+		return true
+	}
 	if pilihanInt < 1 || pilihanInt > len(daftarSoal) {
 		fmt.Println("Pilihan tidak valid")
 		return false
 	}
-
 	soalTerpilih := daftarSoal[pilihanInt-1]
 
 	// Auto tulis soal di file jawaban.go sebagai komentar
@@ -125,7 +127,7 @@ func StartSoalMenu() bool { // Renamed and added return value
 	fmt.Println("Membuka Notepad++ untuk menjawab soal...")
 	time.Sleep(1 * time.Second)
 	openNotepadPlusPlus("jawaban.go")
-
+	var nilai float64 = 10
 	for {
 		fmt.Print("\nTekan ENTER untuk cek jawaban atau 'x' untuk keluar: ")
 		input, _ := reader.ReadString('\n')
@@ -133,16 +135,15 @@ func StartSoalMenu() bool { // Renamed and added return value
 
 		if strings.ToLower(input) == "x" {
 			fmt.Println("Keluar dari mode soal...")
-			os.Remove("jawaban.go") // Hapus file jawaban.go saat keluar.
+			os.Remove("jawaban.go")
 			fmt.Print("\nTekan ENTER: ")
-			bufio.NewReader(os.Stdin).ReadString('\n') // Just consume the newline
-			return false                               // Indicate that the user wants to go back
+			bufio.NewReader(os.Stdin).ReadString('\n')
+			return false
 		}
 
 		output, _ := compileAndRun()
 		match := false
-		for i := 0; i < len(soalTerpilih.TestCases); i++ {
-			tc := soalTerpilih.TestCases[i]
+		for _, tc := range soalTerpilih.TestCases {
 			if strings.Contains(output, tc) {
 				match = true
 			}
@@ -150,19 +151,27 @@ func StartSoalMenu() bool { // Renamed and added return value
 
 		if match {
 			fmt.Println("\n✅ Jawaban BENAR! Output sesuai test case.")
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			if nilai < 0 {
+				nilai = 0
+			}
+			fmt.Printf("Nilai kamu: %.2f\n", nilai)
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama? (y/n)")
 			fmt.Scan(&Choice2)
-			// Membersihkan buffer stdin setelah fmt.Scan
 			bufio.NewReader(os.Stdin).ReadString('\n')
-			if strings.ToLower(Choice2) == "y" {
-				os.Remove("jawaban.go") // Hapus file sebelum memanggil MainMenu lagi.
-				return true             // Indicate that the user wants to select another topic
-			} else {
-				os.Remove("jawaban.go") // Hapus file jawaban.go saat kembali ke menu utama.
-				return false            // Indicate that the user wants to go back to main menu
+
+			os.Remove("jawaban.go")
+			switch strings.ToLower(Choice2) {
+			case "y":
+				return StartSoalMenu()
+			case "n":
+				return true
+			default:
+				fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 			}
 		} else {
+			nilai -= nilai * 0.1 // Pengurangan 10%
 			fmt.Println("\n❌ Output tidak sesuai dengan test case.")
+			fmt.Printf("Nilai dikurangi 10%%, sisa nilai: %.2f\n", nilai)
 			fmt.Println("Output kamu:\n", output)
 			fmt.Println("Test case yang diharapkan:")
 			for _, t := range soalTerpilih.TestCases {

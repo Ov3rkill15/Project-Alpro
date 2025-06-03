@@ -6,7 +6,7 @@ const NMAX int = 100
 
 type tabInt [NMAX]int
 
-func SoalSelectionSort() {
+func SoalSelectionSort() bool {
 	fmt.Println(`
 ============================================
 package main
@@ -73,7 +73,7 @@ func cetakData(A tabInt, N int) {
 	cetakData(data, nData)
 	SelectionSort(&data, nData)
 	cetakData(data, nData)
-
+	return true
 }
 
 func SelectionSort(A *tabInt, N int) {

@@ -1,6 +1,7 @@
 package p_rekursif
 
 import (
+	soal "Project-Alpro/alpro/praktikum/Rekursif"
 	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
@@ -15,6 +16,7 @@ func MainMenu() {
 Selamat Datang di Pembelajaran Rekursif
 ======================================
 1. Apa itu Rekursif
+2. Referensi Soal
 0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
@@ -37,11 +39,25 @@ Selamat Datang di Pembelajaran Rekursif
 		} else {
 			return
 		}
+	case "2":
+		atribut.ClearScreen()
+		if soal.Soal1rekursif() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			fmt.Scan(&pilihan2)
+			fmt.Scanln()
+			if strings.ToLower(pilihan2) == "y" {
+				MainMenu()
+			} else {
+				return
+			}
+		} else {
+			return
+		}
 	case "0":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran rekursif.")
 		return
 	default:
-		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '3'.")
+		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '0'.")
 		fmt.Print("Tekan Enter untuk melanjutkan...")
 		fmt.Scanln()
 		MainMenu()
@@ -145,7 +161,7 @@ func belajarRekursif() bool {
 			// Loop untuk input valid s/n
 			berhenti2 := false
 			for !berhenti2 {
-				fmt.Print("Materi selesai! Mau lanjut ke soal (s), atau kembali ke menu utama (n)? ")
+				fmt.Print("kembali ke menu utama (n)")
 				fmt.Scan(&Choice)
 				fmt.Scanln() // Clear newline
 				if strings.ToLower(Choice) == "n" {
@@ -155,7 +171,7 @@ func belajarRekursif() bool {
 					atribut.ClearScreen()
 					return false // Return false to exit belajarRekursif
 				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 's' atau 'n'.")
+					fmt.Println("Pilihan tidak valid.")
 				}
 			}
 		}

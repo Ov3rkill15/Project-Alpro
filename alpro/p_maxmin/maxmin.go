@@ -1,6 +1,7 @@
 package p_maxmin
 
 import (
+	soal "Project-Alpro/alpro/praktikum/Searching"
 	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
@@ -15,6 +16,8 @@ func MainMenu() {
 Selamat Datang di Pembelajaran Max & Min Array
 ============================================
 1. Mencari Nilai Maksimum & Minimum
+2. Referensi Soal Max
+3. Referensi Soal Min
 0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
@@ -46,11 +49,53 @@ Selamat Datang di Pembelajaran Max & Min Array
 		} else {
 			return
 		}
+	case "2":
+		atribut.ClearScreen()
+		if soal.Soal1searching() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Scan(&pilihan2)
+				fmt.Scanln()
+				if strings.ToLower(pilihan2) == "y" {
+					berhenti2 = true
+					MainMenu()
+					return
+				} else if strings.ToLower(pilihan2) == "n" {
+					berhenti2 = true
+					return
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
+				}
+			}
+		}
+	case "3":
+		atribut.ClearScreen()
+		if soal.Soal2searching() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Scan(&pilihan2)
+				fmt.Scanln()
+				if strings.ToLower(pilihan2) == "y" {
+					berhenti2 = true
+					MainMenu()
+					return
+				} else if strings.ToLower(pilihan2) == "n" {
+					berhenti2 = true
+					return
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
+				}
+			}
+		}
 	case "0":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran Max & Min.")
 		return
 	default:
-		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '3'.")
+		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '0'.")
 		fmt.Print("Tekan Enter untuk melanjutkan...")
 		fmt.Scanln()
 		MainMenu()
@@ -169,7 +214,7 @@ func belajarMaxMin() bool {
 		} else {
 			berhenti2 := false
 			for !berhenti2 {
-				fmt.Print("Materi selesai! Mau lanjut ke soal (s), atau kembali ke menu utama (n)? ")
+				fmt.Print("kembali ke menu utama (n)")
 				fmt.Scan(&Choice)
 				fmt.Scanln()
 				if strings.ToLower(Choice) == "n" {
@@ -179,7 +224,7 @@ func belajarMaxMin() bool {
 					atribut.ClearScreen()
 					return false
 				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 's' atau 'n'.")
+					fmt.Println("Pilihan tidak valid.")
 				}
 			}
 		}

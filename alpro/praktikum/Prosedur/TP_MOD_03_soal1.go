@@ -18,7 +18,7 @@ func total(LP, LL, KP, KL float64, totalluas *float64, totalkeliling *float64) {
 	*totalkeliling = KP + KL
 }
 
-func Soal1prosedur() {
+func Soal1prosedur() bool {
 	fmt.Println(`
 ============================================
 package main
@@ -78,4 +78,5 @@ func main() {
 			break
 		}
 	}
+	return true
 }

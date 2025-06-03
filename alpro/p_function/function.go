@@ -1,6 +1,7 @@
 package p_function
 
 import (
+	soal "Project-Alpro/alpro/praktikum/Fungsi"
 	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
@@ -15,6 +16,7 @@ func MainMenu() {
 Selamat Datang di Pembelajaran Function
 =====================================
 1. Apa itu Function
+2. Referensi Soal Fungsi
 0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
@@ -43,11 +45,31 @@ Selamat Datang di Pembelajaran Function
 		} else {
 			return
 		}
+	case "2":
+		atribut.ClearScreen()
+		if soal.Soal1fungsi() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Scan(&pilihan2)
+				fmt.Scanln()
+				if strings.ToLower(pilihan2) == "y" {
+					MainMenu()
+				} else if strings.ToLower(pilihan2) == "n" {
+					return
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
+				}
+			}
+		} else {
+			return
+		}
 	case "0":
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran function.")
 		return
 	default:
-		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '3'.")
+		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '0'.")
 		fmt.Print("Tekan Enter untuk melanjutkan...")
 		fmt.Scanln()
 		MainMenu()
@@ -157,7 +179,7 @@ func belajarFunction() bool {
 		} else {
 			berhenti2 := false
 			for !berhenti2 {
-				fmt.Print("Materi selesai! Mau lanjut ke soal (s), atau kembali ke menu utama (n)? ")
+				fmt.Print("kembali ke menu utama (n)")
 				fmt.Scan(&Choice)
 				fmt.Scanln()
 				if strings.ToLower(Choice) == "n" {
@@ -167,7 +189,7 @@ func belajarFunction() bool {
 					atribut.ClearScreen()
 					return false
 				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 's' atau 'n'.")
+					fmt.Println("Pilihan tidak valid.")
 				}
 			}
 		}

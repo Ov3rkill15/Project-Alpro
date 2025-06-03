@@ -2,7 +2,7 @@ package Array
 
 import "fmt"
 
-func Soal1array() {
+func Soal1array() bool {
 	fmt.Println(`
 package main
 
@@ -39,4 +39,5 @@ func main() {
 	for i = 0; i < n; i++ {
 		fmt.Println(A[i])
 	}
+	return true
 }

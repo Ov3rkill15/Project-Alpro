@@ -17,7 +17,7 @@ func SeqSearch(T atribut.Array, N, X int) bool {
 	return ketemu
 }
 
-func Soal1SeqSearch() {
+func Soal1SeqSearch() bool {
 	fmt.Println(`
 ============================================
 package main
@@ -61,5 +61,5 @@ func main() {
 	atribut.BacaData1(&data)
 	atribut.CetakData1(data)
 	SeqSearch(data, data.N, x)
-
+	return true
 }

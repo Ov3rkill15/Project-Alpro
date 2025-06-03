@@ -10,6 +10,7 @@ import (
 	selection "Project-Alpro/alpro/praktikum/Selection_Sort"
 	sequential "Project-Alpro/alpro/praktikum/Sequential_Search"
 	Tbentukan "Project-Alpro/alpro/praktikum/Tipe_Bentukan"
+	insertion "Project-Alpro/alpro/praktikum/insertion_sort"
 	"fmt"
 )
 
@@ -29,6 +30,7 @@ Berikut Adalah Pilihan Tugas Pendahuluan:
 7. Sequential Search
 8. Binary Search
 9. Selection Sort
+10. Insertion Sort
 0. Keluar
 	`)
 	fmt.Scan(&pilihan)
@@ -284,6 +286,16 @@ func kumpulanTugasPendahuluan(n1, n2 string) {
 		case "1":
 			selection.SoalSelectionSort()
 			tanyaKembali("selection")
+		case "0":
+			MainMenu()
+		default:
+			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
+		}
+	case "10":
+		switch n2 {
+		case "1":
+			insertion.SoalInsertionSort()
+			tanyaKembali("insertion")
 		case "0":
 			MainMenu()
 		default:

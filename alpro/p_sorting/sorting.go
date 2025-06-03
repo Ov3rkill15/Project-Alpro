@@ -1,6 +1,8 @@
 package p_sorting
 
 import (
+	selection "Project-Alpro/alpro/praktikum/Selection_Sort"
+	insertion "Project-Alpro/alpro/praktikum/insertion_sort"
 	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
@@ -16,6 +18,8 @@ Selamat Datang di Pembelajaran Sorting
 ======================================
 1. Apa itu Selection Sort
 2. Apa itu Insertion Sort
+3. Referensi Soal Selection Sort
+4. Refensisi Soal Insertion Sort
 0. Keluar
     `)
 	fmt.Print("Masukkan pilihan: ")
@@ -73,6 +77,49 @@ Selamat Datang di Pembelajaran Sorting
 		} else { // Jika false, artinya belajarInsertionSort sudah mengarahkan atau keluar
 			return
 		}
+	case "3": // Case 3: Referensi Soal Selection Sort
+		atribut.ClearScreen()
+		if selection.SoalSelectionSort() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Scan(&pilihan2)
+				fmt.Scanln()
+				if strings.ToLower(pilihan2) == "y" {
+					berhenti2 = true
+					MainMenu()
+					return
+				} else if strings.ToLower(pilihan2) == "n" {
+					berhenti2 = true
+					return
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
+				}
+			}
+		}
+	case "4":
+		atribut.ClearScreen()
+		if insertion.SoalInsertionSort() {
+			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
+			berhenti2 := false
+			for !berhenti2 {
+				fmt.Scan(&pilihan2)
+				fmt.Scanln()
+				if strings.ToLower(pilihan2) == "y" {
+					berhenti2 = true
+					MainMenu()
+					return
+				} else if strings.ToLower(pilihan2) == "n" {
+					berhenti2 = true
+					return
+				} else {
+					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
+					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
+				}
+			}
+		}
+
 	case "0": // Case 4: Keluar
 		fmt.Println("Terima kasih telah menggunakan program pembelajaran sorting.")
 		return

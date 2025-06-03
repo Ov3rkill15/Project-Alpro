@@ -2,7 +2,7 @@ package Searching
 
 import "fmt"
 
-func Soal2searching() {
+func Soal2searching() bool {
 	fmt.Println(`
 ============================================
 package main
@@ -48,4 +48,5 @@ func main() {
 		}
 	}
 	fmt.Println(A[MIN], MIN)
+	return true
 }
