@@ -166,9 +166,11 @@ func displayQuizScores(sortOrder string) {
 		}
 	case "ascending":
 		fmt.Println("     (Diurutkan Menaik berdasarkan Total Poin) ")
-		pass := 0                  // pass <- 0
-		for pass < activeCount-1 { // while pass <= n-1 do (simulasi)
-			// { 1. Pencarian nilai idx ekstrim (minimum) }
+		// Selection Sort untuk urut menaik, dengan pass dimulai dari 1
+		// Catatan: Ini akan melewatkan pengurutan elemen pertama (indeks 0).
+		pass := 1                // pass <- 1
+		for pass < activeCount { // while pass <= n-1 do (simulasi, n=activeCount)
+			// { 1. Pencarian nilai idx ekstrim (minimum) dari pass hingga akhir array }
 			idx := pass           // idx <- pass
 			i := pass + 1         // i <- pass + 1
 			for i < activeCount { // while i < n do (simulasi)
@@ -178,9 +180,9 @@ func displayQuizScores(sortOrder string) {
 				i++ // i <- i + 1
 			}
 			// { 2. Pertukaran }
-			temp := studentsToSort[idx]                // temp <- A[idx]
-			studentsToSort[idx] = studentsToSort[pass] // A[idx] <- A[pass]
-			studentsToSort[pass] = temp                // A[pass] <- temp
+			temp := studentsToSort[idx]
+			studentsToSort[idx] = studentsToSort[pass]
+			studentsToSort[pass] = temp
 
 			pass++ // pass <- pass + 1
 		}
