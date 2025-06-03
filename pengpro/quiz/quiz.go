@@ -10,16 +10,16 @@ const NMAX int = 15
 
 // DataQuiz is the global dataquiz array for your application
 var DataQuiz [NMAX]atribut.Quiz = [NMAX]atribut.Quiz{
-	{Nama: "Budi Santoso", ID: "QS001", TotalScore: 0},
-	{Nama: "Siti Aminah", ID: "QS002", TotalScore: 0},
-	{Nama: "Joko Susilo", ID: "QS003", TotalScore: 0},
-	{Nama: "Dewi Lestari", ID: "QS004", TotalScore: 0},
-	{Nama: "Agus Ramadhan", ID: "QS005", TotalScore: 0},
-	{Nama: "Putri Indah", ID: "QS006", TotalScore: 0},
-	{Nama: "Rizky Pratama", ID: "QS007", TotalScore: 0},
-	{Nama: "Nurul Hidayah", ID: "QS008", TotalScore: 0},
-	{Nama: "Faisal Rahman", ID: "QS009", TotalScore: 0},
-	{Nama: "Linda Wijaya", ID: "QS010", TotalScore: 0},
+	{Nama: "Alwan Suryadi", ID: "0104", TotalScore: 20},
+	{Nama: "fathurrahman", ID: "0035", TotalScore: 16},
+	{Nama: "azriel raihan", ID: "0010", TotalScore: 12},
+	{Nama: "Alya Aziza", ID: "0026", TotalScore: 14},
+	{Nama: "theodore elvis", ID: "0006", TotalScore: 9},
+	{Nama: "Dyah kusuma", ID: "0009", TotalScore: 10},
+	{Nama: "Muhammad Ilham", ID: "0022", TotalScore: 11},
+	{Nama: "nayla assyifa", ID: "0078", TotalScore: 8},
+	{Nama: "fitria cahyani", ID: "0060", TotalScore: 7},
+	{Nama: "zaidan salam", ID: "0088", TotalScore: 19},
 }
 
 // FindStudentIndex finds a student's index by ID. It's exported.
