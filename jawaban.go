@@ -5,14 +5,5 @@ package main
 import "fmt"
 
 func main() {
-	var a, b int
-	fmt.Scan(&a,&b)
-	hitungJumlah(a,b)
-	fmt.Println(hitungJumlah(a,b))
-}
-
-func hitungJumlah(A int, B int)int{
-	var nilai int
-	nilai = A + b
-	
+		fmt.Println(8)
 }

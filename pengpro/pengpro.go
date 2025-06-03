@@ -58,7 +58,7 @@ func Submenu() int {
 
 	switch Choice {
 	case 1:
-		p_golanguange.MainMenu(&dataquiz.DataQuiz) // Meneruskan pointer ke array DataQuiz global
+		pengenalan.MainMenu(&dataquiz.DataQuiz) // Meneruskan pointer ke array DataQuiz global
 	case 2:
 		tipe_data_go.MainMenu(&dataquiz.DataQuiz) // Meneruskan pointer ke array DataQuiz global
 	case 3:
@@ -240,4 +240,3 @@ func displayQuizScores(sortOrder string) {
 	fmt.Println("Tekan Enter untuk kembali ke menu sebelumnya...")
 	fmt.Scanln()
 }
-

@@ -11,6 +11,7 @@ import (
 	"Project-Alpro/alpro/p_sorting"
 	p_tipeBentukan "Project-Alpro/alpro/p_tipebentukan"
 	"Project-Alpro/alpro/praktikum"
+	"Project-Alpro/alpro/quiz"
 	"Project-Alpro/atribut"
 	"bufio"
 	"fmt"
@@ -23,6 +24,7 @@ import (
 func MainMenu() int {
 	reader := bufio.NewReader(os.Stdin)
 	var stop bool = true
+	var nilaiTemp float64
 	for stop {
 		atribut.ClearScreen()
 		Submenu()
@@ -59,7 +61,14 @@ func MainMenu() int {
 			praktikum.MainMenu()
 		case "10":
 			atribut.ClearScreen()
-			contohsoal.StartSoalMenu()
+			contohsoal.StartSoalMenu(&nilaiTemp)
+		case "11":
+			atribut.ClearScreen()
+			quiz.DisplayScoresMenu()
+
+		case "12":
+			atribut.ClearScreen()
+			quiz.HandleNewStudentRegistration()
 		case "0":
 			atribut.ClearScreen()
 			atribut.Loading(1200)
@@ -91,7 +100,9 @@ Selamat Datang di Algoritma dan Pemrograman
 7. Pembelajaran Searching
 8. Pembelajaran Sorting
 9. Referensi Soal
-10. Contoh Soal
+10. contoh soal
+11. scores	
+12. Register
 
 0. Keluar
 	`)

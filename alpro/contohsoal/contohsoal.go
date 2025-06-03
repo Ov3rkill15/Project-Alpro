@@ -39,7 +39,7 @@ func compileAndRun() (string, error) {
 
 // StartSoalMenu adalah fungsi utama yang mengelola alur soal dan pengecekan jawaban.
 // Ini sekarang mengembalikan boolean untuk menunjukkan apakah pengguna ingin kembali ke MainMenu.
-func StartSoalMenu() bool { // Renamed and added return value
+func StartSoalMenu(nilaiTemp *float64) bool { // Renamed and added return value
 	var Choice2 string
 	reader := bufio.NewReader(os.Stdin)
 
@@ -106,7 +106,9 @@ func StartSoalMenu() bool { // Renamed and added return value
 		i++
 	}
 	fmt.Println("0. Keluar")
-	fmt.Print("Masukkan pilihan: ")
+	fmt.Println("Masukkan pilihan: ")
+	fmt.Println()
+	fmt.Println("nilai saat ini,", *nilaiTemp)
 	pilihanStr, _ := reader.ReadString('\n')
 	pilihanStr = strings.TrimSpace(pilihanStr)
 
@@ -128,7 +130,7 @@ func StartSoalMenu() bool { // Renamed and added return value
 	time.Sleep(1 * time.Second)
 	openNotepadPlusPlus("jawaban.go")
 	var nilai float64 = 10
-	for {
+	for match := false; !match; {
 		fmt.Print("\nTekan ENTER untuk cek jawaban atau 'x' untuk keluar: ")
 		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(input)
@@ -143,8 +145,9 @@ func StartSoalMenu() bool { // Renamed and added return value
 
 		output, _ := compileAndRun()
 		match := false
+		outputTrimmed := strings.TrimSpace(output)
 		for _, tc := range soalTerpilih.TestCases {
-			if strings.Contains(output, tc) {
+			if outputTrimmed == strings.TrimSpace(tc) {
 				match = true
 			}
 		}
@@ -154,6 +157,7 @@ func StartSoalMenu() bool { // Renamed and added return value
 			if nilai < 0 {
 				nilai = 0
 			}
+			*nilaiTemp += nilai
 			fmt.Printf("Nilai kamu: %.2f\n", nilai)
 			fmt.Println("Mau pilih materi lain atau kembali ke menu utama? (y/n)")
 			fmt.Scan(&Choice2)
@@ -162,7 +166,7 @@ func StartSoalMenu() bool { // Renamed and added return value
 			os.Remove("jawaban.go")
 			switch strings.ToLower(Choice2) {
 			case "y":
-				return StartSoalMenu()
+				return StartSoalMenu(nilaiTemp)
 			case "n":
 				return true
 			default:
@@ -179,4 +183,5 @@ func StartSoalMenu() bool { // Renamed and added return value
 			}
 		}
 	}
+	return true
 }
