@@ -1,6 +1,9 @@
 package Fungsi
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func reamur(celcius float64) float64 {
 	var reamur float64
@@ -62,5 +65,26 @@ func main() {
 		fmt.Printf("%-10.2f %-10.2f %-12.2f %-10.2f\n", celcius_awal, reamur(celcius_awal), fahrenheit(celcius_awal), kelvin(celcius_awal))
 		celcius_awal += step
 	}
+	fmt.Println()
+	var pilihan string
+	// Variabel untuk mengontrol loop input validasi
+	inputValid := false
+	for !inputValid {
+		fmt.Println("\n------------------------------------")
+		fmt.Print("Ingin kembali ke menu utama (n)? ") // Asumsi setelah soal selesai, hanya ada opsi kembali
+		fmt.Scan(&pilihan)
+		fmt.Scanln()
+
+		if strings.ToLower(pilihan) == "n" {
+			inputValid = true // Input valid, keluar dari loop input
+			// Mengembalikan true berarti kembali ke MainMenu
+			return true // Kembali ke MainMenu
+		} else {
+			fmt.Println("Pilihan tidak valid. Harap masukkan 'n'.")
+			// Loop akan terus berjalan sampai input 'n' diterima
+		}
+	}
+	// Jika loop berakhir karena input valid, berarti 'n' sudah dimasukkan,
+	// jadi kita mengembalikan true untuk kembali ke MainMenu.
 	return true
 }

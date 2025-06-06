@@ -11,7 +11,7 @@ import (
 	"Project-Alpro/alpro/p_sorting"
 	p_tipeBentukan "Project-Alpro/alpro/p_tipebentukan"
 	"Project-Alpro/alpro/praktikum"
-	"Project-Alpro/alpro/quiz"
+	"Project-Alpro/alpro/quiz" // Import package quiz
 	"Project-Alpro/atribut"
 	"bufio"
 	"fmt"
@@ -21,16 +21,23 @@ import (
 	"github.com/common-nighthawk/go-figure"
 )
 
+// MainMenu adalah fungsi utama aplikasi.
 func MainMenu() int {
 	reader := bufio.NewReader(os.Stdin)
 	var stop bool = true
-	var nilaiTemp float64
+
+	// --- PENTING: Inisialisasi data siswa di awal program ---
+	// Panggil ini sekali untuk mengisi studentsData di package quiz
+	quiz.InitStudentsData()
+	// --- Akhir bagian inisialisasi ---
+
 	for stop {
 		atribut.ClearScreen()
-		Submenu()
+		Submenu() // Menampilkan menu utama
 		fmt.Print("Masukkan pilihan: ")
 		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(input)
+
 		switch input {
 		case "1":
 			atribut.ClearScreen()
@@ -59,34 +66,38 @@ func MainMenu() int {
 		case "9":
 			atribut.ClearScreen()
 			praktikum.MainMenu()
-		case "10":
+		case "10": // Opsi "contoh soal"
 			atribut.ClearScreen()
-			contohsoal.StartSoalMenu(&nilaiTemp)
-		case "11":
+			// Gunakan quiz.StartQuizSession untuk memulai kuis.
+			// Ini akan menangani pengambilan ID siswa dan meneruskan pointer skor.
+			quiz.StartQuizSession(contohsoal.StartSoalMenu, "Contoh Soal Umum")
+		case "11": // Opsi "scores"
 			atribut.ClearScreen()
 			quiz.DisplayScoresMenu()
-
-		case "12":
+		case "12": // Opsi "Register"
 			atribut.ClearScreen()
-			quiz.HandleNewStudentRegistration()
-		case "0":
+			// quiz.InitStudentsData() // Tidak perlu dipanggil lagi di sini, sudah di awal MainMenu
+			quiz.RegisterNewStudentFlow()
+		case "0": // Opsi "Keluar"
 			atribut.ClearScreen()
-			atribut.Loading(1200)
-			stop = false
+			atribut.Loading(1200) // Animasi loading
+			stop = false          // Menghentikan loop menu utama
 			return 0
-		default:
+		default: // Pilihan tidak valid
 			atribut.ClearScreen()
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
-			atribut.Loading(1200)
+			atribut.Loading(1200) // Animasi loading
 		}
 	}
 	return 0
 }
+
+// Submenu menampilkan menu utama aplikasi.
 func Submenu() {
 	welcome := figure.NewFigure("ALPRO", "doom", true).String()
 	fmt.Print("\033[32m") // Set warna hijau
 	fmt.Print(welcome)    // Cetak teks ASCII
-	fmt.Print("\033[0m")
+	fmt.Print("\033[0m")  // Reset warna
 	fmt.Println(`
 ====================================
 Selamat Datang di Algoritma dan Pemrograman
@@ -100,10 +111,10 @@ Selamat Datang di Algoritma dan Pemrograman
 7. Pembelajaran Searching
 8. Pembelajaran Sorting
 9. Referensi Soal
-10. contoh soal
-11. scores	
-12. Register
+10. Contoh Soal
+11. Lihat Skor Siswa
+12. Daftar/Registrasi Siswa Baru
 
 0. Keluar
-	`)
+     `)
 }

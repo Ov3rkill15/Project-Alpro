@@ -51,3 +51,20 @@ func Loading(durationMs int) {
 func GetWaktuSekarang() string {
 	return time.Now().Format("2006-01-02 15:04:05")
 }
+
+func BukaPDF(path string) error {
+	var cmd *exec.Cmd
+
+	switch runtime.GOOS {
+	case "linux":
+		cmd = exec.Command("xdg-open", path)
+	case "windows":
+		cmd = exec.Command("rundll32", "url.dll,FileProtocolHandler", path)
+	case "darwin": // MacOS
+		cmd = exec.Command("open", path)
+	default:
+		return fmt.Errorf("sistem operasi tidak didukung")
+	}
+
+	return cmd.Start()
+}

@@ -1,94 +1,81 @@
 package p_procedure
 
 import (
-	soal "Project-Alpro/alpro/praktikum/Prosedur"
+	soal "Project-Alpro/alpro/praktikum/Prosedur" // Asumsi ini adalah package soal untuk Prosedur
 	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
 )
 
+// MainMenu adalah fungsi utama untuk navigasi menu pembelajaran Procedure.
 func MainMenu() {
 	var pilihan string
-	var pilihan2 string
+	// Gunakan variabel boolean untuk mengontrol loop menu utama.
+	isRunning := true
 
-	fmt.Println(`
+	for isRunning { // Loop utama agar menu terus tampil sampai pengguna memilih untuk keluar
+		atribut.ClearScreen() // Bersihkan layar setiap kali menu utama ditampilkan
+		fmt.Println(`
 =====================================
 Selamat Datang di Pembelajaran Procedure
 =====================================
 1. Apa itu Procedure
 2. Referensi Soal Procedure
 0. Keluar
-    `)
-	fmt.Print("Masukkan pilihan: ")
-	fmt.Scan(&pilihan)
-	fmt.Scanln()
-	atribut.ClearScreen()
-
-	switch pilihan {
-	case "1":
-		atribut.ClearScreen()
-		if belajarProcedure() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					berhenti2 = true
-					MainMenu()
-					return
-				} else if strings.ToLower(pilihan2) == "n" {
-					berhenti2 = true
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
-			}
-		} else {
-			return
-		}
-	case "2":
-		atribut.ClearScreen()
-		if soal.Soal1prosedur() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					berhenti2 = true
-					MainMenu()
-					return
-				} else if strings.ToLower(pilihan2) == "n" {
-					berhenti2 = true
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
-			}
-		} else {
-			return
-		}
-	case "0":
-		fmt.Println("Terima kasih telah menggunakan program pembelajaran procedure.")
-		return
-	default:
-		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '0'.")
-		fmt.Print("Tekan Enter untuk melanjutkan...")
+		`)
+		fmt.Print("Masukkan pilihan: ")
+		fmt.Scan(&pilihan)
 		fmt.Scanln()
-		MainMenu()
+		atribut.ClearScreen() // Bersihkan layar setelah pilihan diinput
+
+		switch pilihan {
+		case "1":
+			// belajarProcedure akan mengelola navigasi internalnya sendiri
+			// dan akan kembali ke MainMenu saat selesai atau pengguna memilih 'n' dari dalamnya.
+			shouldStayInMenu := belajarProcedure()
+			if !shouldStayInMenu {
+				// Jika belajarProcedure mengindikasikan keluar dari program, hentikan loop MainMenu.
+				// Dalam implementasi belajarProcedure yang kita buat, ini berarti program akan keluar.
+				isRunning = false
+			}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "2":
+			// Asumsi: soal.Soal1prosedur() mengembalikan true jika ingin kembali ke MainMenu,
+			// dan false jika pengguna ingin keluar dari program sepenuhnya.
+			shouldStayInMenu := soal.Soal1prosedur() // Panggil fungsi soal dari package 'soal'
+			if !shouldStayInMenu {
+				// Jika soal.Soal1prosedur() mengindikasikan keluar dari program, hentikan loop MainMenu.
+				fmt.Println("Terima kasih telah menggunakan program pembelajaran procedure.")
+				isRunning = false
+			}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "0":
+			fmt.Println("Terima kasih telah menggunakan program pembelajaran procedure.")
+			isRunning = false // Set isRunning menjadi false untuk menghentikan loop
+
+		default:
+			fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '0'.")
+			fmt.Print("Tekan Enter untuk melanjutkan...")
+			fmt.Scanln()
+			// Loop akan berlanjut secara otomatis karena isRunning masih true
+		}
 	}
 }
 
+// belajarProcedure mengelola materi pembelajaran prosedur.
+// Mengembalikan true jika pengguna ingin kembali ke MainMenu,
+// atau false jika pengguna ingin keluar dari program (misalnya dari halaman terakhir).
 func belajarProcedure() bool {
 	halamanSekarang := 1
-	totalHalaman := 3
-	var berhenti bool = true
+	totalHalaman := 3 // Ada 3 halaman materi
 	var Choice string
 
-	for berhenti {
+	// isStudying akan menjadi false jika pengguna memilih 'n' untuk kembali ke menu utama.
+	isStudying := true
+
+	for isStudying { // Loop tak terbatas sampai pengguna memutuskan untuk keluar dari materi ini
 		atribut.ClearScreen()
 		fmt.Printf("=== Apa itu Procedure di Go? (Halaman %d/%d) ===\n", halamanSekarang, totalHalaman)
 
@@ -120,7 +107,7 @@ func belajarProcedure() bool {
 			fmt.Println("\n**Contoh Prosedur Sederhana:**")
 			fmt.Println("```go")
 			fmt.Println("func tampilkanPesanSelamatDatang(nama string) { // tidak ada tipe return")
-			fmt.Println("    fmt.Printf(\"Halo, %s! Selamat datang di aplikasi kami.\\n\", nama)") // Perbaikan: %s untuk nama
+			fmt.Println("    fmt.Printf(\"Halo, %s! Selamat datang di aplikasi kami.\\n\", nama)")
 			fmt.Println("}")
 			fmt.Println("\n// Cara memanggil (menggunakan) prosedur ini:")
 			fmt.Println("// tampilkanPesanSelamatDatang(\"Budi\") // Ini akan mencetak \"Halo, Budi! Selamat datang di aplikasi kami.\"")
@@ -148,9 +135,9 @@ func belajarProcedure() bool {
 			fmt.Println("    fmt.Println(\"|      MENU APLIKASI   |\")")
 			fmt.Println("    fmt.Println(\"------------------------\")")
 			fmt.Println("    fmt.Println(\"| 1. Tambah Data       |\")")
-			fmt.Println("    fmt.Println(\" | 2. Lihat Data        |\")")
-			fmt.Println("    fmt.Println(\" | 3. Hapus Data        |\")")
-			fmt.Println("    fmt.Println(\" | 4. Keluar            |\")")
+			fmt.Println("    fmt.Println(\"| 2. Lihat Data        |\")")
+			fmt.Println("    fmt.Println(\"| 3. Hapus Data        |\")")
+			fmt.Println("    fmt.Println(\"| 4. Keluar            |\")")
 			fmt.Println("    fmt.Println(\"------------------------\")")
 			fmt.Println("}")
 			fmt.Println("\nfunc main() {")
@@ -164,47 +151,37 @@ func belajarProcedure() bool {
 			fmt.Println("* Tugas utamanya adalah mencetak serangkaian baris ke konsol untuk membentuk menu.")
 			fmt.Println("* Di dalam fungsi `main`, kita **memanggil** `tampilkanMenu()` untuk mengeksekusi kode di dalamnya dan menampilkan menu kepada pengguna.")
 			fmt.Println("\nIni adalah contoh dasar bagaimana prosedur membantu kita mengorganisir kode untuk melakukan tindakan tertentu tanpa perlu mengembalikan nilai.")
+		default:
+			fmt.Println("Halaman tidak ditemukan.")
+			// Jika halaman tidak valid, kita akan menganggap pengguna ingin kembali ke menu utama.
+			return true // Kembali ke MainMenu
 		}
 
 		fmt.Println("\n------------------------------------")
 
-		if halamanSekarang < totalHalaman {
-			berhenti2 := false
-			for !berhenti2 {
+		// Loop untuk mendapatkan input navigasi halaman
+		inputValid := false
+		for !inputValid {
+			if halamanSekarang < totalHalaman {
 				fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
-				fmt.Scan(&Choice)
-				fmt.Scanln()
-
-				if strings.ToLower(Choice) == "y" {
-					halamanSekarang++
-					berhenti2 = true
-				} else if strings.ToLower(Choice) == "n" {
-					atribut.ClearScreen()
-					berhenti = false
-					berhenti2 = true
-					MainMenu()
-					return false
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				}
+			} else { // Jika sudah di halaman terakhir
+				fmt.Print("Kembali ke menu utama (n)? ")
 			}
-		} else {
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Print("kembali ke menu utama (n) ")
-				fmt.Scan(&Choice)
-				fmt.Scanln()
-				if strings.ToLower(Choice) == "n" {
-					berhenti = false
-					berhenti2 = true
-					MainMenu()
-					atribut.ClearScreen()
-					return false
-				} else {
-					fmt.Println("Pilihan tidak valid.")
-				}
+			fmt.Scan(&Choice)
+			fmt.Scanln()
+
+			if strings.ToLower(Choice) == "y" && halamanSekarang < totalHalaman {
+				halamanSekarang++
+				inputValid = true // Input valid, keluar dari loop input dan lanjut ke halaman berikutnya (outer loop)
+			} else if strings.ToLower(Choice) == "n" {
+				isStudying = false // Mengindikasikan untuk keluar dari loop materi
+				inputValid = true  // Input valid, keluar dari loop input
+			} else {
+				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
 			}
 		}
 	}
+	// Setelah loop isStudying berakhir (karena Choice adalah 'n'), kita mengembalikan true
+	// yang menandakan bahwa MainMenu harus terus berjalan.
 	return true
 }

@@ -8,145 +8,98 @@ import (
 	"strings"
 )
 
+// MainMenu adalah fungsi utama untuk navigasi menu pembelajaran Sorting.
 func MainMenu() {
 	var pilihan string
-	var pilihan2 string // Local variable for pilihan2
+	// Gunakan variabel boolean untuk mengontrol loop menu utama.
+	isRunning := true
 
-	fmt.Println(`
+	for isRunning { // Loop utama agar menu terus tampil sampai pengguna memilih untuk keluar
+		atribut.ClearScreen() // Bersihkan layar setiap kali menu utama ditampilkan
+		fmt.Println(`
 ======================================
 Selamat Datang di Pembelajaran Sorting
 ======================================
 1. Apa itu Selection Sort
 2. Apa itu Insertion Sort
 3. Referensi Soal Selection Sort
-4. Refensisi Soal Insertion Sort
+4. Referensi Soal Insertion Sort
 0. Keluar
-    `)
-	fmt.Print("Masukkan pilihan: ")
-	fmt.Scan(&pilihan)
-	fmt.Scanln() // Membersihkan newline
-	atribut.ClearScreen()
+		`)
+		fmt.Print("Masukkan pilihan: ")
+		fmt.Scan(&pilihan)
+		fmt.Scanln() // Membersihkan newline
+		atribut.ClearScreen()
 
-	switch pilihan {
-	case "1":
-		atribut.ClearScreen()
-		// belajarSelectionSort akan mengembalikan true jika user ingin kembali ke MainMenu
-		if belajarSelectionSort() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			// Loop untuk input valid y/n
-			isInputValid := false
-			for !isInputValid {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln() // Membersihkan newline
-				if strings.ToLower(pilihan2) == "y" {
-					isInputValid = true // Valid input, keluar dari loop
-					MainMenu()          // Rekursi
-				} else if strings.ToLower(pilihan2) == "n" {
-					isInputValid = true // Valid input, keluar dari loop
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
+		switch pilihan {
+		case "1":
+			// belajarSelectionSort akan mengembalikan true jika ingin kembali ke MainMenu,
+			// dan false jika pengguna ingin keluar dari program.
+			shouldStayInMenu := belajarSelectionSort()
+			if !shouldStayInMenu {
+				isRunning = false // Hentikan loop MainMenu jika belajarSelectionSort mengindikasikan keluar
 			}
-		} else { // Jika false, artinya belajarSelectionSort sudah mengarahkan atau keluar
-			return
-		}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
 
-	case "2":
-		atribut.ClearScreen()
-		// belajarInsertionSort akan mengembalikan true jika user ingin kembali ke MainMenu
-		if belajarInsertionSort() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			// Loop untuk input valid y/n
-			isInputValid := false
-			for !isInputValid {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln() // Membersihkan newline
-				if strings.ToLower(pilihan2) == "y" {
-					isInputValid = true // Valid input, keluar dari loop
-					MainMenu()          // Rekursi
-				} else if strings.ToLower(pilihan2) == "n" {
-					isInputValid = true // Valid input, keluar dari loop
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
+		case "2":
+			// belajarInsertionSort akan mengembalikan true jika ingin kembali ke MainMenu,
+			// dan false jika pengguna ingin keluar dari program.
+			shouldStayInMenu := belajarInsertionSort()
+			if !shouldStayInMenu {
+				isRunning = false // Hentikan loop MainMenu jika belajarInsertionSort mengindikasikan keluar
 			}
-		} else { // Jika false, artinya belajarInsertionSort sudah mengarahkan atau keluar
-			return
-		}
-	case "3": // Case 3: Referensi Soal Selection Sort
-		atribut.ClearScreen()
-		if selection.SoalSelectionSort() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					berhenti2 = true
-					MainMenu()
-					return
-				} else if strings.ToLower(pilihan2) == "n" {
-					berhenti2 = true
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
-			}
-		}
-	case "4":
-		atribut.ClearScreen()
-		if insertion.SoalInsertionSort() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					berhenti2 = true
-					MainMenu()
-					return
-				} else if strings.ToLower(pilihan2) == "n" {
-					berhenti2 = true
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
-			}
-		}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
 
-	case "0": // Case 4: Keluar
-		fmt.Println("Terima kasih telah menggunakan program pembelajaran sorting.")
-		return
-	default:
-		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', '3', atau '4'.")
-		fmt.Print("Tekan Enter untuk melanjutkan...")
-		fmt.Scanln() // Tunggu Enter
-		MainMenu()   // Rekursi untuk input tidak valid
+		case "3": // Case 3: Referensi Soal Selection Sort
+			// Asumsi: selection.SoalSelectionSort() mengembalikan true jika ingin kembali ke MainMenu,
+			// dan false jika pengguna ingin keluar dari program.
+			shouldStayInMenu := selection.SoalSelectionSort()
+			if !shouldStayInMenu {
+				fmt.Println("Terima kasih telah menggunakan program pembelajaran sorting.")
+				isRunning = false // Hentikan loop MainMenu jika ingin keluar dari program
+			}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "4": // Case 4: Referensi Soal Insertion Sort
+			// Asumsi: insertion.SoalInsertionSort() mengembalikan true jika ingin kembali ke MainMenu,
+			// dan false jika pengguna ingin keluar dari program.
+			shouldStayInMenu := insertion.SoalInsertionSort()
+			if !shouldStayInMenu {
+				fmt.Println("Terima kasih telah menggunakan program pembelajaran sorting.")
+				isRunning = false // Hentikan loop MainMenu jika ingin keluar dari program
+			}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "0": // Case 0: Keluar
+			fmt.Println("Terima kasih telah menggunakan program pembelajaran sorting.")
+			isRunning = false // Set isRunning menjadi false untuk menghentikan loop
+
+		default:
+			fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', '3', '4', atau '0'.")
+			fmt.Print("Tekan Enter untuk melanjutkan...")
+			fmt.Scanln() // Tunggu Enter
+			// Loop akan berlanjut secara otomatis karena isRunning masih true
+		}
 	}
 }
 
-// belajarSelectionSort manages the display of Selection Sort material.
-// It returns true if the user wants to return to the MainMenu, false if it handled redirection.
+// belajarSelectionSort mengelola tampilan materi Selection Sort.
+// Mengembalikan true jika pengguna ingin kembali ke MainMenu,
+// atau false jika pengguna ingin keluar dari program.
 func belajarSelectionSort() bool {
 	halamanSekarang := 1
-	totalHalaman := 3        // Adjusted total pages for Selection Sort
-	var berhenti bool = true // Inisialisasi 'berhenti' sebagai true
-	var Choice string        // Local variable for Choice
+	totalHalaman := 3
+	var Choice string
+	isStudying := true // Kontrol loop utama materi
 
-	for berhenti { // Loop dikendalikan oleh variabel 'berhenti'
+	for isStudying {
 		atribut.ClearScreen()
 		fmt.Printf("=== Apa itu Selection Sort di Go? (Halaman %d/%d) ===\n", halamanSekarang, totalHalaman)
 
 		switch halamanSekarang {
 		case 1:
 			fmt.Println("Bayangkan Anda memiliki tumpukan kartu yang tidak berurutan dan ingin mengurutkannya dari yang terkecil ke terbesar. Dengan **Selection Sort**, Anda akan mencari kartu terkecil dari seluruh tumpukan, lalu meletakkannya di posisi paling awal. Kemudian, Anda ulangi proses ini untuk sisa kartu yang belum terurut.")
-			fmt.Println("\nDalam pemrograman, **Selection Sort (Pengurutan Seleksi)** adalah algoritma pengurutan sederhana yang bekerja dengan cara berulang kali menemukan elemen minimum (atau maksimum) dari bagian daftar yang belum terurut dan menukarnya (swap) ke posisi yang benar di bagian yang terurut.")
+			fmt.Println("\nDalam pemrograman, **Selection Sort (Pengurutan Seleksi)**, atau sering disebut **Linear Sort**, adalah algoritma pengurutan sederhana yang bekerja dengan cara berulang kali menemukan elemen minimum (atau maksimum) dari bagian daftar yang belum terurut dan menukarnya (swap) ke posisi yang benar di bagian yang terurut.")
 			fmt.Println("\n**Konsep Dasar Selection Sort:**")
 			fmt.Println("1.  Pindai seluruh daftar untuk menemukan elemen terkecil.")
 			fmt.Println("2.  Tukar elemen terkecil tersebut dengan elemen di posisi pertama daftar.")
@@ -228,7 +181,7 @@ func belajarSelectionSort() bool {
 			fmt.Println("- **Tidak Efisien untuk Data Besar:** Baik dalam kasus terbaik, rata-rata, maupun terburuk, **Time Complexity** Selection Sort adalah **O(n^2)**. Ini berarti waktu eksekusi meningkat secara kuadratis dengan ukuran input. Untuk daftar yang besar, ini akan sangat lambat.")
 			fmt.Println("- **Tidak Adaptif:** Kinerjanya tidak meningkat bahkan jika daftar sudah sebagian terurut. Ia akan selalu melakukan jumlah perbandingan yang sama.")
 			fmt.Println("\nKarena efisiensinya yang O(n^2), Selection Sort jarang digunakan pada daftar besar. Namun, kesederhanaannya membuatnya cocok untuk daftar yang sangat kecil atau sebagai alat pembelajaran fundamental dalam algoritma pengurutan.")
-			fmt.Println("\n---") // Garis pemisah untuk visualisasi
+			fmt.Println("\n---")
 			fmt.Println("### Latihan Sederhana Selection Sort")
 			fmt.Println("Coba terapkan Selection Sort untuk mengurutkan daftar string (nama-nama).")
 			fmt.Println("```go")
@@ -237,60 +190,59 @@ func belajarSelectionSort() bool {
 			fmt.Println("    // Hint: Perbandingan string di Go menggunakan operator < atau >")
 			fmt.Println("}")
 			fmt.Println("```")
+		default:
+			fmt.Println("Halaman tidak ditemukan.")
+			return true // Kembali ke MainMenu jika ada kesalahan halaman
 		}
 
 		fmt.Println("\n------------------------------------")
 
-		if halamanSekarang < totalHalaman {
-			isInputValid := false
-			for !isInputValid {
+		// Loop untuk mendapatkan input navigasi halaman
+		inputValid := false
+		for !inputValid {
+			if halamanSekarang < totalHalaman {
 				fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
-				fmt.Scan(&Choice)
-				fmt.Scanln() // Clear newline
-
-				if strings.ToLower(Choice) == "y" {
-					halamanSekarang++
-					isInputValid = true // Input valid, keluar dari loop
-				} else if strings.ToLower(Choice) == "n" {
-					atribut.ClearScreen()
-					berhenti = false    // Mengatur 'berhenti' menjadi false untuk keluar dari loop utama
-					isInputValid = true // Input valid, keluar dari loop
-					MainMenu()          // Rekursi
-					return false        // Return false untuk mengindikasikan MainMenu sudah dipanggil
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				}
-			}
-		} else { // On the last page
-			isInputValid := false
-			for !isInputValid {
+			} else { // Jika sudah di halaman terakhir
 				fmt.Print("Materi selesai! Mau lanjut ke Soal (s) atau kembali ke menu utama (n)? ")
-				fmt.Scan(&Choice)
-				fmt.Scanln() // Clear newline
-				if strings.ToLower(Choice) == "n" {
-					berhenti = false    // Mengatur 'berhenti' menjadi false untuk keluar dari loop utama
-					isInputValid = true // Input valid, keluar dari loop
-					MainMenu()          // Rekursi
-					atribut.ClearScreen()
-					return false // Return false untuk mengindikasikan MainMenu sudah dipanggil
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 's' atau 'n'.")
+			}
+			fmt.Scan(&Choice)
+			fmt.Scanln() // Clear newline
+
+			if strings.ToLower(Choice) == "y" && halamanSekarang < totalHalaman {
+				halamanSekarang++
+				inputValid = true // Input valid, keluar dari loop input dan lanjut ke halaman berikutnya
+			} else if strings.ToLower(Choice) == "n" {
+				isStudying = false // Mengindikasikan untuk keluar dari loop materi
+				inputValid = true  // Input valid, keluar dari loop input
+				return true        // Kembali ke MainMenu
+			} else if strings.ToLower(Choice) == "s" && halamanSekarang == totalHalaman {
+				// Handle redirection to Selection Sort quiz directly from here if 's' is chosen
+				atribut.ClearScreen()
+				shouldStayInMenu := selection.SoalSelectionSort() // Panggil soal selection sort
+				if !shouldStayInMenu {
+					return false // Exit program
 				}
+				isStudying = false // Stop studying loop to prevent re-displaying this section
+				inputValid = true  // Exit input loop
+				return true        // Return to MainMenu after quiz
+			} else {
+				fmt.Println("Pilihan tidak valid. Harap masukkan 'y', 'n', atau 's' (jika di halaman terakhir).")
 			}
 		}
 	}
-	return true // Default return: if loop finishes (e.g., all pages shown and user chose 's' or 'n')
+	return true // Default return: kembali ke MainMenu setelah selesai belajar
 }
 
-// belajarInsertionSort manages the display of Insertion Sort material.
-// It returns true if the user wants to return to the MainMenu, false if it handled redirection.
+// belajarInsertionSort mengelola tampilan materi Insertion Sort.
+// Mengembalikan true jika pengguna ingin kembali ke MainMenu,
+// atau false jika pengguna ingin keluar dari program.
 func belajarInsertionSort() bool {
 	halamanSekarang := 1
-	totalHalaman := 3        // Adjusted total pages for Insertion Sort
-	var berhenti bool = true // Inisialisasi 'berhenti' sebagai true
-	var Choice string        // Local variable for Choice
+	totalHalaman := 3
+	var Choice string
+	isStudying := true // Kontrol loop utama materi
 
-	for berhenti { // Loop dikendalikan oleh variabel 'berhenti'
+	for isStudying {
 		atribut.ClearScreen()
 		fmt.Printf("=== Apa itu Insertion Sort di Go? (Halaman %d/%d) ===\n", halamanSekarang, totalHalaman)
 
@@ -377,7 +329,7 @@ func belajarInsertionSort() bool {
 			fmt.Println("\n**Kekurangan:**")
 			fmt.Println("- **Tidak Efisien untuk Data Besar:** Sama seperti Selection Sort, **Time Complexity** Insertion Sort adalah **O(n^2)** dalam kasus terburuk dan rata-rata. Ini membuatnya tidak cocok untuk pengurutan daftar yang sangat besar.")
 			fmt.Println("\nInsertion Sort sering digunakan dalam situasi di mana daftar masukan relatif kecil atau sudah terurut sebagian. Ini juga menjadi bagian dari algoritma pengurutan hibrida (seperti Timsort dan Introsort) untuk menangani bagian-bagian kecil dari daftar yang lebih besar.")
-			fmt.Println("\n---") // Garis pemisah untuk visualisasi
+			fmt.Println("\n---")
 			fmt.Println("### Latihan Sederhana Insertion Sort")
 			fmt.Println("Coba terapkan Insertion Sort untuk mengurutkan daftar angka secara menurun (dari terbesar ke terkecil).")
 			fmt.Println("```go")
@@ -386,49 +338,45 @@ func belajarInsertionSort() bool {
 			fmt.Println("    // Hint: Ubah kondisi perbandingan agar mengurutkan secara menurun")
 			fmt.Println("}")
 			fmt.Println("```")
+		default:
+			fmt.Println("Halaman tidak ditemukan.")
+			return true // Kembali ke MainMenu jika ada kesalahan halaman
 		}
 
 		fmt.Println("\n------------------------------------")
 
-		if halamanSekarang < totalHalaman {
-			isInputValid := false
-			for !isInputValid {
+		// Loop untuk mendapatkan input navigasi halaman
+		inputValid := false
+		for !inputValid {
+			if halamanSekarang < totalHalaman {
 				fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
-				fmt.Scan(&Choice)
-				fmt.Scanln() // Clear newline
-
-				if strings.ToLower(Choice) == "y" {
-					halamanSekarang++
-					isInputValid = true // Input valid, keluar dari loop
-				} else if strings.ToLower(Choice) == "n" {
-					atribut.ClearScreen()
-					berhenti = false    // Mengatur 'berhenti' menjadi false untuk keluar dari loop utama
-					isInputValid = true // Input valid, keluar dari loop
-					MainMenu()          // Recursive call to MainMenu
-					return false        // Return false untuk mengindikasikan MainMenu sudah dipanggil
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				}
-			}
-		} else { // On the last page
-			isInputValid := false
-			for !isInputValid {
+			} else { // Jika sudah di halaman terakhir
 				fmt.Print("Materi selesai! Mau lanjut ke Soal (s) atau kembali ke menu utama (n)? ")
-				fmt.Scan(&Choice)
-				fmt.Scanln() // Clear newline
-				if strings.ToLower(Choice) == "n" {
-					berhenti = false    // Mengatur 'berhenti' menjadi false untuk keluar dari loop utama
-					isInputValid = true // Input valid, keluar dari loop
-					MainMenu()          // Rekursi
-					atribut.ClearScreen()
-					return false // Return false untuk mengindikasikan MainMenu sudah dipanggil
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 's' atau 'n'.")
+			}
+			fmt.Scan(&Choice)
+			fmt.Scanln() // Clear newline
+
+			if strings.ToLower(Choice) == "y" && halamanSekarang < totalHalaman {
+				halamanSekarang++
+				inputValid = true // Input valid, keluar dari loop input dan lanjut ke halaman berikutnya
+			} else if strings.ToLower(Choice) == "n" {
+				isStudying = false // Mengindikasikan untuk keluar dari loop materi
+				inputValid = true  // Input valid, keluar dari loop input
+				return true        // Kembali ke MainMenu
+			} else if strings.ToLower(Choice) == "s" && halamanSekarang == totalHalaman {
+				// Handle redirection to Insertion Sort quiz directly from here if 's' is chosen
+				atribut.ClearScreen()
+				shouldStayInMenu := insertion.SoalInsertionSort() // Panggil soal insertion sort
+				if !shouldStayInMenu {
+					return false // Exit program
 				}
+				isStudying = false // Stop studying loop to prevent re-displaying this section
+				inputValid = true  // Exit input loop
+				return true        // Return to MainMenu after quiz
+			} else {
+				fmt.Println("Pilihan tidak valid. Harap masukkan 'y', 'n', atau 's' (jika di halaman terakhir).")
 			}
 		}
 	}
-	return true // Default return: if loop finishes (e.g., all pages shown and user chose 's' or 'n')
+	return true // Default return: kembali ke MainMenu setelah selesai belajar
 }
-
-// soalSorting is a placeholder for the quiz section.

@@ -135,7 +135,7 @@ func main() {
 			main()
 		case "10":
 			atribut.ClearScreen()
-			fmt.Println("COMING SOON!!!")
+			atribut.BukaPDF("D:\\Matkul smester 2\\Project-Alpro\\cv\\CV_Muhamad Alwan Suryadi.pdf")
 			fmt.Println("Menuju Menu utama...")
 			atribut.Loading(1200)
 		case "0":

@@ -1,17 +1,21 @@
 package p_maxmin
 
 import (
-	soal "Project-Alpro/alpro/praktikum/Searching"
+	soal "Project-Alpro/alpro/praktikum/Searching" // Asumsi ini adalah package soal untuk Searching (Max/Min)
 	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
 )
 
+// MainMenu adalah fungsi utama untuk navigasi menu pembelajaran Max & Min Array.
 func MainMenu() {
 	var pilihan string
-	var pilihan2 string
+	// Gunakan variabel boolean untuk mengontrol loop menu utama.
+	isRunning := true
 
-	fmt.Println(`
+	for isRunning { // Loop utama agar menu terus tampil sampai pengguna memilih untuk keluar
+		atribut.ClearScreen() // Bersihkan layar setiap kali menu utama ditampilkan
+		fmt.Println(`
 ============================================
 Selamat Datang di Pembelajaran Max & Min Array
 ============================================
@@ -19,95 +23,70 @@ Selamat Datang di Pembelajaran Max & Min Array
 2. Referensi Soal Max
 3. Referensi Soal Min
 0. Keluar
-    `)
-	fmt.Print("Masukkan pilihan: ")
-	fmt.Scan(&pilihan)
-	fmt.Scanln()
-	atribut.ClearScreen()
-
-	switch pilihan {
-	case "1":
-		atribut.ClearScreen()
-		if belajarMaxMin() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					berhenti2 = true
-					MainMenu()
-					return
-				} else if strings.ToLower(pilihan2) == "n" {
-					berhenti2 = true
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
-			}
-		} else {
-			return
-		}
-	case "2":
-		atribut.ClearScreen()
-		if soal.Soal1searching() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					berhenti2 = true
-					MainMenu()
-					return
-				} else if strings.ToLower(pilihan2) == "n" {
-					berhenti2 = true
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
-			}
-		}
-	case "3":
-		atribut.ClearScreen()
-		if soal.Soal2searching() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					berhenti2 = true
-					MainMenu()
-					return
-				} else if strings.ToLower(pilihan2) == "n" {
-					berhenti2 = true
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
-			}
-		}
-	case "0":
-		fmt.Println("Terima kasih telah menggunakan program pembelajaran Max & Min.")
-		return
-	default:
-		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '0'.")
-		fmt.Print("Tekan Enter untuk melanjutkan...")
+		`)
+		fmt.Print("Masukkan pilihan: ")
+		fmt.Scan(&pilihan)
 		fmt.Scanln()
-		MainMenu()
+		atribut.ClearScreen() // Bersihkan layar setelah pilihan diinput
+
+		switch pilihan {
+		case "1":
+			// belajarMaxMin akan mengelola navigasi internalnya sendiri
+			// dan akan kembali ke MainMenu saat selesai atau pengguna memilih 'n' dari dalamnya.
+			shouldStayInMenu := belajarMaxMin()
+			if !shouldStayInMenu {
+				// Jika belajarMaxMin mengindikasikan keluar dari program, hentikan loop MainMenu.
+				isRunning = false
+			}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "2":
+			// Asumsi: soal.Soal1searching() mengembalikan true jika ingin kembali ke MainMenu,
+			// dan false jika pengguna ingin keluar dari program sepenuhnya.
+			shouldStayInMenu := soal.Soal1searching() // Panggil fungsi soal dari package 'soal'
+			if !shouldStayInMenu {
+				// Jika soal.Soal1searching() mengindikasikan keluar dari program, hentikan loop MainMenu.
+				fmt.Println("Terima kasih telah menggunakan program pembelajaran Max & Min.")
+				isRunning = false
+			}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "3":
+			// Asumsi: soal.Soal2searching() mengembalikan true jika ingin kembali ke MainMenu,
+			// dan false jika pengguna ingin keluar dari program sepenuhnya.
+			shouldStayInMenu := soal.Soal2searching() // Panggil fungsi soal dari package 'soal'
+			if !shouldStayInMenu {
+				// Jika soal.Soal2searching() mengindikasikan keluar dari program, hentikan loop MainMenu.
+				fmt.Println("Terima kasih telah menggunakan program pembelajaran Max & Min.")
+				isRunning = false
+			}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "0":
+			fmt.Println("Terima kasih telah menggunakan program pembelajaran Max & Min.")
+			isRunning = false // Set isRunning menjadi false untuk menghentikan loop
+
+		default:
+			fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', '3', atau '0'.")
+			fmt.Print("Tekan Enter untuk melanjutkan...")
+			fmt.Scanln()
+			// Loop akan berlanjut secara otomatis karena isRunning masih true
+		}
 	}
 }
 
+// belajarMaxMin mengelola materi pembelajaran mencari nilai maksimum dan minimum.
+// Mengembalikan true jika pengguna ingin kembali ke MainMenu,
+// atau false jika pengguna ingin keluar dari program (misalnya dari halaman terakhir).
 func belajarMaxMin() bool {
 	halamanSekarang := 1
-	totalHalaman := 3
-	var berhenti bool = true
+	totalHalaman := 3 // Ada 3 halaman materi
 	var Choice string
-	for berhenti {
+
+	// isStudying akan menjadi false jika pengguna memilih 'n' untuk kembali ke menu utama.
+	isStudying := true
+
+	for isStudying { // Loop tak terbatas sampai pengguna memutuskan untuk keluar dari materi ini
 		atribut.ClearScreen()
 		fmt.Printf("=== Mencari Nilai Maksimum & Minimum di Array (Halaman %d/%d) ===\n", halamanSekarang, totalHalaman)
 
@@ -185,49 +164,37 @@ func belajarMaxMin() bool {
 			fmt.Println("```")
 			fmt.Println("\nDengan menggabungkannya dalam satu fungsi, kita hanya perlu melakukan satu iterasi penuh melalui array, yang lebih efisien daripada dua iterasi terpisah untuk mencari max dan min secara terpisah.")
 			fmt.Println("\n---")
-			fmt.Println("### Latihan: Pikirkan Edge Cases")
-			fmt.Println("Bagaimana fungsi `FindMaxMin` akan berperilaku jika array hanya memiliki satu elemen? Apakah logikanya masih benar?")
+		default:
+			fmt.Println("Halaman tidak ditemukan.")
+			// Jika halaman tidak valid, kita akan menganggap pengguna ingin kembali ke menu utama.
+			return true // Kembali ke MainMenu
 		}
 
 		fmt.Println("\n------------------------------------")
 
-		if halamanSekarang < totalHalaman {
-			berhenti2 := false
-			for !berhenti2 {
+		// Loop untuk mendapatkan input navigasi halaman
+		inputValid := false
+		for !inputValid {
+			if halamanSekarang < totalHalaman {
 				fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
-				fmt.Scan(&Choice)
-				fmt.Scanln()
-
-				if strings.ToLower(Choice) == "y" {
-					halamanSekarang++
-					berhenti2 = true
-				} else if strings.ToLower(Choice) == "n" {
-					atribut.ClearScreen()
-					berhenti = false
-					berhenti2 = true
-					MainMenu()
-					return false
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				}
+			} else { // Jika sudah di halaman terakhir
+				fmt.Print("Kembali ke menu utama (n)? ")
 			}
-		} else {
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Print("kembali ke menu utama (n)")
-				fmt.Scan(&Choice)
-				fmt.Scanln()
-				if strings.ToLower(Choice) == "n" {
-					berhenti = false
-					berhenti2 = true
-					MainMenu()
-					atribut.ClearScreen()
-					return false
-				} else {
-					fmt.Println("Pilihan tidak valid.")
-				}
+			fmt.Scan(&Choice)
+			fmt.Scanln()
+
+			if strings.ToLower(Choice) == "y" && halamanSekarang < totalHalaman {
+				halamanSekarang++
+				inputValid = true // Input valid, keluar dari loop input dan lanjut ke halaman berikutnya (outer loop)
+			} else if strings.ToLower(Choice) == "n" {
+				isStudying = false // Mengindikasikan untuk keluar dari loop materi
+				inputValid = true  // Input valid, keluar dari loop input
+			} else {
+				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
 			}
 		}
 	}
+	// Setelah loop isStudying berakhir (karena Choice adalah 'n'), kita mengembalikan true
+	// yang menandakan bahwa MainMenu harus terus berjalan.
 	return true
 }

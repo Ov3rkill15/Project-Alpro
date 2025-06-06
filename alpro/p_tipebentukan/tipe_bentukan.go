@@ -1,7 +1,7 @@
 package p_tipeBentukan
 
 import (
-	soal "Project-Alpro/alpro/praktikum/Tipe_Bentukan"
+	soal "Project-Alpro/alpro/praktikum/Tipe_Bentukan" // Asumsi ini adalah package soal untuk Tipe Bentukan
 	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
@@ -10,77 +10,66 @@ import (
 // MainMenu manages the main navigation for the Struct and Type Alias module.
 func MainMenu() {
 	var pilihan string
-	var pilihan2 string // Local variable for pilihan2
+	// Gunakan variabel boolean untuk mengontrol loop menu utama.
+	isRunning := true
 
-	fmt.Println(`
+	for isRunning { // Loop utama agar menu terus tampil sampai pengguna memilih untuk keluar
+		atribut.ClearScreen() // Bersihkan layar setiap kali menu utama ditampilkan
+		fmt.Println(`
 ============================================
 Selamat Datang di Pembelajaran Tipe Bentukan
 ============================================
 1. Apa itu Tipe Bentukan (Struct) dan Alias
 2. Soal referensi
 0. Keluar
-    `)
-	fmt.Print("Masukkan pilihan: ")
-	fmt.Scan(&pilihan)
-	fmt.Scanln() // Clear newline
-	atribut.ClearScreen()
+		`)
+		fmt.Print("Masukkan pilihan: ")
+		fmt.Scan(&pilihan)
+		fmt.Scanln() // Clear newline
+		atribut.ClearScreen()
 
-	switch pilihan {
-	case "1":
-		atribut.ClearScreen()
-		if belajarTipeBentukkan() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			fmt.Scan(&pilihan2)
-			fmt.Scanln() // Clear newline
-			if strings.ToLower(pilihan2) == "y" {
-				MainMenu() // Rekursi
-			} else {
-				return
+		switch pilihan {
+		case "1":
+			// belajarTipeBentukkan akan mengembalikan true jika ingin kembali ke MainMenu,
+			// dan false jika pengguna ingin keluar dari program.
+			shouldStayInMenu := belajarTipeBentukkan()
+			if !shouldStayInMenu {
+				isRunning = false // Hentikan loop MainMenu jika belajarTipeBentukkan mengindikasikan keluar
 			}
-		} else { // Jika false, artinya user ingin keluar dari modul
-			return
-		}
-	case "2":
-		atribut.ClearScreen()
-		if soal.Soal1bentukan() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					berhenti2 = true
-					MainMenu()
-					return
-				} else if strings.ToLower(pilihan2) == "n" {
-					berhenti2 = true
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "2":
+			// Asumsi: soal.Soal1bentukan() mengembalikan true jika ingin kembali ke MainMenu,
+			// dan false jika pengguna ingin keluar dari program.
+			shouldStayInMenu := soal.Soal1bentukan() // Panggil fungsi soal dari package 'soal'
+			if !shouldStayInMenu {
+				fmt.Println("Terima kasih telah menggunakan program pembelajaran tipe bentukan.")
+				isRunning = false // Hentikan loop MainMenu jika ingin keluar dari program
 			}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "0":
+			fmt.Println("Terima kasih telah menggunakan program pembelajaran tipe bentukan.")
+			isRunning = false // Set isRunning menjadi false untuk menghentikan loop
+
+		default:
+			fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '0'.")
+			fmt.Print("Tekan Enter untuk melanjutkan...")
+			fmt.Scanln() // Tunggu Enter
+			// Loop akan berlanjut secara otomatis karena isRunning masih true
 		}
-	case "0":
-		fmt.Println("Terima kasih telah menggunakan program pembelajaran tipe bentukan.")
-		return
-	default:
-		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '3'.")
-		fmt.Print("Tekan Enter untuk melanjutkan...")
-		fmt.Scanln() // Wait for Enter
-		MainMenu()   // Recursive call for invalid input
 	}
 }
 
 // belajarTipeBentukkan manages the display of learning material pages for Structs and Type Aliases.
-// It returns true if the user wants to return to the MainMenu, false if they want to exit this module.
+// It returns true if the user wants to return to the MainMenu, false if they want to exit the program.
 func belajarTipeBentukkan() bool {
 	halamanSekarang := 1
 	totalHalaman := 3
-	var berhenti bool = true
-	var Choice string // Local variable for Choice
+	var Choice string
+	isStudying := true // Kontrol loop utama materi
 
-	for berhenti { // This loop now primarily controls page progression
+	for isStudying {
 		atribut.ClearScreen()
 		fmt.Printf("=== Apa itu Tipe Bentukan (Struct) dan Alias di Go? (Halaman %d/%d) ===\n", halamanSekarang, totalHalaman)
 
@@ -97,9 +86,9 @@ func belajarTipeBentukkan() bool {
 			fmt.Println("\n**Contoh Deklarasi Struct:**")
 			fmt.Println("```go")
 			fmt.Println("type Person struct {")
-			fmt.Println("    Name string")
-			fmt.Println("    Age  int")
-			fmt.Println("    City string")
+			fmt.Println("    Name string")
+			fmt.Println("    Age  int")
+			fmt.Println("    City string")
 			fmt.Println("}")
 			fmt.Println("```")
 			fmt.Println("\nDi sini, kita mendefinisikan sebuah struct bernama `Person` dengan tiga bidang: `Name` (string), `Age` (int), dan `City` (string).")
@@ -122,7 +111,7 @@ func belajarTipeBentukkan() bool {
 			fmt.Println("Anda dapat mengakses bidang-bidang struct menggunakan operator titik (`.`):")
 			fmt.Println("```go")
 			fmt.Println("fmt.Println(p1.Name) // Output: Alice")
-			fmt.Println("fmt.Println(p2.Age)  // Output: 25")
+			fmt.Println("fmt.Println(p2.Age)  // Output: 25")
 			fmt.Println("```")
 			fmt.Println("\n---")
 			fmt.Println("## Type Alias (Alias Tipe)")
@@ -132,10 +121,10 @@ func belajarTipeBentukkan() bool {
 			fmt.Println("type KTP string") // KTP adalah alias untuk tipe string")
 			fmt.Println("type Usia int")   // Usia adalah alias untuk tipe int")
 			fmt.Println("\nfunc main() {")
-			fmt.Println("    var id KTP = \"1234567890\"")
-			fmt.Println("    var umur Usia = 28")
-			fmt.Println("    fmt.Println(\"Nomor KTP:\", id)")
-			fmt.Println("    fmt.Println(\"Umur:\", umur)")
+			fmt.Println("    var id KTP = \"1234567890\"")
+			fmt.Println("    var umur Usia = 28")
+			fmt.Println("    fmt.Println(\"Nomor KTP:\", id)")
+			fmt.Println("    fmt.Println(\"Umur:\", umur)")
 			fmt.Println("}")
 			fmt.Println("```")
 			fmt.Println("\nDi sini, `KTP` dan `Usia` hanyalah nama lain untuk `string` dan `int`. Mereka *kompatibel* satu sama lain. Anda bisa menggunakan `id` sebagai `string` dan `umur` sebagai `int` tanpa konversi eksplisit.")
@@ -145,54 +134,50 @@ func belajarTipeBentukkan() bool {
 			fmt.Println("- **Type Alias:** Hanya memberikan **nama alternatif** pada tipe yang sudah ada. Tipe alias sepenuhnya kompatibel dengan tipe aslinya.")
 			fmt.Println("\n**Kapan Menggunakan yang Mana?**")
 			fmt.Println("- Gunakan **Struct** ketika Anda perlu mengelompokkan beberapa nilai (bisa berbeda tipe) menjadi satu unit logis dan ingin membuat tipe data *baru* yang berbeda secara fundamental.")
-			fmt.Println("  Contoh: `Person`, `Product`, `Order`.")
+			fmt.Println("  Contoh: `Person`, `Product`, `Order`.")
 			fmt.Println("- Gunakan **Type Alias** ketika Anda ingin meningkatkan keterbacaan kode dengan memberikan nama yang lebih deskriptif pada tipe yang sudah ada, tanpa membuat tipe baru.")
-			fmt.Println("  Contoh: `UserID` untuk `int`, `EmailAddress` untuk `string`.")
+			fmt.Println("  Contoh: `UserID` untuk `int`, `EmailAddress` untuk `string`.")
 			fmt.Println("\n---")
 			fmt.Println("Dengan memahami struct dan type alias, Anda dapat membuat kode Go yang lebih terstruktur, mudah dibaca, dan mudah dikelola, terutama saat menangani data yang kompleks.")
+		default:
+			fmt.Println("Halaman tidak ditemukan.")
+			return true // Kembali ke MainMenu jika ada kesalahan halaman
 		}
 
 		fmt.Println("\n------------------------------------")
 
-		if halamanSekarang < totalHalaman {
-			// Loop untuk input valid y/n
-			berhenti2 := false
-			for !berhenti2 {
+		// Loop untuk mendapatkan input navigasi halaman
+		inputValid := false
+		for !inputValid {
+			if halamanSekarang < totalHalaman {
 				fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
-				fmt.Scan(&Choice)
-				fmt.Scanln() // Clear newline
-
-				if strings.ToLower(Choice) == "y" {
-					halamanSekarang++
-					berhenti2 = true // Input valid, keluar dari loop
-				} else if strings.ToLower(Choice) == "n" {
-					atribut.ClearScreen()
-					berhenti = false // Stop the main 'for berhenti' loop
-					berhenti2 = true // Input valid, exit loop
-					MainMenu()       // Recursive call to MainMenu
-					return false     // Return false to exit belajarTipeBentukkan
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				}
+			} else { // Jika sudah di halaman terakhir
+				fmt.Print("Materi selesai! Mau lanjut ke Soal (s) atau kembali ke menu utama (n)? ")
 			}
-		} else { // On the last page
-			// Loop untuk input valid s/n
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Print("Kembali ke menu utama (n)? ")
-				fmt.Scan(&Choice)
-				fmt.Scanln() // Clear newline
-				if strings.ToLower(Choice) == "n" {
-					berhenti = false // Stop the main 'for berhenti' loop
-					berhenti2 = true // Input valid, exit loop
-					MainMenu()       // Recursive call to MainMenu
-					atribut.ClearScreen()
-					return false // Return false to exit belajarTipeBentukkan
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'n'.")
+			fmt.Scan(&Choice)
+			fmt.Scanln() // Clear newline
+
+			if strings.ToLower(Choice) == "y" && halamanSekarang < totalHalaman {
+				halamanSekarang++
+				inputValid = true // Input valid, keluar dari loop input dan lanjut ke halaman berikutnya
+			} else if strings.ToLower(Choice) == "n" {
+				isStudying = false // Mengindikasikan untuk keluar dari loop materi
+				inputValid = true  // Input valid, keluar dari loop input
+				return true        // Kembali ke MainMenu
+			} else if strings.ToLower(Choice) == "s" && halamanSekarang == totalHalaman {
+				// Handle redirection to Tipe Bentukan quiz directly from here if 's' is chosen
+				atribut.ClearScreen()
+				shouldStayInMenu := soal.Soal1bentukan() // Panggil soal tipe bentukan
+				if !shouldStayInMenu {
+					return false // Exit program
 				}
+				isStudying = false // Stop studying loop to prevent re-displaying this section
+				inputValid = true  // Exit input loop
+				return true        // Return to MainMenu after quiz
+			} else {
+				fmt.Println("Pilihan tidak valid. Harap masukkan 'y', 'n', atau 's' (jika di halaman terakhir).")
 			}
 		}
 	}
-	return true
+	return true // Default return: kembali ke MainMenu setelah selesai belajar
 }

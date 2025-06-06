@@ -1,15 +1,17 @@
 package quiz
 
 import (
-	"Project-Alpro/atribut" // Assuming this path is correct for your project
+	"Project-Alpro/atribut" // Asumsi path ini benar untuk proyek Anda
 	"fmt"
 	"strings"
 )
 
+// Quiz struct to hold student quiz data.
+// TotalScore is float64 to match your data initialization.
 type Quiz struct {
 	Nama                         string
 	ID                           string
-	TotalScore                   int
+	TotalScore                   float64 // Menggunakan float64 untuk total skor
 	GoLanguageScore              int
 	PercabanganScore             int
 	KonversiTipeDataScore        int
@@ -19,104 +21,79 @@ type Quiz struct {
 	VariableConstantScore        int
 }
 
-// User represents a user with a username, password, and score.
-type User struct {
-	Username, Password string
-	Score              float64
-}
-
-// NMAX defines the maximum number of users the system can hold.
+// NMAX mendefinisikan jumlah maksimum siswa yang dapat ditampung sistem.
 const NMAX int = 45
 
-// Daftarnama is a fixed-size array to store User structs.
-type Daftarnama [NMAX]User
+// Global array to store all student quiz data.
+// Ini adalah array utama tempat semua data siswa disimpan.
+var studentsData [NMAX]Quiz
 
-// Global variables for user management.
-var users Daftarnama
-var jumlahPengguna int // 'jumlahPengguna' means 'number of users'
-
-// initUsers initializes the 'users' array with a predefined set of user data.
-// This function should ideally be called once at the application start.
-var DataQuiz [NMAX]atribut.Quiz = [NMAX]atribut.Quiz{
-	{Nama: "Budi Santoso", ID: "QS001", TotalScore: 0},
-	{Nama: "Siti Aminah", ID: "QS002", TotalScore: 0},
-	{Nama: "Joko Susilo", ID: "QS003", TotalScore: 0},
-	{Nama: "Dewi Lestari", ID: "QS004", TotalScore: 0},
-	{Nama: "Agus Ramadhan", ID: "QS005", TotalScore: 0},
-	{Nama: "Putri Indah", ID: "QS006", TotalScore: 0},
-	{Nama: "Rizky Pratama", ID: "QS007", TotalScore: 0},
-	{Nama: "Nurul Hidayah", ID: "QS008", TotalScore: 0},
-	{Nama: "Faisal Rahman", ID: "QS009", TotalScore: 0},
-	{Nama: "Linda Wijaya", ID: "QS010", TotalScore: 0},
+// initialQuizData adalah data kuis awal yang sudah didefinisikan.
+// Data ini akan disalin ke studentsData saat program dimulai.
+var initialQuizData = [NMAX]Quiz{
+	{Nama: "nathasyayuanmaharani", ID: "0001", TotalScore: 85.5},
+	{Nama: "theodoreelvisestrada", ID: "0006", TotalScore: 92.0},
+	{Nama: "dyahkusumawardani", ID: "0009", TotalScore: 78.5},
+	{Nama: "azrielraihaneldovahartoto", ID: "0010", TotalScore: 88.0},
+	{Nama: "muhammadilhamalifianda", ID: "0022", TotalScore: 95.0},
+	{Nama: "alyaazizaputeri", ID: "0026", TotalScore: 76.0},
+	{Nama: "ahmadabdansyakuro", ID: "0029", TotalScore: 81.5},
+	{Nama: "fathurrahmanalfarizi", ID: "0035", TotalScore: 89.0},
+	{Nama: "nuswantorosetyomukti", ID: "0040", TotalScore: 72.0},
+	{Nama: "anggitacahyatihidayat", ID: "0041", TotalScore: 90.0},
+	{Nama: "wibnuhijrahfranstio", ID: "0048", TotalScore: 83.0},
+	{Nama: "meyshaprimiandita", ID: "0050", TotalScore: 91.0},
+	{Nama: "muhamadfiqrihabibi", ID: "0056", TotalScore: 79.5},
+	{Nama: "fitriacahyani", ID: "0060", TotalScore: 87.0},
+	{Nama: "triansyahdaniswaraibrahim", ID: "0062", TotalScore: 93.0},
+	{Nama: "rakhaabdillahalkautsar", ID: "0068", TotalScore: 75.0},
+	{Nama: "avicenanaufallathif", ID: "0073", TotalScore: 86.0},
+	{Nama: "naylaassyifa", ID: "0078", TotalScore: 94.0},
+	{Nama: "williampetervanxnajoan", ID: "0084", TotalScore: 77.0},
+	{Nama: "rayvanalifarlomahesworo", ID: "0087", TotalScore: 90.5},
+	{Nama: "zaidansalamrojab", ID: "0088", TotalScore: 82.0},
+	{Nama: "audreyfredileyhanas", ID: "0093", TotalScore: 89.5},
+	{Nama: "muhammadnaelfadly", ID: "0096", TotalScore: 74.0},
+	{Nama: "nairacahayaputridarmawansinaga", ID: "0100", TotalScore: 96.0},
+	{Nama: "muhamadalwansuryadi", ID: "0104", TotalScore: 80.0},
+	{Nama: "dhafyahmadzubaidi", ID: "0107", TotalScore: 91.5},
+	{Nama: "muhammadfarisdhiyaylhaqsarbini", ID: "0117", TotalScore: 78.0},
+	{Nama: "nursyadira", ID: "0123", TotalScore: 92.5},
+	{Nama: "rayfitokrisnawijaya", ID: "0124", TotalScore: 84.0},
+	{Nama: "mochammadrafirisqullah", ID: "0129", TotalScore: 88.5},
+	{Nama: "iputugedeagastyakrisnawidartha", ID: "0134", TotalScore: 73.0},
+	{Nama: "rendil", ID: "0137", TotalScore: 85.0},
+	{Nama: "muhammadariqazzaki", ID: "0138", TotalScore: 90.0},
+	{Nama: "edmundyuliusgantur", ID: "0155", TotalScore: 77.5},
+	{Nama: "muhammadsayyidhuwaidi", ID: "0157", TotalScore: 86.5},
+	{Nama: "muhdzuljalalwaliikramjalil", ID: "0160", TotalScore: 93.5},
+	{Nama: "ramadhantangguhdefennder", ID: "0003", TotalScore: 81.0},
+	{Nama: "adzkiyaputrirahmawan", ID: "0025", TotalScore: 89.0},
+	{Nama: "fathimahradhiyya", ID: "0029", TotalScore: 79.0},
+	{Nama: "rakanghazianadiwjaya", ID: "0034", TotalScore: 95.5},
+	{Nama: "jihannabilamubarakah", ID: "0037", TotalScore: 87.5},
+	{Nama: "admin", ID: "admin123", TotalScore: 0.0},
 }
 
-func initUsers() {
-	// Predefined user data
-	// Using a temporary array directly for initialization without 'make' or 'copy'
-	var data = [42]User{
-		{"admin", "admin123", 0.0},
-		{"nathasyayuanmaharani", "0001", 85.5},
-		{"theodoreelvisestrada", "0006", 92.0},
-		{"dyahkusumawardani", "0009", 78.5},
-		{"azrielraihaneldovahartoto", "0010", 88.0},
-		{"muhammadilhamalifianda", "0022", 95.0},
-		{"alyaazizaputeri", "0026", 76.0},
-		{"ahmadabdansyakuro", "0029", 81.5},
-		{"fathurrahmanalfarizi", "0035", 89.0},
-		{"nuswantorosetyomukti", "0040", 72.0},
-		{"anggitacahyatihidayat", "0041", 90.0},
-		{"wibnuhijrahfranstio", "0048", 83.0},
-		{"meyshaprimiandita", "0050", 91.0},
-		{"muhamadfiqrihabibi", "0056", 79.5},
-		{"fitriacahyani", "0060", 87.0},
-		{"triansyahdaniswaraibrahim", "0062", 93.0},
-		{"rakhaabdillahalkautsar", "0068", 75.0},
-		{"avicenanaufallathif", "0073", 86.0},
-		{"naylaassyifa", "0078", 94.0},
-		{"williampetervanxnajoan", "0084", 77.0},
-		{"rayvanalifarlomahesworo", "0087", 90.5},
-		{"zaidansalamrojab", "0088", 82.0},
-		{"audreyfredileyhanas", "0093", 89.5},
-		{"muhammadnaelfadly", "0096", 74.0},
-		{"nairacahayaputridarmawansinaga", "0100", 96.0},
-		{"muhamadalwansuryadi", "0104", 80.0},
-		{"dhafyahmadzubaidi", "0107", 91.5},
-		{"muhammadfarisdhiyaylhaqsarbini", "0117", 78.0},
-		{"nursyadira", "0123", 92.5},
-		{"rayfitokrisnawijaya", "0124", 84.0},
-		{"mochammadrafirisqullah", "0129", 88.5},
-		{"iputugedeagastyakrisnawidartha", "0134", 73.0},
-		{"rendil", "0137", 85.0},
-		{"muhammadariqazzaki", "0138", 90.0},
-		{"edmundyuliusgantur", "0155", 77.5},
-		{"muhammadsayyidhuwaidi", "0157", 86.5},
-		{"muhdzuljalalwaliikramjalil", "0160", 93.5},
-		{"ramadhantangguhdefennder", "0003", 81.0},
-		{"adzkiyaputrirahmawan", "0025", 89.0},
-		{"fathimahradhiyya", "0029", 79.0},
-		{"rakanghazianadiwjaya", "0034", 95.5},
-		{"jihannabilamubarakah", "0037", 87.5},
-	}
-
-	jumlahPengguna = 0
-	var i int = 0
-	for i < len(data) { // Loop without 'break'
-		if i < NMAX {
-			users[i] = data[i]
-			jumlahPengguna++
-		}
+// InitStudentsData menginisialisasi array 'studentsData' dengan data yang sudah ditentukan.
+// Ini memastikan hanya hingga NMAX entri yang disalin.
+func InitStudentsData() {
+	i := 0
+	for i < len(initialQuizData) && i < NMAX {
+		studentsData[i] = initialQuizData[i]
 		i++
 	}
 }
 
-// DisplayScoresMenu menampilkan submenu untuk pilihan tampilan skor.
+// DisplayScoresMenu menampilkan sub-menu untuk pilihan tampilan skor.
 func DisplayScoresMenu() {
 	var choice string
-	berhenti := true
-	for berhenti {
+	isDisplayingMenu := true // Flag untuk mengontrol loop menu tampilan skor
+
+	for isDisplayingMenu {
 		atribut.ClearScreen()
 		fmt.Println("====================================")
-		fmt.Println("          MENU TAMPILAN SKOR        ")
+		fmt.Println("          MENU TAMPILAN SKOR        ")
 		fmt.Println("====================================")
 		fmt.Println("Pilih opsi tampilan skor:")
 		fmt.Println("1. Daftar Nilai (Urutan Asli)")
@@ -128,14 +105,14 @@ func DisplayScoresMenu() {
 
 		switch choice {
 		case "1":
-			displayQuizScores("original") // Tampilan asli
+			ShowQuizScores("original") // Menampilkan skor dalam urutan asli
 		case "2":
-			displayQuizScores("descending") // Urut menurun
+			ShowQuizScores("descending") // Menampilkan skor urut menurun
 		case "3":
-			displayQuizScores("ascending") // Urut menaik
+			ShowQuizScores("ascending") // Menampilkan skor urut menaik
 		case "4":
 			fmt.Println("Kembali ke menu utama...")
-			berhenti = false
+			isDisplayingMenu = false // Menghentikan loop menu skor
 		default:
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
 			fmt.Println("Tekan Enter untuk melanjutkan...")
@@ -144,243 +121,266 @@ func DisplayScoresMenu() {
 	}
 }
 
-// displayQuizScores menampilkan semua skor kuis untuk semua siswa.
+// ShowQuizScores menampilkan semua skor kuis untuk semua siswa.
 // Menerima parameter `sortOrder` untuk menentukan urutan tampilan:
-// "original", "descending", "ascending".
-func displayQuizScores(sortOrder string) {
+// "original", "descending", "ascending". Fungsi ini juga memungkinkan pencarian nama.
+func ShowQuizScores(sortOrder string) {
 	atribut.ClearScreen()
 	fmt.Println("====================================")
-	fmt.Println("          SKOR KUIS SISWA           ")
+	fmt.Println("          SKOR KUIS SISWA           ")
 
-	// 1. Buat array lokal baru untuk menampung data yang akan diurutkan.
-	// Inisialisasi dengan semua slot kosong (zero value).
-	var studentsToSort [NMAX]atribut.Quiz
+	// studentsToProcess adalah array lokal sementara untuk menampung data yang akan diurutkan.
+	var studentsToProcess [NMAX]Quiz
 	activeCount := 0 // Menghitung berapa banyak siswa aktif yang disalin
 
-	// 2. Salin hanya siswa yang aktif ke array lokal.
-	// Ini juga akan "memadatkan" data ke awal array studentsToSort.
-	for i := 0; i < NMAX; i++ {
-		if DataQuiz[i].Nama != "" {
-			studentsToSort[activeCount] = DataQuiz[i]
+	// Salin hanya siswa yang aktif (ID tidak kosong) ke array lokal studentsToProcess.
+	i := 0
+	for i < NMAX {
+		if studentsData[i].ID != "" {
+			studentsToProcess[activeCount] = studentsData[i]
 			activeCount++
 		}
+		i++
 	}
 
-	// 3. Lakukan pengurutan pada bagian yang berisi siswa aktif dari studentsToSort
-	switch sortOrder {
-	case "descending":
-		fmt.Println("     (Diurutkan Menurun berdasarkan Total Poin) ")
-		// Insertion Sort untuk urut menurun, disesuaikan dengan format while-loop
-		// Kamus: i, pass : integer; temp : types.Quiz
-		pass := 1                // pass <- 1
-		for pass < activeCount { // while pass < activeCount do (setara dengan pass <= n-1 di pseudocode jika n=activeCount)
-			// { Pencarian indeks yang tepat untuk elemen }
-			i := pass
-			temp := studentsToSort[pass] // temp <- A[pass]
-
-			// while i > 0 and A[i-1] < temp.TotalScore do (untuk menurun)
-			for i > 0 && studentsToSort[i-1].TotalScore < temp.TotalScore {
-				studentsToSort[i] = studentsToSort[i-1] // A[i] <- A[i-1]
-				i--                                     // i <- i - 1
-			}
-			// { Menempatkan elemen pada lokasi tersebut}
-			studentsToSort[i] = temp // A[i] <- temp
-
-			pass++ // pass <- pass + 1
-		}
-	case "ascending":
-		fmt.Println("     (Diurutkan Menaik berdasarkan Total Poin) ")
-		pass := 0                  // pass <- 0
-		for pass < activeCount-1 { // while pass <= n-1 do (simulasi)
-			// { 1. Pencarian nilai idx ekstrim (minimum) }
-			idx := pass           // idx <- pass
-			i := pass + 1         // i <- pass + 1
-			for i < activeCount { // while i < n do (simulasi)
-				if studentsToSort[i].TotalScore < studentsToSort[idx].TotalScore { // Kondisi untuk mencari MINIMUM
-					idx = i
-				}
-				i++ // i <- i + 1
-			}
-			// { 2. Pertukaran }
-			temp := studentsToSort[idx]                // temp <- A[idx]
-			studentsToSort[idx] = studentsToSort[pass] // A[idx] <- A[pass]
-			studentsToSort[pass] = temp                // A[pass] <- temp
-
-			pass++ // pass <- pass + 1
-		}
-	default: // "original" atau jika ada nilai sortOrder lain yang tidak dikenali
-		fmt.Println("     (Urutan Asli) ")
-	}
 	fmt.Println("====================================")
 
-	// 4. Tampilkan data
-	fmt.Printf("%-15s %-10s %-8s %-8s %-12s %-8s %-8s %-10s %-8s %s\n",
-		"Nama", "ID", "Total", "GoLang", "Percabangan", "KonvTD", "OpML", "Perulangan", "TDGo", "VarConst")
+	// Melakukan pengurutan pada studentsToProcess sesuai permintaan
+	switch sortOrder {
+	case "descending":
+		fmt.Println("     (Diurutkan Menurun berdasarkan Total Poin) ")
+		// Insertion Sort untuk urut menurun (Descending)
+		// Beroperasi pada studentsToProcess hingga activeCount
+		i = 1
+		for i < activeCount { // Outer loop
+			key := studentsToProcess[i]
+			j := i - 1
+			canShift := true // Flag untuk mengontrol loop geser
+			for canShift && j >= 0 {
+				if studentsToProcess[j].TotalScore < key.TotalScore {
+					studentsToProcess[j+1] = studentsToProcess[j]
+					j--
+				} else {
+					canShift = false // Hentikan geser jika kondisi tidak terpenuhi
+				}
+			}
+			studentsToProcess[j+1] = key
+			i++
+		}
+	case "ascending":
+		fmt.Println("     (Diurutkan Menaik berdasarkan Total Poin) ")
+		// Selection Sort untuk urut menaik (Ascending)
+		// Beroperasi pada studentsToProcess hingga activeCount
+		i = 0
+		for i < activeCount-1 { // Outer loop
+			minIndex := i
+			j := i + 1
+			for j < activeCount { // Inner loop untuk mencari minIndex
+				if studentsToProcess[j].TotalScore < studentsToProcess[minIndex].TotalScore {
+					minIndex = j
+				}
+				j++
+			}
+			// Tukar elemen minimum yang ditemukan dengan elemen saat ini (studentsToProcess[i])
+			temp := studentsToProcess[i]
+			studentsToProcess[i] = studentsToProcess[minIndex]
+			studentsToProcess[minIndex] = temp
+			i++
+		}
+	default: // "original"
+		fmt.Println("     (Urutan Asli) ")
+	}
+
+	fmt.Println(strings.Repeat("=", 60)) // Menyesuaikan lebar untuk tampilan konsol yang lebih baik
+
+	// Menampilkan header kolom
+	fmt.Printf("%-25s %-10s %-8s \n", "Nama", "ID", "Total")
 	fmt.Println(strings.Repeat("-", 120))
 
 	if activeCount == 0 { // Cek apakah ada siswa aktif yang ditemukan
 		fmt.Println("Belum ada siswa yang terdaftar atau mengambil kuis.")
 	} else {
-		if sortOrder == "original" {
-			// Tampilkan dari array global asli untuk menjaga urutan awal
-			for i := 0; i < NMAX; i++ {
-				if DataQuiz[i].Nama != "" {
-					fmt.Printf("%-15s %-10s %-8d %-8d %-12d %-8d %-8d %-10d %-8d %d\n",
-						DataQuiz[i].Nama,
-						DataQuiz[i].ID,
-						DataQuiz[i].TotalScore,
-						DataQuiz[i].GoLanguageScore,
-						DataQuiz[i].PercabanganScore,
-						DataQuiz[i].KonversiTipeDataScore,
-						DataQuiz[i].OperasiMatematikaLogikaScore,
-						DataQuiz[i].PerulanganScore,
-						DataQuiz[i].TipeDataGoScore,
-						DataQuiz[i].VariableConstantScore,
-					)
-				}
-			}
-		} else {
-			// Tampilkan dari array lokal yang sudah diurutkan (studentsToSort)
-			// Hanya loop sebanyak activeCount untuk menghindari slot kosong
-			for i := 0; i < activeCount; i++ {
-				student := studentsToSort[i] // Ambil data dari array yang diurutkan
-				fmt.Printf("%-15s %-10s %-8d %-8d %-12d %-8d %-8d %-10d %-8d %d\n",
-					student.Nama,
-					student.ID,
-					student.TotalScore,
-					student.GoLanguageScore,
-					student.PercabanganScore,
-					student.KonversiTipeDataScore,
-					student.OperasiMatematikaLogikaScore,
-					student.PerulanganScore,
-					student.TipeDataGoScore,
-					student.VariableConstantScore,
-				)
-			}
+		// Menampilkan data siswa dari array lokal studentsToProcess yang sudah diurutkan (atau tidak diurutkan jika "original")
+		i = 0
+		for i < activeCount {
+			student := studentsToProcess[i]
+			fmt.Printf("%-25s %-10s %-8.1f \n", // Menggunakan .1f untuk float dengan satu desimal
+				student.Nama,
+				student.ID,
+				student.TotalScore,
+			)
+			i++
 		}
 	}
 
 	fmt.Println(strings.Repeat("-", 120))
+	fmt.Println("Opsi Pencarian:")
+	fmt.Print("Ingin mencari siswa berdasarkan nama? (y/n): ")
+	var searchChoice string
+	fmt.Scanln(&searchChoice)
+
+	if strings.ToLower(searchChoice) == "y" {
+		fmt.Print("Masukkan nama siswa yang dicari: ")
+		var searchName string
+		fmt.Scanln(&searchName)
+
+		foundStudentIndex := -1 // Default: tidak ditemukan
+		isSearching := true     // Flag untuk mengontrol loop pencarian
+
+		// PENTING: Dalam kondisi tanpa slice dan tanpa mengurutkan array berdasarkan nama,
+		// pencarian biner pada nama tidak akan bekerja dengan benar.
+		// Oleh karena itu, *selalu gunakan Sequential Search* untuk mencari nama di sini,
+		// karena ini adalah metode yang benar secara fungsional dalam batasan yang ada.
+
+		fmt.Println("\n--- Melakukan Pencarian Sekuensial Berdasarkan Nama ---")
+		i = 0
+		for i < activeCount && isSearching { // Loop selama masih dalam batas dan belum ditemukan
+			if strings.EqualFold(strings.ToLower(studentsToProcess[i].Nama), strings.ToLower(searchName)) { // Perbandingan tidak case-sensitive
+				foundStudentIndex = i
+				isSearching = false // Set isSearching ke false untuk menghentikan loop pada iterasi berikutnya
+			}
+			i++
+		}
+
+		fmt.Println(strings.Repeat("-", 40))
+		if foundStudentIndex != -1 {
+			foundStudent := studentsToProcess[foundStudentIndex]
+			fmt.Println("Siswa ditemukan:")
+			fmt.Printf("Nama: %s\n", foundStudent.Nama)
+			fmt.Printf("ID: %s\n", foundStudent.ID)
+			fmt.Printf("Total Score: %.1f\n", foundStudent.TotalScore)
+		} else {
+			fmt.Println("Siswa dengan nama '" + searchName + "' tidak ditemukan.")
+		}
+		fmt.Println(strings.Repeat("-", 40))
+		fmt.Println("Tekan Enter untuk melanjutkan...")
+		fmt.Scanln()
+	}
+
 	fmt.Println("Tekan Enter untuk kembali ke menu sebelumnya...")
 	fmt.Scanln()
 }
 
-func HandleNewStudentRegistration() {
+// RegisterNewStudentFlow mengelola alur untuk pendaftaran siswa baru.
+func RegisterNewStudentFlow() {
 	atribut.ClearScreen()
 	fmt.Println("====================================")
-	fmt.Println("          DAFTAR SISWA BARU         ")
+	fmt.Println("          DAFTAR SISWA BARU         ")
 	fmt.Println("====================================")
 
 	var newNama, newID string
 	fmt.Print("Masukkan Nama Lengkap Anda: ")
 	fmt.Scanln(&newNama)
 
-	registrationAttempted := false  // Flag untuk menunjukkan apakah sudah mencoba mendaftar
 	registrationSuccessful := false // Flag untuk menunjukkan apakah pendaftaran berhasil
 
-	// Loop akan terus berjalan sampai pendaftaran berhasil atau tidak mungkin lagi
-	for !registrationSuccessful && !registrationAttempted { // Loop terus selama belum berhasil dan belum ada upaya
-		// Jika sudah ada upaya, berarti loop ini dari percobaan sebelumnya yang gagal
-		// dan kita perlu meminta ID lagi kecuali sudah dinyatakan gagal total
-		if registrationAttempted {
-			fmt.Print("Masukkan ID Anda (contoh: QS011): ") // Minta ID lagi setelah kegagalan
-			fmt.Scanln(&newID)
-		} else {
-			// Pertama kali masuk loop, minta ID tanpa pesan error sebelumnya
-			fmt.Print("Masukkan ID Anda (contoh: QS011): ")
-			fmt.Scanln(&newID)
-			registrationAttempted = true // Tandai bahwa sudah ada upaya pertama
-		}
+	for !registrationSuccessful { // Loop akan terus berjalan sampai pendaftaran berhasil
+		isValidInputRound := true // Flag untuk validasi input ID di putaran saat ini
 
-		isValidInput := true // Flag untuk validasi input ID
+		fmt.Print("Masukkan ID Anda (contoh: 011, QS011, dll.): ")
+		fmt.Scanln(&newID)
+
+		// Validasi input ID
 		if strings.TrimSpace(newID) == "" {
 			fmt.Println("ID tidak boleh kosong. Silakan masukkan ID yang valid.")
-			isValidInput = false
-		} else if strings.Contains(newID, " ") {
+			isValidInputRound = false
+		}
+		if isValidInputRound && strings.Contains(newID, " ") { // Cek spasi hanya jika input sudah dianggap valid sejauh ini
 			fmt.Println("ID tidak boleh mengandung spasi. Silakan masukkan ID yang valid.")
-			isValidInput = false
+			isValidInputRound = false
+		}
+		if isValidInputRound && GetStudentIndexByID(newID) != -1 { // Cek ID sudah ada hanya jika input sudah dianggap valid sejauh ini
+			fmt.Println("ID tersebut sudah digunakan. Silakan gunakan ID lain.")
+			isValidInputRound = false
 		}
 
-		if isValidInput {
-			newIndex := RegisterNewStudent(newNama, newID)
+		if isValidInputRound { // Jika semua validasi lolos
+			indexAdded := AddNewStudent(newNama, newID) // Mencoba mendaftarkan siswa baru
 
-			if newIndex != -1 {
-				// Pendaftaran berhasil
+			if indexAdded != -1 {
 				fmt.Printf("\nSelamat datang, %s! Data Anda (ID: %s) telah berhasil didaftarkan.\n", newNama, newID)
 				fmt.Println("Sekarang Anda bisa mengambil kuis menggunakan ID Anda.")
-				registrationSuccessful = true // Atur flag untuk keluar dari loop
+				registrationSuccessful = true // Pendaftaran berhasil, keluar dari loop
 			} else {
-				// Pendaftaran gagal, tentukan alasannya
-				if FindStudentIndex(newID) != -1 { // Cek apakah ID sudah ada
-					fmt.Println("ID tersebut sudah digunakan. Silakan gunakan ID lain.")
-					// Loop akan terus berjalan untuk meminta ID baru
-				} else { // Jika bukan karena ID ada, berarti kapasitas penuh
-					fmt.Println("Maaf, kapasitas pendaftar sudah penuh (" + fmt.Sprintf("%d", NMAX) + " orang).")
-					registrationSuccessful = true // Atur flag untuk keluar dari loop karena sudah penuh
-				}
+				fmt.Println("Maaf, kapasitas pendaftar sudah penuh (" + fmt.Sprintf("%d", NMAX) + " orang).")
+				registrationSuccessful = true // Kapasitas penuh, keluar dari loop
 			}
 		}
-		// Jika isValidInput false, loop akan berulang dan meminta ID lagi
+		// Jika isValidInputRound false, loop akan berulang (registrationSuccessful masih false) dan meminta ID lagi
 	}
-	PromptKembaliToMain()
+	PromptReturnToPreviousMenu()
 }
 
-// HandleQuizStart mengelola alur untuk memulai kuis.
-func HandleQuizStart(quizSpecificFunction func(quizDataArray *[NMAX]atribut.Quiz, index int), materialName string) {
-	studentIndex := GetStudentIndexPrompt()
+// StartQuizSession mengelola alur untuk memulai kuis.
+// quizSpecificFunction adalah fungsi kuis yang akan dipanggil (misal StartSoalMenu dari contohsoal).
+// Fungsi kuis ini diharapkan menerima pointer ke TotalScore siswa (*float64) dan mengembalikan bool.
+func StartQuizSession(quizSpecificFunction func(nilaiTemp *float64) bool, materialName string) {
+	studentIndex := GetStudentIndexPrompt() // Mendapatkan indeks siswa berdasarkan ID
 	if studentIndex != -1 {
-		quizSpecificFunction(&DataQuiz, studentIndex)
+		// Panggil fungsi kuis spesifik dan teruskan pointer ke TotalScore siswa.
+		// Fungsi kuis akan memodifikasi studentsData[studentIndex].TotalScore secara langsung.
+		quizSpecificFunction(&studentsData[studentIndex].TotalScore)
 	} else {
 		fmt.Println("ID siswa tidak ditemukan atau tidak valid. Kuis " + materialName + " tidak dapat dimulai.")
 		fmt.Println("Silakan daftar terlebih dahulu (pilih 'Daftar / Masukkan Data Baru') atau gunakan ID yang terdaftar.")
-		PromptKembaliToMain()
+		PromptReturnToPreviousMenu() // Kembali ke menu sebelumnya setelah pesan kesalahan
 	}
 }
 
-func FindStudentIndex(studentID string) int {
-	for i := 0; i < NMAX; i++ {
-		if strings.ToLower(DataQuiz[i].ID) == strings.ToLower(studentID) {
-			return i
+// GetStudentIndexByID mencari indeks siswa berdasarkan ID di array studentsData.
+// Mengembalikan indeks siswa jika ditemukan, atau -1 jika tidak.
+func GetStudentIndexByID(studentID string) int {
+	i := 0
+	foundIndex := -1 // Default: tidak ditemukan
+	isFound := false // Flag untuk mengontrol loop dan menunjukkan apakah ditemukan
+
+	for i < NMAX && !isFound { // Loop selama masih dalam batas array dan belum ditemukan
+		if strings.ToLower(studentsData[i].ID) == strings.ToLower(studentID) {
+			foundIndex = i // Ditemukan, simpan indeks
+			isFound = true // Set flag ke true untuk menghentikan loop pada iterasi berikutnya
 		}
+		i++
 	}
-	return -1
+	return foundIndex // Mengembalikan indeks yang ditemukan atau -1
 }
 
-// RegisterNewStudent adds a new student's data to the DataQuiz array. It's exported.
-func RegisterNewStudent(nama string, id string) int {
-	if FindStudentIndex(id) != -1 {
-		return -1
-	}
-
+// AddNewStudent menambahkan data siswa baru ke array studentsData.
+// Mengembalikan indeks siswa yang baru ditambahkan, atau -1 jika pendaftaran gagal (kapasitas penuh).
+func AddNewStudent(nama string, id string) int {
 	emptyIndex := -1
-	foundEmptySlot := false
-	for i := 0; i < NMAX && !foundEmptySlot; i++ {
-		if DataQuiz[i].ID == "" {
+	i := 0
+	foundEmptySlot := false // Flag untuk mengontrol loop agar berhenti jika slot kosong ditemukan
+
+	for i < NMAX && !foundEmptySlot { // Loop selama masih dalam batas array dan belum menemukan slot kosong
+		if studentsData[i].ID == "" { // Cari slot kosong berdasarkan ID yang kosong
 			emptyIndex = i
-			foundEmptySlot = true
+			foundEmptySlot = true // Slot kosong ditemukan, set flag ke true
 		}
+		i++
 	}
 
-	if !foundEmptySlot {
+	if emptyIndex == -1 { // Tidak ada slot kosong (kapasitas penuh)
 		return -1
 	}
 
-	DataQuiz[emptyIndex].Nama = nama
-	DataQuiz[emptyIndex].ID = id
-	DataQuiz[emptyIndex].TotalScore = 0
-
+	// Inisialisasi siswa baru di slot yang ditemukan
+	studentsData[emptyIndex].Nama = nama
+	studentsData[emptyIndex].ID = id
+	studentsData[emptyIndex].TotalScore = 0.0 // Nilai default 0.0 saat daftar
 	return emptyIndex
 }
 
-func PromptKembaliToMain() {
+// PromptReturnToPreviousMenu meminta pengguna untuk menekan 'm' untuk kembali ke menu sebelumnya.
+func PromptReturnToPreviousMenu() {
 	var choice string
-	berhenti3 := false
-	for !berhenti3 {
-		fmt.Print("\nTekan 'm' untuk kembali ke submenu: ")
+	isInputHandled := false // Flag untuk mengontrol loop input
+
+	for !isInputHandled { // Loop selama input belum ditangani
+		fmt.Print("\nTekan 'm' untuk kembali ke menu sebelumnya: ")
 		fmt.Scanln(&choice)
 
 		if strings.ToLower(choice) == "m" {
-			berhenti3 = true
+			isInputHandled = true // Input valid, keluar dari loop
 		} else {
 			fmt.Println("Pilihan tidak valid. Silakan masukkan 'm'.")
 		}
@@ -388,10 +388,11 @@ func PromptKembaliToMain() {
 }
 
 // GetStudentIndexPrompt meminta ID siswa dari pengguna dan mencari indeksnya.
+// Mengembalikan indeks siswa jika ditemukan, atau -1 jika tidak.
 func GetStudentIndexPrompt() int {
 	var studentID string
-	fmt.Print("Masukkan ID siswa Anda (contoh: QS001): ")
+	fmt.Print("Masukkan ID siswa Anda (contoh: 0001): ")
 	fmt.Scanln(&studentID)
 
-	return FindStudentIndex(studentID)
+	return GetStudentIndexByID(studentID) // Menggunakan fungsi pencarian yang disesuaikan
 }

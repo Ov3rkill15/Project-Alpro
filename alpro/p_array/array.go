@@ -7,82 +7,72 @@ import (
 	"strings"
 )
 
+// MainMenu adalah fungsi utama untuk navigasi menu array.
 func MainMenu() {
 	var pilihan string
-	var pilihan2 string
-	var key int
-	fmt.Println(`
+	// Gunakan variabel boolean untuk mengontrol loop menu utama.
+	// isRunning akan menjadi false jika pengguna memilih untuk keluar (0).
+	isRunning := true
+
+	for isRunning {
+		atribut.ClearScreen() // Bersihkan layar setiap kali menu utama ditampilkan
+		fmt.Println(`
 =====================================
 Selamat Datang di Pembelajaran Array
 =====================================
 1. Apa itu Array
 2. Referensi Soal Array
 0. Keluar
-    `)
-	fmt.Print("Masukkan pilihan: ")
-	fmt.Scan(&pilihan)
-	fmt.Scanln()
-	atribut.ClearScreen()
-
-	switch pilihan {
-	case "1":
-		atribut.ClearScreen()
-		if belajarArray(&key) {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					MainMenu()
-				} else if strings.ToLower(pilihan2) == "n" {
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
-			}
-		} else {
-			return
-		}
-	case "2":
-		atribut.ClearScreen()
-		if soal.Soal1array() {
-			fmt.Println("Mau pilih materi lain atau kembali ke menu utama?(y/n)")
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Scan(&pilihan2)
-				fmt.Scanln()
-				if strings.ToLower(pilihan2) == "y" {
-					MainMenu()
-				} else if strings.ToLower(pilihan2) == "n" {
-					return
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-					fmt.Print("Mau pilih materi lain atau kembali ke menu utama?(y/n): ")
-				}
-			}
-		} else {
-			return
-		}
-	case "0":
-		fmt.Println("Terima kasih telah menggunakan program pembelajaran function.")
-		return
-	default:
-		fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '0'.")
-		fmt.Print("Tekan Enter untuk melanjutkan...")
+		`)
+		fmt.Print("Masukkan pilihan: ")
+		fmt.Scan(&pilihan)
 		fmt.Scanln()
-		MainMenu()
+		atribut.ClearScreen() // Bersihkan layar setelah pilihan diinput
+
+		switch pilihan {
+		case "1":
+			// belajarArray sekarang akan mengembalikan true jika ingin tetap di MainMenu,
+			// atau false jika pengguna memutuskan untuk keluar dari program sepenuhnya.
+			shouldStayInMenu := belajarArray()
+			if !shouldStayInMenu {
+				isRunning = false // Jika belajarArray mengindikasikan keluar dari program, hentikan loop MainMenu
+			}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "2":
+			// Asumsi: soal.Soal1array() mengembalikan true jika ingin kembali ke MainMenu,
+			// dan false jika pengguna ingin keluar dari program sepenuhnya.
+			shouldStayInMenu := soal.Soal1array()
+			if !shouldStayInMenu {
+				isRunning = false // Jika soal.Soal1array() mengindikasikan keluar dari program, hentikan loop MainMenu
+			}
+			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
+
+		case "0":
+			fmt.Println("Terima kasih telah menggunakan program pembelajaran array.")
+			isRunning = false // Set isRunning menjadi false untuk menghentikan loop
+
+		default:
+			fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', atau '0'.")
+			fmt.Print("Tekan Enter untuk melanjutkan...")
+			fmt.Scanln()
+			// Loop akan berlanjut secara otomatis karena isRunning masih true
+		}
 	}
 }
 
-func belajarArray(key *int) bool {
+// belajarArray mengelola materi pembelajaran array.
+// Mengembalikan true jika pengguna ingin kembali ke MainMenu,
+// atau false jika pengguna ingin keluar dari program.
+func belajarArray() bool {
 	halamanSekarang := 1
-	totalHalaman := 3
-	var berhenti bool = true
+	totalHalaman := 2 // Hanya ada 2 halaman materi yang relevan
 	var Choice string
 
-	for berhenti {
+	// isStudying akan menjadi false jika pengguna memilih 'n' untuk kembali ke menu utama.
+	isStudying := true
+
+	for isStudying {
 		atribut.ClearScreen()
 		fmt.Printf("=== Apa itu Array di Go? (Halaman %d/%d) ===\n", halamanSekarang, totalHalaman)
 
@@ -131,47 +121,38 @@ func belajarArray(key *int) bool {
 			fmt.Println("### Array vs. Slice (Sekilas)")
 			fmt.Println("Di Go, array memiliki ukuran tetap, yang membuatnya kurang fleksibel untuk banyak kasus penggunaan. Oleh karena itu, Anda akan sering menemukan **Slice** yang lebih banyak digunakan. Slice adalah abstraksi di atas array yang memungkinkan ukuran dinamis. Namun, pemahaman tentang array sangat penting sebagai fondasi untuk memahami slice.")
 			fmt.Println("\nPelajari array dengan baik, dan Anda akan memiliki dasar yang kuat untuk struktur data yang lebih canggih di Go!")
+		default:
+			fmt.Println("Halaman tidak ditemukan.")
+			// Jika halaman tidak valid, kita akan menganggap pengguna ingin kembali ke menu utama.
+			return true // Kembali ke MainMenu
 		}
 
 		fmt.Println("\n------------------------------------")
-		if halamanSekarang < totalHalaman {
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
-				fmt.Scan(&Choice)
-				fmt.Scanln()
 
-				if strings.ToLower(Choice) == "y" {
-					halamanSekarang++
-					berhenti2 = true
-				} else if strings.ToLower(Choice) == "n" {
-					atribut.ClearScreen()
-					berhenti = false
-					berhenti2 = true
-					MainMenu()
-					return false
-				} else {
-					fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
-				}
+		// Loop untuk mendapatkan input navigasi halaman
+		// Kita akan meminta input sampai valid atau pengguna memilih 'n'.
+		inputValid := false
+		for !inputValid {
+			if halamanSekarang < totalHalaman {
+				fmt.Print("Lanjut ke halaman berikutnya (y) atau kembali ke menu utama (n)? ")
+			} else { // Jika sudah di halaman terakhir
+				fmt.Print("Kembali ke menu utama (n)? ")
 			}
-		} else {
-			berhenti2 := false
-			for !berhenti2 {
-				fmt.Print("kembali ke menu utama (n)")
-				fmt.Scan(&Choice)
-				fmt.Scanln()
-				if strings.ToLower(Choice) == "n" {
-					berhenti = false
-					berhenti2 = true
-					MainMenu()
-					atribut.ClearScreen()
-					*key = 10
-					return false
-				} else {
-					fmt.Println("Pilihan tidak valid.")
-				}
+			fmt.Scan(&Choice)
+			fmt.Scanln()
+
+			if strings.ToLower(Choice) == "y" && halamanSekarang < totalHalaman {
+				halamanSekarang++
+				inputValid = true // Input valid, keluar dari loop input dan lanjut ke halaman berikutnya (outer loop)
+			} else if strings.ToLower(Choice) == "n" {
+				isStudying = false // Mengindikasikan untuk keluar dari loop materi
+				inputValid = true  // Input valid, keluar dari loop input
+			} else {
+				fmt.Println("Pilihan tidak valid. Harap masukkan 'y' atau 'n'.")
 			}
 		}
 	}
+	// Setelah loop isStudying berakhir (karena Choice adalah 'n'), kita mengembalikan true
+	// yang menandakan bahwa MainMenu harus terus berjalan.
 	return true
 }

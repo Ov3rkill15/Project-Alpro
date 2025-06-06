@@ -1,6 +1,9 @@
 package insertionsort
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 const nmax int = 99
 
@@ -66,6 +69,27 @@ func cetakData(A tabInt, n int) {
 	cetakData(data, nData)
 	insertionSort(&data, nData)
 	cetakData(data, nData)
+	fmt.Println()
+	var pilihan string
+	// Variabel untuk mengontrol loop input validasi
+	inputValid := false
+	for !inputValid {
+		fmt.Println("\n------------------------------------")
+		fmt.Print("Ingin kembali ke menu utama (n)? ") // Asumsi setelah soal selesai, hanya ada opsi kembali
+		fmt.Scan(&pilihan)
+		fmt.Scanln()
+
+		if strings.ToLower(pilihan) == "n" {
+			inputValid = true // Input valid, keluar dari loop input
+			// Mengembalikan true berarti kembali ke MainMenu
+			return true // Kembali ke MainMenu
+		} else {
+			fmt.Println("Pilihan tidak valid. Harap masukkan 'n'.")
+			// Loop akan terus berjalan sampai input 'n' diterima
+		}
+	}
+	// Jika loop berakhir karena input valid, berarti 'n' sudah dimasukkan,
+	// jadi kita mengembalikan true untuk kembali ke MainMenu.
 	return true
 }
 
