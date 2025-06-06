@@ -178,13 +178,13 @@ func Login(sign, helo *string) (bool, bool) { // <-- Perubahan di sini: tambahka
 			return false, false // Keluar dari fungsi jika username sudah ada
 		}
 
-		fmt.Print("Masukkan NIM: ")
-		NIM, _ := reader.ReadString('\n') // NIM disimpan tapi tidak digunakan di struct User
-		NIM = strings.TrimSpace(NIM)
+		fmt.Print("Masukkan Asal Kota: ")
+		Kota, _ := reader.ReadString('\n') // Kota disimpan tapi tidak digunakan di struct User
+		Kota = strings.TrimSpace(Kota)
 
 		fmt.Println("Selamat datang,")
 		fmt.Println("Nama:", signup.Username)
-		fmt.Println("NIM:", NIM)
+		fmt.Println("Kota:", Kota)
 
 		stop = true // Reset stop untuk loop password
 		key = 0     // Reset key untuk loop password
