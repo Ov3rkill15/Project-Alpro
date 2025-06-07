@@ -136,6 +136,12 @@ func main() {
 		case "10":
 			atribut.ClearScreen()
 			atribut.BukaPDF("D:\\Matkul smester 2\\Project-Alpro\\cv\\CV_Muhamad Alwan Suryadi.pdf")
+			atribut.BukaPDF("D:\\Matkul smester 2\\Project-Alpro\\cv\\CV__103032400035_fathurrahman alfarizi.pdf")
+			fmt.Println("Menuju Menu utama...")
+			atribut.Loading(1200)
+		case "11":
+			atribut.ClearScreen()
+			atribut.BukaPDF("D:\\Matkul smester 2\\Project-Alpro\\cv\\LAPORAN_TUBES_MUHAMMAD_ALWAN_SURYADI & FATHURRAHMAN_ALFARIZI_KELOMPOK_18.pdf")
 			fmt.Println("Menuju Menu utama...")
 			atribut.Loading(1200)
 		case "0":
@@ -172,6 +178,7 @@ Materi yang tersedia:
 
 =========================================
 10. about us:
+11. about this app:
 =========================================
 
 0. keluar
