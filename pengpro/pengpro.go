@@ -54,23 +54,23 @@ func Submenu() int {
 	fmt.Println("9. Tampilkan Skor Kuis") // Opsi untuk menampilkan submenu skor
 	fmt.Println("0. Keluar Aplikasi")     // Opsi keluar aplikasi
 	fmt.Print("Pilihan Anda: ")
-	fmt.Scanln(&Choice) // Menggunakan Scanln untuk membaca seluruh baris dan membersihkan buffer
+	fmt.Scanln(&Choice) 
 
 	switch Choice {
 	case 1:
-		pengenalan.MainMenu(&dataquiz.DataQuiz) // Meneruskan pointer ke array DataQuiz global
+		pengenalan.MainMenu(&dataquiz.DataQuiz) 
 	case 2:
-		tipe_data_go.MainMenu(&dataquiz.DataQuiz) // Meneruskan pointer ke array DataQuiz global
+		tipe_data_go.MainMenu(&dataquiz.DataQuiz) 
 	case 3:
-		variable_constant.MainMenu(&dataquiz.DataQuiz) // Meneruskan pointer ke array DataQuiz global
+		variable_constant.MainMenu(&dataquiz.DataQuiz) 
 	case 4:
-		konversi_tipe_data.MainMenu(&dataquiz.DataQuiz) // Meneruskan pointer ke array DataQuiz global
+		konversi_tipe_data.MainMenu(&dataquiz.DataQuiz) 
 	case 5:
-		operasi_matematika_logika.MainMenu(&dataquiz.DataQuiz) // Meneruskan pointer ke array DataQuiz global
+		operasi_matematika_logika.MainMenu(&dataquiz.DataQuiz) 
 	case 6:
-		perulangan.MainMenu(&dataquiz.DataQuiz) // Meneruskan pointer ke array DataQuiz global
+		perulangan.MainMenu(&dataquiz.DataQuiz) 
 	case 7:
-		percabangan.MainMenu(&dataquiz.DataQuiz) // Meneruskan pointer ke array DataQuiz global
+		percabangan.MainMenu(&dataquiz.DataQuiz) 
 	case 8: // Daftar Siswa Baru
 		dataquiz.HandleNewStudentRegistration()
 	case 9: // Masuk ke submenu tampilan skor
@@ -98,7 +98,7 @@ func DisplayScoresMenu() {
 		fmt.Println("1. Daftar Nilai (Urutan Asli)")
 		fmt.Println("2. Daftar Nilai (Urut Menurun berdasarkan Total Poin)")
 		fmt.Println("3. Daftar Nilai (Urut Menaik berdasarkan Total Poin)")
-		fmt.Println("4. Kembali ke Menu Utama")
+		fmt.Println("4. Kembali ke Menu Utama") // Adjusted option number
 		fmt.Print("Pilihan Anda: ")
 		fmt.Scanln(&choice)
 
@@ -109,7 +109,7 @@ func DisplayScoresMenu() {
 			displayQuizScores("descending") // Urut menurun
 		case "3":
 			displayQuizScores("ascending") // Urut menaik
-		case "4":
+		case "4": // Adjusted case for returning to main menu
 			fmt.Println("Kembali ke menu utama...")
 			berhenti = false
 		default:
@@ -120,9 +120,6 @@ func DisplayScoresMenu() {
 	}
 }
 
-// displayQuizScores menampilkan semua skor kuis untuk semua siswa.
-// Menerima parameter `sortOrder` untuk menentukan urutan tampilan:
-// "original", "descending", "ascending".
 func displayQuizScores(sortOrder string) {
 	atribut.ClearScreen()
 	fmt.Println("====================================")
@@ -147,44 +144,32 @@ func displayQuizScores(sortOrder string) {
 	case "descending":
 		fmt.Println("     (Diurutkan Menurun berdasarkan Total Poin) ")
 		// Insertion Sort untuk urut menurun, disesuaikan dengan format while-loop
-		// Kamus: i, pass : integer; temp : types.Quiz
-		pass := 1                // pass <- 1
-		for pass < activeCount { // while pass < activeCount do (setara dengan pass <= n-1 di pseudocode jika n=activeCount)
-			// { Pencarian indeks yang tepat untuk elemen }
+		pass := 1
+		for pass < activeCount {
 			i := pass
-			temp := studentsToSort[pass] // temp <- A[pass]
+			temp := studentsToSort[pass]
 
-			// while i > 0 and A[i-1] < temp.TotalScore do (untuk menurun)
 			for i > 0 && studentsToSort[i-1].TotalScore < temp.TotalScore {
-				studentsToSort[i] = studentsToSort[i-1] // A[i] <- A[i-1]
-				i--                                     // i <- i - 1
+				studentsToSort[i] = studentsToSort[i-1]
+				i--
 			}
-			// { Menempatkan elemen pada lokasi tersebut}
-			studentsToSort[i] = temp // A[i] <- temp
-
-			pass++ // pass <- pass + 1
+			studentsToSort[i] = temp
+			pass++
 		}
 	case "ascending":
 		fmt.Println("     (Diurutkan Menaik berdasarkan Total Poin) ")
-		// Selection Sort untuk urut menaik, dengan pass dimulai dari 1
-		// Catatan: Ini akan melewatkan pengurutan elemen pertama (indeks 0).
-		pass := 1                // pass <- 1
-		for pass < activeCount { // while pass <= n-1 do (simulasi, n=activeCount)
-			// { 1. Pencarian nilai idx ekstrim (minimum) dari pass hingga akhir array }
-			idx := pass           // idx <- pass
-			i := pass + 1         // i <- pass + 1
-			for i < activeCount { // while i < n do (simulasi)
-				if studentsToSort[i].TotalScore < studentsToSort[idx].TotalScore { // Kondisi untuk mencari MINIMUM
-					idx = i
+		// Selection Sort untuk urut menaik, dengan pass dimulai dari 0
+		for pass := 0; pass < activeCount-1; pass++ {
+			idxMin := pass
+			for i := pass + 1; i < activeCount; i++ {
+				if studentsToSort[i].TotalScore < studentsToSort[idxMin].TotalScore {
+					idxMin = i
 				}
-				i++ // i <- i + 1
 			}
-			// { 2. Pertukaran }
-			temp := studentsToSort[idx]
-			studentsToSort[idx] = studentsToSort[pass]
-			studentsToSort[pass] = temp
-
-			pass++ // pass <- pass + 1
+			// Pertukaran
+			temp := studentsToSort[pass]
+			studentsToSort[pass] = studentsToSort[idxMin]
+			studentsToSort[idxMin] = temp
 		}
 	default: // "original" atau jika ada nilai sortOrder lain yang tidak dikenali
 		fmt.Println("     (Urutan Asli) ")
@@ -239,6 +224,91 @@ func displayQuizScores(sortOrder string) {
 	}
 
 	fmt.Println(strings.Repeat("-", 120))
+
+	// --- Mulai penambahan binary search di sini ---
+	var searchChoice string
+	fmt.Println("\n====================================")
+	fmt.Println("      Opsi Tambahan Setelah Tampilan Skor    ")
+	fmt.Println("====================================")
+	fmt.Println("1. Cari Nama Siswa berdasarkan Total Poin (Binary Search)")
+	fmt.Println("2. Kembali ke Menu Sebelumnya")
+	fmt.Print("Pilihan Anda: ")
+	fmt.Scanln(&searchChoice)
+
+	if searchChoice == "1" {
+		var searchScore int
+		fmt.Print("Masukkan total poin yang dicari: ")
+		fmt.Scanln(&searchScore)
+
+		// If sortOrder was "original", we need to re-sort it for the binary search to be effective.
+		// To keep it simple as requested, we'll ensure it's sorted ascending here.
+		if sortOrder == "original" {
+			// Re-sort the active students for binary search if the original display was not sorted
+			for pass := 0; pass < activeCount-1; pass++ {
+				idxMin := pass
+				for i := pass + 1; i < activeCount; i++ {
+					if studentsToSort[i].TotalScore < studentsToSort[idxMin].TotalScore {
+						idxMin = i
+					}
+				}
+				temp := studentsToSort[pass]
+				studentsToSort[pass] = studentsToSort[idxMin]
+				studentsToSort[idxMin] = temp
+			}
+		}
+
+		left := 0
+		right := activeCount - 1
+		foundIndex := -1
+		foundMatch := false // Flag untuk menghentikan perulangan tanpa break
+
+		for left <= right && !foundMatch {
+			mid := (left + right) / 2 // Calculation of mid remains the same
+			if studentsToSort[mid].TotalScore == searchScore {
+				foundIndex = mid
+				foundMatch = true // Set flag untuk menghentikan perulangan di iterasi berikutnya
+			} else if studentsToSort[mid].TotalScore < searchScore {
+				left = mid + 1 // Move left pointer
+			} else { // studentsToSort[mid].TotalScore > searchScore
+				right = mid - 1 // Move right pointer
+			}
+		}
+
+		if foundIndex != -1 {
+			fmt.Printf("\n--- Hasil Pencarian untuk Total Poin %d ---\n", searchScore)
+			fmt.Println("Nama Siswa:")
+			foundAny := false
+
+			// Scan ke kiri dari foundIndex
+			i := foundIndex
+			for i >= 0 && studentsToSort[i].TotalScore == searchScore {
+				fmt.Printf("- %s (ID: %s)\n", studentsToSort[i].Nama, studentsToSort[i].ID)
+				foundAny = true
+				i--
+			}
+
+			// Scan ke kanan dari foundIndex + 1
+			i = foundIndex + 1
+			for i < activeCount && studentsToSort[i].TotalScore == searchScore {
+				fmt.Printf("- %s (ID: %s)\n", studentsToSort[i].Nama, studentsToSort[i].ID)
+				foundAny = true
+				i++
+			}
+
+			if !foundAny { // Safeguard, should not be hit if foundIndex != -1
+				fmt.Println("Tidak ada siswa yang ditemukan dengan total poin ini.")
+			}
+
+		} else {
+			fmt.Printf("\nTidak ada siswa dengan total poin %d ditemukan.\n", searchScore)
+		}
+	} else if searchChoice == "2" {
+		fmt.Println("Kembali ke menu sebelumnya...")
+	} else {
+		fmt.Println("Pilihan tidak valid. Kembali ke menu sebelumnya...")
+	}
+	// --- Akhir penambahan binary search ---
+
 	fmt.Println("Tekan Enter untuk kembali ke menu sebelumnya...")
-	fmt.Scanln()
+	fmt.Scanln() // Ini akan menangkap Enter terakhir setelah hasil search atau pilihan menu.
 }
