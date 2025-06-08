@@ -49,7 +49,6 @@ Selamat Datang di Pembelajaran Searching
 				isRunning = false // Hentikan loop MainMenu jika belajarBinarySearch mengindikasikan keluar
 			}
 			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
-
 		case "3":
 			// Asumsi: sequential.Soal1SeqSearch() mengembalikan true jika ingin kembali ke MainMenu,
 			// dan false jika pengguna ingin keluar dari program sepenuhnya.
@@ -83,9 +82,6 @@ Selamat Datang di Pembelajaran Searching
 	}
 }
 
-// belajarSequentialSearch mengelola materi pembelajaran Sequential Search.
-// Mengembalikan true jika pengguna ingin kembali ke MainMenu,
-// atau false jika pengguna ingin keluar dari program.
 func belajarSequentialSearch() bool {
 	halamanSekarang := 1
 	totalHalaman := 3
@@ -187,9 +183,6 @@ func belajarSequentialSearch() bool {
 	return true // Kembali ke MainMenu setelah selesai belajar
 }
 
-// belajarBinarySearch mengelola materi pembelajaran Binary Search.
-// Mengembalikan true jika pengguna ingin kembali ke MainMenu,
-// atau false jika pengguna ingin keluar dari program.
 func belajarBinarySearch() bool {
 	halamanSekarang := 1
 	totalHalaman := 3

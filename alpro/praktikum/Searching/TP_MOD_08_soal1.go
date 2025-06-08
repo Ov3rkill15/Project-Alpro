@@ -57,7 +57,7 @@ func main() {
 	inputValid := false
 	for !inputValid {
 		fmt.Println("\n------------------------------------")
-		fmt.Print("Ingin kembali ke menu utama (n)? ") // Asumsi setelah soal selesai, hanya ada opsi kembali
+		fmt.Print("Ingin kembali ke menu utama (n)? ")
 		fmt.Scan(&pilihan)
 		fmt.Scanln()
 
@@ -71,6 +71,5 @@ func main() {
 		}
 	}
 	// Jika loop berakhir karena input valid, berarti 'n' sudah dimasukkan,
-	// jadi kita mengembalikan true untuk kembali ke MainMenu.
 	return true
 }

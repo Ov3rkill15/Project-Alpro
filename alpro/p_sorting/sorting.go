@@ -6,6 +6,7 @@ import (
 	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
+	"time"
 )
 
 // MainMenu adalah fungsi utama untuk navigasi menu pembelajaran Sorting.
@@ -22,8 +23,9 @@ Selamat Datang di Pembelajaran Sorting
 ======================================
 1. Apa itu Selection Sort
 2. Apa itu Insertion Sort
-3. Referensi Soal Selection Sort
-4. Referensi Soal Insertion Sort
+3. Perbandingan Selection Sort dan Insertion Sort
+4. Referensi Soal Selection Sort
+5. Referensi Soal Insertion Sort
 0. Keluar
 		`)
 		fmt.Print("Masukkan pilihan: ")
@@ -39,7 +41,6 @@ Selamat Datang di Pembelajaran Sorting
 			if !shouldStayInMenu {
 				isRunning = false // Hentikan loop MainMenu jika belajarSelectionSort mengindikasikan keluar
 			}
-			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
 
 		case "2":
 			// belajarInsertionSort akan mengembalikan true jika ingin kembali ke MainMenu,
@@ -48,19 +49,22 @@ Selamat Datang di Pembelajaran Sorting
 			if !shouldStayInMenu {
 				isRunning = false // Hentikan loop MainMenu jika belajarInsertionSort mengindikasikan keluar
 			}
-			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
 
-		case "3": // Case 3: Referensi Soal Selection Sort
-			// Asumsi: selection.SoalSelectionSort() mengembalikan true jika ingin kembali ke MainMenu,
-			// dan false jika pengguna ingin keluar dari program.
+		case "3":
+			shouldStayInMenu := visualisasi()
+			if !shouldStayInMenu {
+				fmt.Println("Terima kasih telah menggunakan program pembelajaran sorting.")
+				isRunning = false // Hentikan loop MainMenu jika ingin keluar dari program
+			}
+
+		case "4":
 			shouldStayInMenu := selection.SoalSelectionSort()
 			if !shouldStayInMenu {
 				fmt.Println("Terima kasih telah menggunakan program pembelajaran sorting.")
 				isRunning = false // Hentikan loop MainMenu jika ingin keluar dari program
 			}
-			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
 
-		case "4": // Case 4: Referensi Soal Insertion Sort
+		case "5": // Case 4: Referensi Soal Insertion Sort
 			// Asumsi: insertion.SoalInsertionSort() mengembalikan true jika ingin kembali ke MainMenu,
 			// dan false jika pengguna ingin keluar dari program.
 			shouldStayInMenu := insertion.SoalInsertionSort()
@@ -68,7 +72,6 @@ Selamat Datang di Pembelajaran Sorting
 				fmt.Println("Terima kasih telah menggunakan program pembelajaran sorting.")
 				isRunning = false // Hentikan loop MainMenu jika ingin keluar dari program
 			}
-			// Jika shouldStayInMenu true, loop MainMenu akan berlanjut secara otomatis.
 
 		case "0": // Case 0: Keluar
 			fmt.Println("Terima kasih telah menggunakan program pembelajaran sorting.")
@@ -76,16 +79,11 @@ Selamat Datang di Pembelajaran Sorting
 
 		default:
 			fmt.Println("Pilihan tidak valid. Harap masukkan '1', '2', '3', '4', atau '0'.")
-			fmt.Print("Tekan Enter untuk melanjutkan...")
-			fmt.Scanln() // Tunggu Enter
-			// Loop akan berlanjut secara otomatis karena isRunning masih true
+			fmt.Print("Tekan Enter untuk melanjutkan..karena isRunning masih true")
 		}
 	}
 }
 
-// belajarSelectionSort mengelola tampilan materi Selection Sort.
-// Mengembalikan true jika pengguna ingin kembali ke MainMenu,
-// atau false jika pengguna ingin keluar dari program.
 func belajarSelectionSort() bool {
 	halamanSekarang := 1
 	totalHalaman := 3
@@ -233,9 +231,6 @@ func belajarSelectionSort() bool {
 	return true // Default return: kembali ke MainMenu setelah selesai belajar
 }
 
-// belajarInsertionSort mengelola tampilan materi Insertion Sort.
-// Mengembalikan true jika pengguna ingin kembali ke MainMenu,
-// atau false jika pengguna ingin keluar dari program.
 func belajarInsertionSort() bool {
 	halamanSekarang := 1
 	totalHalaman := 3
@@ -379,4 +374,317 @@ func belajarInsertionSort() bool {
 		}
 	}
 	return true // Default return: kembali ke MainMenu setelah selesai belajar
+}
+
+const nmax int = 100 // Ukuran maksimum array
+const nmax2 int = 5
+
+type Tabint [nmax]int // Tipe array integer dengan ukuran nmax
+
+type Tabuser [nmax2]int
+
+var data10 Tabint
+var data50 Tabint
+var data100 Tabint
+
+func initData10(jData10 *int) {
+	data := [10]int{73, 74, 8, 23, 59, 9, 24, 83, 61, 91}
+	*jData10 = 0
+	i := 0
+	for i < nmax {
+		if i < len(data) {
+			data10[i] = data[i]
+			*jData10++
+		}
+		i++
+	}
+}
+
+func initData50(jData50 *int) {
+	data := [50]int{36, 8, 78, 82, 76, 96, 23, 2, 91, 86, 36, 40, 93, 4, 72, 13, 47, 64, 9, 100, 81, 89, 8, 39, 48, 21, 38, 43, 5, 16, 26, 12, 83, 67, 65, 94, 39, 2, 9, 37, 49, 93, 96, 88, 77, 65, 47, 19, 25, 1}
+	*jData50 = 0
+	i := 0
+	for i < nmax {
+		if i < len(data) {
+			data50[i] = data[i]
+			*jData50++
+		}
+		i++
+	}
+}
+
+func initData100(jData100 *int) {
+	data := [100]int{31, 81, 60, 60, 22, 19, 24, 11, 86, 77, 65, 91, 22, 49, 64, 7, 22, 5, 31, 22, 3, 21, 89, 32, 21, 8, 4, 98, 41, 25, 70, 65, 42, 97, 7, 56, 15, 76, 63, 49, 81, 32, 79, 66, 62, 70, 13, 2, 74, 28, 40, 13, 79, 22, 83, 79, 7, 100, 3, 2, 93, 26, 61, 75, 75, 86, 100, 88, 36, 55, 40, 60, 54, 40, 77, 75, 45, 83, 92, 100, 53, 95, 90, 99, 72, 67, 39, 42, 34, 63, 62, 28, 84, 30, 71, 67, 8, 22, 67, 17}
+	*jData100 = 0
+	i := 0
+	for i < nmax {
+		if i < len(data) {
+			data100[i] = data[i]
+			*jData100++
+		}
+		i++
+	}
+}
+
+func visualisasi() bool {
+	var pilihan string
+	var efisiensi int // Variabel untuk menyimpan jumlah efisiensi. Dideklarasikan sekali saja.
+	var const10 int
+	var const50 int
+	var const100 int
+	//===================== 10 DATA ===========================
+	initData10(&const10)
+	fmt.Printf("================== %d DATA ==================\n", const10)
+	var data10sel Tabint = data10
+	var data10ins Tabint = data10 // Data terpisah untuk Insertion Sort
+
+	fmt.Println("Data asli (10 data):")
+	cetakData(data10sel, const10)
+
+	// --- Selection Sort ---
+	SelectionSort(&data10sel, const10, &efisiensi)
+	fmt.Println("Terurut descending oleh Selection Sort:")
+	cetakData(data10sel, const10)
+	fmt.Println("Dengan proses efisiensi sebanyak:", efisiensi)
+	efisiensi = 0
+	// --- Insertion Sort ---
+	insertionSort(&data10ins, const10, &efisiensi) // Gunakan data10ins
+	fmt.Println("Terurut descending oleh Insertion Sort:")
+	cetakData(data10ins, const10)
+	fmt.Println("Dengan proses efisiensi sebanyak:", efisiensi)
+	efisiensi = 0
+
+	//===================== 50 DATA ===========================
+	initData50(&const50)
+	fmt.Printf("================== %d DATA ==================\n", const50)
+	var data50sel Tabint = data50
+	var data50ins Tabint = data50
+	// --- Selection Sort ---
+	SelectionSort(&data50sel, const50, &efisiensi)
+	fmt.Printf("Terurut descending oleh Selection Sort(%d data tanpa di print):\n", const50)
+	fmt.Println("Dengan proses efisiensi sebanyak:", efisiensi)
+	efisiensi = 0
+	// --- Insertion Sort ---
+	insertionSort(&data50ins, const50, &efisiensi)
+	fmt.Printf("Terurut descending oleh Insertion Sort(%d data tanpa di print):\n", const50)
+	fmt.Println("Dengan proses efisiensi sebanyak:", efisiensi)
+	efisiensi = 0
+
+	//===================== 100 DATA ===========================
+	initData100(&const100)
+	fmt.Printf("================== %d DATA ==================\n", const100)
+	var data100sel Tabint = data100
+	var data100ins Tabint = data100 // Ukuran data untuk set 100
+
+	// --- Selection Sort ---
+	SelectionSort(&data100sel, const100, &efisiensi)
+	fmt.Printf("Terurut descending oleh Selection Sort(%d data tanpa di print):\n", const100)
+	fmt.Println("Dengan proses efisiensi sebanyak:", efisiensi)
+	efisiensi = 0
+	// --- Insertion Sort ---
+	insertionSort(&data100ins, const100, &efisiensi)
+	fmt.Printf("Terurut descending oleh Insertion Sort(%d data tanpa di print):\n", const100)
+	fmt.Println("Dengan proses efisiensi sebanyak:", efisiensi)
+
+	fmt.Println("\nProgram Selesai.")
+	efisiensi = 0
+	if nmax < 100 {
+		fmt.Println("============================================")
+		fmt.Println("Hanya sebagian data yang masuk (NMAX < 100).")
+		fmt.Println("============================================")
+	}
+
+	//===================== MASUKAN DATA ===========================
+	fmt.Println("\n================== MASUKAN DATA ==================")
+	var dataMasuk Tabint
+	var nDataMasuk int
+	var dataTemp Tabint
+	bacadata(&dataMasuk, &nDataMasuk)
+	fmt.Println("Data masuk:")
+	cetakData(dataMasuk, nDataMasuk)
+	dataTemp = dataMasuk
+	// --- Selection Sort ---
+	PenjelasanSelectionSort(&dataTemp, nDataMasuk, &efisiensi)
+	fmt.Println("Terurut descending oleh Selection Sort:")
+	fmt.Println("Dengan proses efisiensi sebanyak:", efisiensi)
+	fmt.Println("=============================================")
+	cetakData(dataMasuk, nDataMasuk)
+	efisiensi = 0
+	// --- Insertion Sort ---
+	PenjelasanInsertionSort(&dataMasuk, nDataMasuk, &efisiensi)
+	fmt.Println("Terurut descending oleh Insertion Sort:")
+	fmt.Println("Dengan proses efisiensi sebanyak:", efisiensi)
+	fmt.Println("=============================================")
+	inputValid := false
+	for !inputValid {
+		fmt.Println("\n------------------------------------")
+		fmt.Print("Ingin kembali ke menu utama (n)? ")
+		fmt.Scan(&pilihan)
+		fmt.Scanln()
+
+		if strings.ToLower(pilihan) == "n" {
+			inputValid = true // Input valid, keluar dari loop input
+			// Mengembalikan true berarti kembali ke MainMenu
+			return true // Kembali ke MainMenu
+		} else {
+			fmt.Println("Pilihan tidak valid. Harap masukkan 'n'.")
+			// Loop akan terus berjalan sampai input 'n' diterima
+		}
+	}
+	// Jika loop berakhir karena input valid, berarti 'n' sudah dimasukkan,
+	return true
+}
+
+// reset mengatur ulang elemen array menjadi 0 dan mereset jumlah data aktif.
+
+func bacadata(A *Tabint, n *int) {
+	var i int = 0
+	var x int
+	var stop bool = true
+
+	fmt.Printf("MAKS DATA: %d\n", nmax2)
+	fmt.Println("Masukkan data (0 untuk berhenti):")
+	for i < nmax2 && stop {
+		fmt.Scan(&x)
+		if x == 0 {
+			stop = false
+		} else {
+			A[i] = x
+			i++
+		}
+	}
+	*n = i
+}
+
+// cetakData mencetak elemen array dari indeks 0 hingga n-1.
+func cetakData(A Tabint, n int) {
+	for i := 0; i < n; i++ {
+		fmt.Print(A[i], " ")
+		if n == 0 {
+			fmt.Println("[Array kosong]")
+		}
+	}
+	fmt.Println()
+}
+
+func SelectionSort(A *Tabint, n int, eff *int) {
+	var i, idx, pass int
+	var temp int
+	pass = 1
+	for pass < n {
+		i = pass
+		idx = pass - 1
+		for i < n {
+			*eff++
+			if A[i] > A[idx] {
+				idx = i
+			}
+			i++
+		}
+		temp = A[pass-1]
+		A[pass-1] = A[idx]
+		A[idx] = temp
+		pass++
+	}
+}
+func insertionSort(A *Tabint, n int, eff *int) {
+	var i, pass int
+	var temp int
+	pass = 1
+
+	for pass < n {
+		i = pass
+		temp = A[pass]
+		for i > 0 && temp > A[i-1] {
+			*eff++
+			A[i] = A[i-1]
+			i--
+		}
+		A[i] = temp
+		pass++
+
+	}
+}
+
+func PenjelasanSelectionSort(A *Tabint, n int, eff *int) {
+	var i, idx, pass int
+	var temp int
+	*eff = 0
+	pass = 1
+	for pass < n {
+		i = pass
+		idx = pass - 1
+		time.Sleep(1 * time.Second)
+		fmt.Println("\n--- Memulai Pass ke-", pass, "---")
+		fmt.Printf("Mencari elemen terbesar untuk ditempatkan di posisi A[%d] (yang saat ini bernilai %d).\n", pass-1, A[pass-1])
+		idx = pass - 1
+		for i < n {
+			time.Sleep(500 * time.Millisecond)
+			fmt.Printf("   Membandingkan A[%d]: %d dengan elemen terbesar sementara (A[%d]): %d\n", i, A[i], idx, A[idx])
+			*eff++
+			if A[i] > A[idx] {
+				fmt.Printf("   -> %d LEBIH BESAR dari %d. Index terbesar sementara berubah dari %d ke %d.\n", A[i], A[idx], idx, i)
+				idx = i
+			} else {
+				fmt.Printf("   -> %d TIDAK lebih besar dari %d. Index terbesar sementara tetap %d.\n", A[i], A[idx], idx)
+			}
+			i++
+		}
+		time.Sleep(1 * time.Second)
+		if idx != (pass - 1) {
+			fmt.Printf("Ditemukan elemen terbesar %d (di indeks %d) untuk Pass ke-%d.\n", A[idx], idx, pass)
+			fmt.Printf("Menukar A[%d] (%d) dengan A[%d] (%d).\n", pass-1, A[pass-1], idx, A[idx])
+			temp = A[pass-1]
+			A[pass-1] = A[idx]
+			A[idx] = temp
+			fmt.Println("Array setelah pertukaran:", A[:n])
+			pass++
+		} else {
+			fmt.Printf("Elemen di posisi A[%d] (%d) sudah merupakan yang terbesar yang ditemukan di sisa array. Tidak perlu pertukaran.\n", pass-1, A[pass-1])
+			pass++
+		}
+	}
+	time.Sleep(1 * time.Second)
+	fmt.Println("\n--- PROSES SELESAI ---")
+	fmt.Println("Array akhir terurut:", A[:n])
+}
+func PenjelasanInsertionSort(A *Tabint, n int, eff *int) {
+	var i, pass int
+	var temp int
+	*eff = 0
+	pass = 1
+	for pass < n {
+		time.Sleep(1 * time.Second)
+		fmt.Println("\n--- Memulai Pass ke-", pass, "---")
+		fmt.Printf("Mengambil elemen A[%d]: %d untuk disisipkan ke bagian yang sudah terurut.\n", pass, A[pass])
+		fmt.Println("Bagian yang sudah terurut:", A[0:pass])
+
+		i = pass
+		temp = A[pass]
+
+		time.Sleep(1 * time.Second)
+		fmt.Println("Memulai proses pergeseran dan perbandingan...")
+
+		for i > 0 && temp > A[i-1] {
+			time.Sleep(500 * time.Millisecond)
+			fmt.Printf("   A[%d]: %d lebih kecil dari A[%d]: %d. Menggeser %d ke kanan.\n", i-1, A[i-1], i, temp, A[i-1])
+			*eff++
+			A[i] = A[i-1]
+			i--
+			fmt.Println("   Array sementara:", A[:pass+1])
+		}
+
+		time.Sleep(1 * time.Second)
+		if i != pass {
+			fmt.Printf("Elemen %d telah digeser ke posisi A[%d].\n", temp, i)
+		} else {
+			fmt.Printf("Elemen %d sudah berada di posisi yang benar (A[%d]). Tidak ada pergeseran.\n", temp, i)
+		}
+		A[i] = temp
+		pass++
+		fmt.Println("Array setelah pass:", A[:n])
+	}
+	time.Sleep(1 * time.Second)
+	fmt.Println("\n--- PROSES SELESAI ---")
+	fmt.Println("Array akhir terurut:", A[:n])
 }
