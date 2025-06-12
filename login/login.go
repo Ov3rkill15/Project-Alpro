@@ -78,8 +78,6 @@ func initUsers() {
 		{"jihannabilamubarakah", "0037"},
 	}
 
-	// Jangan mereset jumlahPengguna jika sudah ada pengguna dari sesi sebelumnya (jika ada data persisten)
-	// Namun, karena belum ada persistensi ke file, ini akan selalu memulai dari data hardcode.
 	jumlahPengguna = 0
 	i := 0
 	for i < NMAX {
@@ -90,9 +88,7 @@ func initUsers() {
 		i++
 	}
 }
-
-// Login sekarang juga mengembalikan boolean kedua untuk menandakan apakah itu logout admin
-func Login(sign, helo *string) (bool, bool) { // <-- Perubahan di sini: tambahkan return bool kedua
+func Login(sign, helo *string) (bool, bool) {
 	var username, password string
 	var signup User
 	stop := true
@@ -146,7 +142,7 @@ func Login(sign, helo *string) (bool, bool) { // <-- Perubahan di sini: tambahka
 					MainAdmin("admin", &adminLogout)
 					if adminLogout {
 						// Jika admin logout, kembalikan false untuk login gagal dan true untuk admin logout
-						return false, true // <-- Perubahan di sini: kembalikan true untuk adminLogout
+						return false, true //kembalikan true untuk adminLogout
 					}
 				}
 				return true, false // Login berhasil untuk user biasa atau admin yang tidak logout
@@ -245,8 +241,6 @@ func isUsernameExists(username string) bool {
 	for i < jumlahPengguna {
 		if users[i].Username == username {
 			exists = true
-			// Tidak menggunakan break, jadi loop akan terus berjalan
-			// hingga selesai, tapi 'exists' sudah true.
 		}
 		i++
 	}
@@ -258,7 +252,7 @@ func Mainlogin(sign, helo *string) {
 	running := true
 	for running {
 		*helo = ""                                       // Reset helo sebelum setiap percobaan login/daftar
-		loginResult, adminLoggedOut := Login(sign, helo) // <-- Perubahan di sini: tangkap adminLoggedOut
+		loginResult, adminLoggedOut := Login(sign, helo) //tangkap adminLoggedOut
 
 		// Logika berdasarkan hasil login
 		if loginResult {
@@ -266,10 +260,8 @@ func Mainlogin(sign, helo *string) {
 			running = false
 		} else {
 			// Login gagal, daftar selesai, atau admin logout - tampilkan pesan dan lanjutkan loop
-			if adminLoggedOut { // <-- Perubahan di sini: tambahkan kondisi untuk adminLoggedOut
+			if adminLoggedOut { //tambahkan kondisi untuk adminLoggedOut
 				fmt.Println("Anda telah berhasil logout.")
-				// Tidak perlu menampilkan pesan "Login gagal" atau "Kembali ke menu login"
-				// Langsung kembali ke loop utama untuk menampilkan menu login/daftar
 			} else if *sign == "1" || *sign == "masuk" {
 				fmt.Println("Login gagal. Coba lagi untuk masuk atau daftar.")
 			} else if *sign == "2" || *sign == "daftar" {
@@ -280,7 +272,6 @@ func Mainlogin(sign, helo *string) {
 	}
 }
 
-// GetUsers mengembalikan array dan jumlah pengguna yang terdaftar (TIDAK MENGGUNAKAN SLICE)
 func GetUsers() (Daftarnama, int) {
 	return users, jumlahPengguna
 }
@@ -292,7 +283,7 @@ func GetJumlahPengguna() int {
 
 // DeleteUser menghapus pengguna berdasarkan username
 func DeleteUser(username string) bool {
-	foundIndex := -1 // Inisialisasi dengan nilai yang tidak mungkin
+	foundIndex := -1 // Inisialisasi dengan nilai yang tidak mungkin (tidak ketemu)
 	i := 0
 	for i < jumlahPengguna {
 		if users[i].Username == username {

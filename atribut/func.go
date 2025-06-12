@@ -49,7 +49,7 @@ func Loading(durationMs int) {
 
 // GetWaktuSekarang mengembalikan string representasi waktu saat ini (YYYY-MM-DD HH:MM:SS)
 func GetWaktuSekarang() string {
-	return time.Now().Format("2006-01-02 15:04:05")
+	return time.Now().Format("Day: Mon | Date: 2006-01-02 | Clock: 15:04:05")
 }
 
 func BukaPDF(path string) error {

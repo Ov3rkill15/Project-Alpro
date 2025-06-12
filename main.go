@@ -115,6 +115,7 @@ func main() {
 		fmt.Print(user)
 		fmt.Print("\033[0m")
 		menu()
+		fmt.Println(atribut.GetWaktuSekarang())
 		fmt.Print("Masukkan pilihan: ")
 		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(input)
