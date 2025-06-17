@@ -8,8 +8,14 @@ import (
 
 const NMAX int = 15
 
-// DataQuiz is the global dataquiz array for your application
-var DataQuiz [NMAX]atribut.Quiz = [NMAX]atribut.Quiz{
+
+// DataQuiz adalah array global utama tempat semua data siswa disimpan dan digunakan oleh fungsi-fungsi lain.
+// Deklarasikan kosong di sini, akan diisi oleh InitDataQuiz().
+var DataQuiz [NMAX]atribut.Quiz
+
+// initialDataValues adalah sumber data kuis awal yang sudah didefinisikan.
+// Menggunakan '...' (array literal dengan ukuran inferensi) di sini.
+var initialDataValues = [...]atribut.Quiz{ 
 	{Nama: "Alwan Suryadi", ID: "0104", TotalScore: 20},
 	{Nama: "fathurrahman", ID: "0035", TotalScore: 16},
 	{Nama: "azriel raihan", ID: "0010", TotalScore: 12},
@@ -20,6 +26,24 @@ var DataQuiz [NMAX]atribut.Quiz = [NMAX]atribut.Quiz{
 	{Nama: "nayla assyifa", ID: "0078", TotalScore: 8},
 	{Nama: "fitria cahyani", ID: "0060", TotalScore: 7},
 	{Nama: "zaidan salam", ID: "0088", TotalScore: 19},
+
+}
+
+// Fungsi init() akan dijalankan secara otomatis saat package ini dimuat.
+func init(){
+
+	// Panggil fungsi inisialisasi data. Ini akan memastikan hanya sampai NMAX yang disalin.
+	InitDataQuiz()
+}
+
+func InitDataQuiz() {
+	i := 0
+	// Loop akan berjalan selama 'i' kurang dari panjang initialDataValues
+	// DAN 'i' kurang dari NMAX.
+	for i < len(initialDataValues) && i < NMAX {
+		DataQuiz[i] = initialDataValues[i]
+		i++
+	}
 }
 
 // FindStudentIndex finds a student's index by ID. It's exported.
@@ -35,9 +59,9 @@ func FindStudentIndex(studentID string) int {
 		}
 	}
 	if found {
-		return i 
+		return i
 	} else {
-		return -1 
+		return -1
 	}
 }
 
