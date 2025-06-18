@@ -7,16 +7,9 @@ import (
 )
 
 type Quiz struct {
-	Nama                         string
-	ID                           string
-	TotalScore                   float64
-	GoLanguageScore              int
-	PercabanganScore             int
-	KonversiTipeDataScore        int
-	OperasiMatematikaLogikaScore int
-	PerulanganScore              int
-	TipeDataGoScore              int
-	VariableConstantScore        int
+	Nama       string
+	ID         string
+	TotalScore float64
 }
 
 // NMAX mendefinisikan jumlah maksimum siswa yang dapat ditampung sistem.
@@ -27,6 +20,7 @@ var studentsData [NMAX]Quiz
 func init() {
 	InitStudentsData()
 }
+
 func InitStudentsData() {
 	data := [45]Quiz{
 		{Nama: "nathasyayuanmaharani", ID: "0001", TotalScore: 85.5},
@@ -115,6 +109,7 @@ func DisplayScoresMenu() {
 }
 
 func ShowQuizScores(sortOrder string) {
+
 	atribut.ClearScreen()
 	fmt.Println("====================================")
 	fmt.Println("          SKOR KUIS SISWA           ")
@@ -134,40 +129,38 @@ func ShowQuizScores(sortOrder string) {
 	fmt.Println("====================================")
 	switch sortOrder {
 	case "descending":
+		var pass, i int
+		var temp Quiz
 		fmt.Println("     (Diurutkan Menurun berdasarkan Total Poin) ")
-		i = 1
-		for i < activeCount { // Outer loop
-			pass := studentsToProcess[i]
-			j := i - 1
-			canShift := true // Flag untuk mengontrol loop geser
-			for canShift && j >= 0 {
-				if studentsToProcess[j].TotalScore < pass.TotalScore {
-					studentsToProcess[j+1] = studentsToProcess[j]
-					j--
-				} else {
-					canShift = false // Hentikan geser jika kondisi tidak terpenuhi
-				}
+		pass = 1
+		for pass < activeCount {
+			temp = studentsToProcess[pass]
+			i = pass
+			for i > 0 && temp.TotalScore > studentsToProcess[i-1].TotalScore {
+				studentsToProcess[i] = studentsToProcess[i-1]
+				i--
 			}
-			studentsToProcess[j+1] = pass
-			i++
+			studentsToProcess[i] = temp
+			pass++
 		}
 	case "ascending":
 		fmt.Println("     (Diurutkan Menaik berdasarkan Total Poin) ")
-		i = 0
-		for i < activeCount-1 { // Outer loop
-			minIndex := i
-			j := i + 1
-			for j < activeCount { // Inner loop untuk mencari minIndex
-				if studentsToProcess[j].TotalScore < studentsToProcess[minIndex].TotalScore {
-					minIndex = j
+		var pass, idx, i int
+		var temp Quiz
+		pass = 1
+		for pass < activeCount {
+			idx = pass - 1
+			i = pass
+			for i < activeCount {
+				if studentsToProcess[i].TotalScore < studentsToProcess[idx].TotalScore {
+					idx = i
 				}
-				j++
+				i++
 			}
-			// Tukar elemen minimum yang ditemukan dengan elemen saat ini (studentsToProcess[i])
-			temp := studentsToProcess[i]
-			studentsToProcess[i] = studentsToProcess[minIndex]
-			studentsToProcess[minIndex] = temp
-			i++
+			temp = studentsToProcess[pass-1]
+			studentsToProcess[pass-1] = studentsToProcess[idx]
+			studentsToProcess[idx] = temp
+			pass++
 		}
 	default: // "original"
 		fmt.Println("     (Urutan Asli) ")
@@ -176,7 +169,7 @@ func ShowQuizScores(sortOrder string) {
 	fmt.Println(strings.Repeat("=", 60)) // Menyesuaikan lebar untuk tampilan konsol yang lebih baik
 
 	// Menampilkan header kolom
-	fmt.Printf("%-25s %-10s %-8s \n", "Nama", "ID", "Total")
+	fmt.Printf("%-35s %-10s %-15s \n", "Nama", "ID", "Total")
 	fmt.Println(strings.Repeat("-", 120))
 
 	if activeCount == 0 { // Cek apakah ada siswa aktif yang ditemukan
@@ -186,7 +179,7 @@ func ShowQuizScores(sortOrder string) {
 		i = 0
 		for i < activeCount {
 			student := studentsToProcess[i]
-			fmt.Printf("%-25s %-10s %-8.1f \n", // Menggunakan .1f untuk float dengan satu desimal
+			fmt.Printf("%-35s %-10s %-15.1f \n", // Menggunakan .1f untuk float dengan satu desimal
 				student.Nama,
 				student.ID,
 				student.TotalScore,

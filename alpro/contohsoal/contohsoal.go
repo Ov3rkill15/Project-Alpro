@@ -9,15 +9,11 @@ import (
 	"time"
 )
 
-// Soal merepresentasikan struktur soal dengan pertanyaan dan daftar test case.
 type Soal struct {
-	Materi     string
-	Pertanyaan string
-	// Menggunakan array tetap untuk test cases karena batasan "tanpa slice".
-	// TestCases mungkin perlu nmax yang lebih kecil atau diisi dengan string kosong
-	// jika jumlah test case bervariasi per soal.
-	TestCases    [10]string // Menggunakan array tetap dengan ukuran yang cukup
-	NumTestCases int        // Menyimpan jumlah test case yang valid
+	Materi       string
+	Pertanyaan   string
+	TestCases    [10]string
+	NumTestCases int // Menyimpan jumlah test case yang valid
 }
 
 // openNotepadPlusPlus membuka file yang diberikan menggunakan Notepad++.
@@ -39,13 +35,12 @@ func compileAndRun() (string, error) {
 
 // StartSoalMenu adalah fungsi utama yang mengelola alur soal dan pengecekan jawaban.
 // Ini sekarang menerima pointer ke float64 (nilaiTemp) dan mengembalikan boolean.
-func StartSoalMenu(nilaiTemp *float64) bool { // Renamed and added return value
+func StartSoalMenu(nilaiTemp *float64) bool {
 	var Choice2 string
 	reader := bufio.NewReader(os.Stdin)
 
-	// Definisi semua soal secara langsung di dalam kode Go
-	// Pastikan TestCases dan NumTestCases diisi dengan benar.
-	daftarSoal := [10]Soal{ // Menggunakan array tetap dengan ukuran NMAX
+	// Definisi semua soal secara langsung
+	daftarSoal := [10]Soal{
 		{
 			Materi:       "Function (Sederhana)",
 			Pertanyaan:   "Buatlah sebuah fungsi Go bernama `hitungJumlah` yang menerima dua bilangan bulat ($a$ dan $b$) sebagai input, lalu mengembalikan hasil penjumlahan kedua bilangan tersebut. Cetak hasil pemanggilan fungsi ini dengan input 5 dan 3.",
@@ -127,7 +122,7 @@ func StartSoalMenu(nilaiTemp *float64) bool { // Renamed and added return value
 		i++
 	}
 	fmt.Println("0. Keluar")
-	fmt.Print("Masukkan pilihan: ") // Menggunakan Print bukan Println agar input sebaris
+	fmt.Print("Masukkan pilihan: ")
 
 	fmt.Println()
 	fmt.Printf("Nilai saat ini: %.2f\n", *nilaiTemp)
@@ -145,7 +140,7 @@ func StartSoalMenu(nilaiTemp *float64) bool { // Renamed and added return value
 		fmt.Println("Pilihan tidak valid.")
 		fmt.Println("Tekan ENTER untuk melanjutkan...")
 		bufio.NewReader(os.Stdin).ReadString('\n')
-		return StartSoalMenu(nilaiTemp) // Kembali ke menu soal jika pilihan tidak valid
+		return StartSoalMenu(nilaiTemp)
 	}
 
 	soalTerpilih := daftarSoal[pilihanInt-1]
@@ -157,7 +152,7 @@ func StartSoalMenu(nilaiTemp *float64) bool { // Renamed and added return value
 	time.Sleep(1 * time.Second)
 	openNotepadPlusPlus("jawaban.go")
 
-	var nilai float64 = 10.0 // Nilai awal untuk soal ini
+	var nilai float64 = 10.0 // Nilai untuk bobot soal
 
 	isAttemptingQuiz := true // Flag untuk mengontrol loop pengerjaan kuis
 
@@ -230,6 +225,6 @@ func StartSoalMenu(nilaiTemp *float64) bool { // Renamed and added return value
 			}
 		}
 	}
-	os.Remove("jawaban.go") // Pastikan file dihapus jika loop pengerjaan kuis selesai (misal karena 'x')
+	os.Remove("jawaban.go") // Pastikan file dihapus
 	return false            // Jika keluar dari loop pengerjaan kuis tanpa memilih y/n, anggap ingin keluar dari soal menu
 }

@@ -24,9 +24,7 @@ type Daftarnama [NMAX]User
 var users Daftarnama
 var jumlahPengguna int // Inisialisasi default ke 0
 
-// init() adalah fungsi khusus di Go yang otomatis dieksekusi satu kali
-// saat package ini diinisialisasi. Ini adalah tempat yang tepat untuk
-// memanggil initUsers() agar data pengguna hanya dimuat sekali.
+// init() adalah fungsi khusus di Go yang otomatis dieksekusi satu kali saat program dimuat.
 func init() {
 	initUsers()
 }

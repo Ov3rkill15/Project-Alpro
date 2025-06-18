@@ -21,16 +21,9 @@ import (
 	"github.com/common-nighthawk/go-figure"
 )
 
-// MainMenu adalah fungsi utama aplikasi.
 func MainMenu() int {
 	reader := bufio.NewReader(os.Stdin)
 	var stop bool = true
-
-	// --- PENTING: Inisialisasi data siswa di awal program ---
-	// Panggil ini sekali untuk mengisi studentsData di package quiz
-	quiz.InitStudentsData()
-	// --- Akhir bagian inisialisasi ---
-
 	for stop {
 		atribut.ClearScreen()
 		Submenu() // Menampilkan menu utama
@@ -66,33 +59,29 @@ func MainMenu() int {
 		case "9":
 			atribut.ClearScreen()
 			praktikum.MainMenu()
-		case "10": // Opsi "contoh soal"
+		case "10":
 			atribut.ClearScreen()
-			// Gunakan quiz.StartQuizSession untuk memulai kuis.
-			// Ini akan menangani pengambilan ID siswa dan meneruskan pointer skor.
 			quiz.StartQuizSession(contohsoal.StartSoalMenu, "Contoh Soal Umum")
-		case "11": // Opsi "scores"
+		case "11":
 			atribut.ClearScreen()
 			quiz.DisplayScoresMenu()
-		case "12": // Opsi "Register"
+		case "12":
 			atribut.ClearScreen()
-			// quiz.InitStudentsData() // Tidak perlu dipanggil lagi di sini, sudah di awal MainMenu
 			quiz.RegisterNewStudentFlow()
-		case "0": // Opsi "Keluar"
+		case "0":
 			atribut.ClearScreen()
-			atribut.Loading(1200) // Animasi loading
-			stop = false          // Menghentikan loop menu utama
+			atribut.Loading(1200)
+			stop = false
 			return 0
-		default: // Pilihan tidak valid
+		default:
 			atribut.ClearScreen()
 			fmt.Println("Pilihan tidak valid. Silakan coba lagi.")
-			atribut.Loading(1200) // Animasi loading
+			atribut.Loading(1200)
 		}
 	}
 	return 0
 }
 
-// Submenu menampilkan menu utama aplikasi.
 func Submenu() {
 	welcome := figure.NewFigure("ALPRO", "doom", true).String()
 	fmt.Print("\033[32m") // Set warna hijau
