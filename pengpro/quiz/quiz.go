@@ -35,9 +35,9 @@ func FindStudentIndex(studentID string) int {
 		}
 	}
 	if found {
-		return i 
+		return i
 	} else {
-		return -1 
+		return -1
 	}
 }
 

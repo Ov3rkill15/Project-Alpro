@@ -1,17 +1,15 @@
 package quiz
 
 import (
-	"Project-Alpro/atribut" // Asumsi path ini benar untuk proyek Anda
+	"Project-Alpro/atribut"
 	"fmt"
 	"strings"
 )
 
-// Quiz struct to hold student quiz data.
-// TotalScore is float64 to match your data initialization.
 type Quiz struct {
 	Nama                         string
 	ID                           string
-	TotalScore                   float64 // Menggunakan float64 untuk total skor
+	TotalScore                   float64
 	GoLanguageScore              int
 	PercabanganScore             int
 	KonversiTipeDataScore        int
@@ -22,70 +20,65 @@ type Quiz struct {
 }
 
 // NMAX mendefinisikan jumlah maksimum siswa yang dapat ditampung sistem.
-const NMAX int = 45
+const NMAX int = 50
 
-// Global array to store all student quiz data.
-// Ini adalah array utama tempat semua data siswa disimpan.
 var studentsData [NMAX]Quiz
 
-// initialQuizData adalah data kuis awal yang sudah didefinisikan.
-// Data ini akan disalin ke studentsData saat program dimulai.
-var initialQuizData = [NMAX]Quiz{
-	{Nama: "nathasyayuanmaharani", ID: "0001", TotalScore: 85.5},
-	{Nama: "theodoreelvisestrada", ID: "0006", TotalScore: 92.0},
-	{Nama: "dyahkusumawardani", ID: "0009", TotalScore: 78.5},
-	{Nama: "azrielraihaneldovahartoto", ID: "0010", TotalScore: 88.0},
-	{Nama: "muhammadilhamalifianda", ID: "0022", TotalScore: 95.0},
-	{Nama: "alyaazizaputeri", ID: "0026", TotalScore: 76.0},
-	{Nama: "ahmadabdansyakuro", ID: "0029", TotalScore: 81.5},
-	{Nama: "fathurrahmanalfarizi", ID: "0035", TotalScore: 89.0},
-	{Nama: "nuswantorosetyomukti", ID: "0040", TotalScore: 72.0},
-	{Nama: "anggitacahyatihidayat", ID: "0041", TotalScore: 90.0},
-	{Nama: "wibnuhijrahfranstio", ID: "0048", TotalScore: 83.0},
-	{Nama: "meyshaprimiandita", ID: "0050", TotalScore: 91.0},
-	{Nama: "muhamadfiqrihabibi", ID: "0056", TotalScore: 79.5},
-	{Nama: "fitriacahyani", ID: "0060", TotalScore: 87.0},
-	{Nama: "triansyahdaniswaraibrahim", ID: "0062", TotalScore: 93.0},
-	{Nama: "rakhaabdillahalkautsar", ID: "0068", TotalScore: 75.0},
-	{Nama: "avicenanaufallathif", ID: "0073", TotalScore: 86.0},
-	{Nama: "naylaassyifa", ID: "0078", TotalScore: 94.0},
-	{Nama: "williampetervanxnajoan", ID: "0084", TotalScore: 77.0},
-	{Nama: "rayvanalifarlomahesworo", ID: "0087", TotalScore: 90.5},
-	{Nama: "zaidansalamrojab", ID: "0088", TotalScore: 82.0},
-	{Nama: "audreyfredileyhanas", ID: "0093", TotalScore: 89.5},
-	{Nama: "muhammadnaelfadly", ID: "0096", TotalScore: 74.0},
-	{Nama: "nairacahayaputridarmawansinaga", ID: "0100", TotalScore: 96.0},
-	{Nama: "muhamadalwansuryadi", ID: "0104", TotalScore: 80.0},
-	{Nama: "dhafyahmadzubaidi", ID: "0107", TotalScore: 91.5},
-	{Nama: "muhammadfarisdhiyaylhaqsarbini", ID: "0117", TotalScore: 78.0},
-	{Nama: "nursyadira", ID: "0123", TotalScore: 92.5},
-	{Nama: "rayfitokrisnawijaya", ID: "0124", TotalScore: 84.0},
-	{Nama: "mochammadrafirisqullah", ID: "0129", TotalScore: 88.5},
-	{Nama: "iputugedeagastyakrisnawidartha", ID: "0134", TotalScore: 73.0},
-	{Nama: "rendil", ID: "0137", TotalScore: 85.0},
-	{Nama: "muhammadariqazzaki", ID: "0138", TotalScore: 90.0},
-	{Nama: "edmundyuliusgantur", ID: "0155", TotalScore: 77.5},
-	{Nama: "muhammadsayyidhuwaidi", ID: "0157", TotalScore: 86.5},
-	{Nama: "muhdzuljalalwaliikramjalil", ID: "0160", TotalScore: 93.5},
-	{Nama: "ramadhantangguhdefennder", ID: "0003", TotalScore: 81.0},
-	{Nama: "adzkiyaputrirahmawan", ID: "0025", TotalScore: 89.0},
-	{Nama: "fathimahradhiyya", ID: "0029", TotalScore: 79.0},
-	{Nama: "rakanghazianadiwjaya", ID: "0034", TotalScore: 95.5},
-	{Nama: "jihannabilamubarakah", ID: "0037", TotalScore: 87.5},
-	{Nama: "admin", ID: "admin123", TotalScore: 0.0},
+func init() {
+	InitStudentsData()
 }
-
-// InitStudentsData menginisialisasi array 'studentsData' dengan data yang sudah ditentukan.
-// Ini memastikan hanya hingga NMAX entri yang disalin.
 func InitStudentsData() {
+	data := [45]Quiz{
+		{Nama: "nathasyayuanmaharani", ID: "0001", TotalScore: 85.5},
+		{Nama: "theodoreelvisestrada", ID: "0006", TotalScore: 92.0},
+		{Nama: "dyahkusumawardani", ID: "0009", TotalScore: 78.5},
+		{Nama: "azrielraihaneldovahartoto", ID: "0010", TotalScore: 88.0},
+		{Nama: "muhammadilhamalifianda", ID: "0022", TotalScore: 95.0},
+		{Nama: "alyaazizaputeri", ID: "0026", TotalScore: 76.0},
+		{Nama: "ahmadabdansyakuro", ID: "0029", TotalScore: 81.5},
+		{Nama: "fathurrahmanalfarizi", ID: "0035", TotalScore: 89.0},
+		{Nama: "nuswantorosetyomukti", ID: "0040", TotalScore: 72.0},
+		{Nama: "anggitacahyatihidayat", ID: "0041", TotalScore: 90.0},
+		{Nama: "wibnuhijrahfranstio", ID: "0048", TotalScore: 83.0},
+		{Nama: "meyshaprimiandita", ID: "0050", TotalScore: 91.0},
+		{Nama: "muhamadfiqrihabibi", ID: "0056", TotalScore: 79.5},
+		{Nama: "fitriacahyani", ID: "0060", TotalScore: 87.0},
+		{Nama: "triansyahdaniswaraibrahim", ID: "0062", TotalScore: 93.0},
+		{Nama: "rakhaabdillahalkautsar", ID: "0068", TotalScore: 75.0},
+		{Nama: "avicenanaufallathif", ID: "0073", TotalScore: 86.0},
+		{Nama: "naylaassyifa", ID: "0078", TotalScore: 94.0},
+		{Nama: "williampetervanxnajoan", ID: "0084", TotalScore: 77.0},
+		{Nama: "rayvanalifarlomahesworo", ID: "0087", TotalScore: 90.5},
+		{Nama: "zaidansalamrojab", ID: "0088", TotalScore: 82.0},
+		{Nama: "audreyfredileyhanas", ID: "0093", TotalScore: 89.5},
+		{Nama: "muhammadnaelfadly", ID: "0096", TotalScore: 74.0},
+		{Nama: "nairacahayaputridarmawansinaga", ID: "0100", TotalScore: 96.0},
+		{Nama: "muhamadalwansuryadi", ID: "0104", TotalScore: 80.0},
+		{Nama: "dhafyahmadzubaidi", ID: "0107", TotalScore: 91.5},
+		{Nama: "muhammadfarisdhiyaylhaqsarbini", ID: "0117", TotalScore: 78.0},
+		{Nama: "nursyadira", ID: "0123", TotalScore: 92.5},
+		{Nama: "rayfitokrisnawijaya", ID: "0124", TotalScore: 84.0},
+		{Nama: "mochammadrafirisqullah", ID: "0129", TotalScore: 88.5},
+		{Nama: "iputugedeagastyakrisnawidartha", ID: "0134", TotalScore: 73.0},
+		{Nama: "rendil", ID: "0137", TotalScore: 85.0},
+		{Nama: "muhammadariqazzaki", ID: "0138", TotalScore: 90.0},
+		{Nama: "edmundyuliusgantur", ID: "0155", TotalScore: 77.5},
+		{Nama: "muhammadsayyidhuwaidi", ID: "0157", TotalScore: 86.5},
+		{Nama: "muhdzuljalalwaliikramjalil", ID: "0160", TotalScore: 93.5},
+		{Nama: "ramadhantangguhdefennder", ID: "0003", TotalScore: 81.0},
+		{Nama: "adzkiyaputrirahmawan", ID: "0025", TotalScore: 89.0},
+		{Nama: "fathimahradhiyya", ID: "0029", TotalScore: 79.0},
+		{Nama: "rakanghazianadiwjaya", ID: "0034", TotalScore: 95.5},
+		{Nama: "jihannabilamubarakah", ID: "0037", TotalScore: 87.5},
+		{Nama: "admin", ID: "admin123", TotalScore: 0.0},
+	}
 	i := 0
-	for i < len(initialQuizData) && i < NMAX {
-		studentsData[i] = initialQuizData[i]
+	for i < len(data) && i < NMAX {
+		studentsData[i] = data[i]
 		i++
 	}
 }
 
-// DisplayScoresMenu menampilkan sub-menu untuk pilihan tampilan skor.
 func DisplayScoresMenu() {
 	var choice string
 	isDisplayingMenu := true // Flag untuk mengontrol loop menu tampilan skor
@@ -121,9 +114,6 @@ func DisplayScoresMenu() {
 	}
 }
 
-// ShowQuizScores menampilkan semua skor kuis untuk semua siswa.
-// Menerima parameter `sortOrder` untuk menentukan urutan tampilan:
-// "original", "descending", "ascending". Fungsi ini juga memungkinkan pencarian nama.
 func ShowQuizScores(sortOrder string) {
 	atribut.ClearScreen()
 	fmt.Println("====================================")
@@ -132,8 +122,6 @@ func ShowQuizScores(sortOrder string) {
 	// studentsToProcess adalah array lokal sementara untuk menampung data yang akan diurutkan.
 	var studentsToProcess [NMAX]Quiz
 	activeCount := 0 // Menghitung berapa banyak siswa aktif yang disalin
-
-	// Salin hanya siswa yang aktif (ID tidak kosong) ke array lokal studentsToProcess.
 	i := 0
 	for i < NMAX {
 		if studentsData[i].ID != "" {
@@ -144,33 +132,27 @@ func ShowQuizScores(sortOrder string) {
 	}
 
 	fmt.Println("====================================")
-
-	// Melakukan pengurutan pada studentsToProcess sesuai permintaan
 	switch sortOrder {
 	case "descending":
 		fmt.Println("     (Diurutkan Menurun berdasarkan Total Poin) ")
-		// Insertion Sort untuk urut menurun (Descending)
-		// Beroperasi pada studentsToProcess hingga activeCount
 		i = 1
 		for i < activeCount { // Outer loop
-			key := studentsToProcess[i]
+			pass := studentsToProcess[i]
 			j := i - 1
 			canShift := true // Flag untuk mengontrol loop geser
 			for canShift && j >= 0 {
-				if studentsToProcess[j].TotalScore < key.TotalScore {
+				if studentsToProcess[j].TotalScore < pass.TotalScore {
 					studentsToProcess[j+1] = studentsToProcess[j]
 					j--
 				} else {
 					canShift = false // Hentikan geser jika kondisi tidak terpenuhi
 				}
 			}
-			studentsToProcess[j+1] = key
+			studentsToProcess[j+1] = pass
 			i++
 		}
 	case "ascending":
 		fmt.Println("     (Diurutkan Menaik berdasarkan Total Poin) ")
-		// Selection Sort untuk urut menaik (Ascending)
-		// Beroperasi pada studentsToProcess hingga activeCount
 		i = 0
 		for i < activeCount-1 { // Outer loop
 			minIndex := i
@@ -226,11 +208,6 @@ func ShowQuizScores(sortOrder string) {
 
 		foundStudentIndex := -1 // Default: tidak ditemukan
 		isSearching := true     // Flag untuk mengontrol loop pencarian
-
-		// PENTING: Dalam kondisi tanpa slice dan tanpa mengurutkan array berdasarkan nama,
-		// pencarian biner pada nama tidak akan bekerja dengan benar.
-		// Oleh karena itu, *selalu gunakan Sequential Search* untuk mencari nama di sini,
-		// karena ini adalah metode yang benar secara fungsional dalam batasan yang ada.
 
 		fmt.Println("\n--- Melakukan Pencarian Sekuensial Berdasarkan Nama ---")
 		i = 0
@@ -306,19 +283,13 @@ func RegisterNewStudentFlow() {
 				registrationSuccessful = true // Kapasitas penuh, keluar dari loop
 			}
 		}
-		// Jika isValidInputRound false, loop akan berulang (registrationSuccessful masih false) dan meminta ID lagi
 	}
 	PromptReturnToPreviousMenu()
 }
 
-// StartQuizSession mengelola alur untuk memulai kuis.
-// quizSpecificFunction adalah fungsi kuis yang akan dipanggil (misal StartSoalMenu dari contohsoal).
-// Fungsi kuis ini diharapkan menerima pointer ke TotalScore siswa (*float64) dan mengembalikan bool.
 func StartQuizSession(quizSpecificFunction func(nilaiTemp *float64) bool, materialName string) {
 	studentIndex := GetStudentIndexPrompt() // Mendapatkan indeks siswa berdasarkan ID
 	if studentIndex != -1 {
-		// Panggil fungsi kuis spesifik dan teruskan pointer ke TotalScore siswa.
-		// Fungsi kuis akan memodifikasi studentsData[studentIndex].TotalScore secara langsung.
 		quizSpecificFunction(&studentsData[studentIndex].TotalScore)
 	} else {
 		fmt.Println("ID siswa tidak ditemukan atau tidak valid. Kuis " + materialName + " tidak dapat dimulai.")
@@ -327,8 +298,6 @@ func StartQuizSession(quizSpecificFunction func(nilaiTemp *float64) bool, materi
 	}
 }
 
-// GetStudentIndexByID mencari indeks siswa berdasarkan ID di array studentsData.
-// Mengembalikan indeks siswa jika ditemukan, atau -1 jika tidak.
 func GetStudentIndexByID(studentID string) int {
 	i := 0
 	foundIndex := -1 // Default: tidak ditemukan
