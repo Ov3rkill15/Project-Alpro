@@ -60,8 +60,6 @@ func BukaPDF(path string) error {
 		cmd = exec.Command("xdg-open", path)
 	case "windows":
 		cmd = exec.Command("rundll32", "url.dll,FileProtocolHandler", path)
-	case "darwin": // MacOS
-		cmd = exec.Command("open", path)
 	default:
 		return fmt.Errorf("sistem operasi tidak didukung")
 	}
